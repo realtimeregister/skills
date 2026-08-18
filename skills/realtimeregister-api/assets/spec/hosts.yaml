@@ -1,0 +1,114 @@
+# Hosts (glue records) category. Verified against
+# https://dm.realtimeregister.com/docs/api/hosts/*.
+# Wire format is camelCase.
+
+category: hosts
+label: Hosts
+description: |
+  Hosts are nameserver objects (with optional glue IP addresses) that domains
+  can reference in their `ns` array. All operations are synchronous.
+
+operations:
+
+  - operationId: getHost
+    verified: docs
+    method: GET
+    path: /v2/hosts/{hostName}
+    docUrl: /hosts/get
+    async: false
+    authScope: customer
+    summary: Retrieve a single host and its address records.
+    pathParams:
+      - { name: hostName, type: string, required: true, format: fqdn }
+    queryParams:
+      - { name: fields, type: string, description: "Comma-separated field selector." }
+    responses:
+      "200": { description: "Host object with `addresses` array." }
+    errors: [ObjectDoesNotExist, AuthorizationFailed]
+
+  - operationId: listHosts
+    verified: docs
+    method: GET
+    path: /v2/hosts
+    docUrl: /hosts/list
+    async: false
+    authScope: customer
+    summary: List hosts owned by the authenticated customer.
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string, description: "Filter expression." }
+      - { name: limit,  type: integer, default: 100, maximum: 1000 }
+      - { name: offset, type: integer, default: 0,   minimum: 0 }
+      - { name: order,  type: string }
+    responses:
+      "200": { description: "Paginated envelope." }
+    errors: [InvalidParameter, AuthenticationFailed]
+    gotchas:
+      - "Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering)."
+
+  - operationId: createHost
+    verified: docs
+    method: POST
+    path: /v2/hosts/{hostName}
+    docUrl: /hosts/create
+    async: false
+    authScope: customer
+    summary: Create a new host with one or more glue IP addresses.
+    pathParams:
+      - { name: hostName, type: string, required: true, format: fqdn,
+          description: "4\u2013255 characters; must be a valid FQDN." }
+    requestBody:
+      contentType: application/json
+      fields:
+        addresses: { type: array, required: true, itemsRef: HostAddress,
+                     description: "One entry per glue IP; IpVersion V4 or V6." }
+    responses:
+      "201": { description: "Host created." }
+    errors: [InvalidParameter, ObjectExists]
+    examples:
+      - name: ipv4-and-ipv6
+        request:
+          method: POST
+          path: /v2/hosts/ns1.example.com
+          body:
+            addresses:
+              - { ipVersion: V4, address: "203.0.113.10" }
+              - { ipVersion: V6, address: "2001:db8::10" }
+    gotchas:
+      - "Glue records are only required when the host is subordinate to a domain you register (in-bailiwick)."
+
+  - operationId: updateHost
+    verified: docs
+    method: POST
+    path: /v2/hosts/{hostName}/update
+    docUrl: /hosts/update
+    async: false
+    authScope: customer
+    summary: Replace the address set for an existing host.
+    pathParams:
+      - { name: hostName, type: string, required: true, format: fqdn }
+    requestBody:
+      contentType: application/json
+      fields:
+        addresses: { type: array, required: true, itemsRef: HostAddress }
+    responses:
+      "200": { description: "Host updated." }
+    errors: [InvalidParameter, ObjectDoesNotExist]
+    gotchas:
+      - "The `addresses` array is authoritative; omit an address to remove it."
+
+  - operationId: deleteHost
+    verified: docs
+    method: DELETE
+    path: /v2/hosts/{hostName}
+    docUrl: /hosts/delete
+    async: false
+    authScope: customer
+    summary: Delete a host.
+    pathParams:
+      - { name: hostName, type: string, required: true, format: fqdn }
+    responses:
+      "204": { description: "Host deleted." }
+    errors: [ObjectDoesNotExist, AuthorizationFailed]
+    gotchas:
+      - "Registry rejects deletion while the host is referenced by a domain's `ns` array."

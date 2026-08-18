@@ -1,0 +1,369 @@
+# Shared enums and reusable schemas referenced by every category YAML.
+# All field names use the camelCase wire format sent to https://api.yoursrs.com.
+# Values are sourced directly from https://dm.realtimeregister.com/docs/api/.
+# Any change must be accompanied by an `rtr doctor` run.
+
+version: 1
+baseUrl: https://api.yoursrs.com
+docsBaseUrl: https://dm.realtimeregister.com/docs/api
+
+auth:
+  header: Authorization
+  scheme: ApiKey
+  format: "Authorization: ApiKey <your-api-key>"
+  docsUrl: /access
+  rules:
+    - "Authenticate every REST request with the header `Authorization: ApiKey <your-api-key>`. API keys are generated in the Realtime Register portal."
+    - "There is NO `X-API-KEY` header in this API. Never use it."
+    - "Basic (password-based) authentication is DEPRECATED upstream. Never suggest or generate it."
+    - "Session authentication (`Authorization: Session <key>`) and `POST /v2/session` are deprecated in favor of API keys. Do not use."
+    - "Customer-scope and gateway-scope endpoints (`authScope` on each operation) require different API keys. Never mix them."
+
+enums:
+  DomainStatus:
+    description: EPP domain statuses returned in the `status` list.
+    values:
+      - OK
+      - INACTIVE
+      - PENDING_TRANSFER
+      - PENDING_RENEW
+      - PENDING_UPDATE
+      - DELETE_REQUESTED
+      - PENDING_DELETE
+      - ADD_PERIOD
+      - RENEW_PERIOD
+      - AUTO_RENEW_PERIOD
+      - TRANSFER_PERIOD
+      - REDEMPTION_PERIOD
+      - PENDING_RESTORE
+      - CLIENT_HOLD
+      - CLIENT_DELETE_PROHIBITED
+      - CLIENT_UPDATE_PROHIBITED
+      - CLIENT_RENEW_PROHIBITED
+      - CLIENT_TRANSFER_PROHIBITED
+      - REGISTRAR_HOLD
+      - REGISTRAR_DELETE_PROHIBITED
+      - REGISTRAR_UPDATE_PROHIBITED
+      - REGISTRAR_RENEW_PROHIBITED
+      - REGISTRAR_TRANSFER_PROHIBITED
+      - SERVER_HOLD
+      - SERVER_DELETE_PROHIBITED
+      - SERVER_UPDATE_PROHIBITED
+      - SERVER_RENEW_PROHIBITED
+      - SERVER_TRANSFER_PROHIBITED
+      - PENDING_VALIDATION
+      - PRIVACY_PROTECT_PROHIBITED
+      - EXPIRED
+      - IRTPC_TRANSFER_PROHIBITED
+
+  ContactRole:
+    description: Only three domain-contact roles are accepted by the RTR API.
+    values: [ADMIN, BILLING, TECH]
+
+  BillableAction:
+    description: |
+      Action types inside a `billables` entry. Copy verbatim from the
+      BillableAcknowledgmentNeededException payload and re-submit.
+    values:
+      - CREATE
+      - REQUEST
+      - TRANSFER
+      - RENEW
+      - RESTORE
+      - TRANSFER_RESTORE
+      - UPDATE
+      - REGISTRANT_CHANGE
+      - LOCAL_CONTACT
+      - NEGATIVE_MARKUP
+      - PRIVACY_PROTECT
+      - EXTRA_WILDCARD
+      - EXTRA_DOMAIN
+      - REGISTRY_LOCK
+
+  DnsService:
+    description: DNS service tier for a managed zone.
+    values: [BASIC, PREMIUM]
+
+  DsAlgorithm:
+    description: IANA DNSSEC algorithm numbers accepted by RTR.
+    values: [3, 5, 6, 7, 8, 10, 12, 13, 14, 15, 16, 17, 23]
+
+  DsDigestType:
+    description: 1=SHA-1, 2=SHA-256, 4=SHA-384.
+    values: [1, 2, 4]
+
+  DnssecFlags:
+    description: 256=ZSK, 257=KSK.
+    values: [256, 257]
+
+  DnssecProtocol:
+    description: DNSSEC protocol field; always 3.
+    values: [3]
+
+  ProcessStatus:
+    description: Lifecycle state of an async process (see GET /v2/processes/{id}).
+    values: [NEW, VALIDATED, RUNNING, COMPLETED, INVALID, CANCELLED, FAILED, IN_DOUBT, SCHEDULED, SUSPENDED]
+
+  ProcessResumeType:
+    values: [PROVIDER, TIMER, MANUAL, INTERNAL, RESEND, CANCEL]
+
+  SslValidationType:
+    description: Validation tier of an SSL certificate product.
+    values: [DV, OV, EV]
+
+  DcvType:
+    description: Domain Control Validation method accepted by the CA.
+    values: [EMAIL, FILE, DNS]
+
+  DnsRecordType:
+    description: DNS record types supported by RTR-managed zones and templates.
+    values:
+      - A
+      - AAAA
+      - ALIAS
+      - CAA
+      - CERT
+      - CNAME
+      - DNSKEY
+      - DS
+      - HINFO
+      - LOC
+      - MBOXFW
+      - MX
+      - NAPTR
+      - NS
+      - SOA
+      - SRV
+      - SSHFP
+      - TLSA
+      - TXT
+      - URI
+      - URL
+
+  IpVersion:
+    values: [V4, V6]
+
+  WhoisExposure:
+    description: Data publicly exposed over WHOIS/RDAP.
+    values: [NONE, LIMITED, FULL, UNKNOWN]
+
+  GdprCategory:
+    values: [EU_BASED, ADEQUACY, DATA_EXPORT, UNKNOWN]
+
+  DesignatedAgent:
+    values: [NONE, OLD, NEW, BOTH]
+
+  TransferContactRole:
+    description: Contacts eligible to receive the FOA during an inbound transfer.
+    values: [REGISTRANT, ADMIN]
+
+  TransferAction:
+    description: Gateway-only action used to approve or reject an outbound transfer.
+    values: [approve, reject]
+
+  IntendedUsage:
+    description: Usage for which contact properties are being added/updated.
+    values: [REGISTRANT, ADMIN, BILLING, TECH]
+
+  VerificationMethod:
+    description: Method used to verify a contact (CONTACT_VERIFICATION permission).
+    values: [REACHABILITY, ELECTRONIC_DOCUMENT, PHYSICAL_DOCUMENT, EID_AUTH, TRANSACTION, DATA]
+
+  VerificationProof:
+    description: Evidence type backing a contact verification.
+    values:
+      - LOG_RECORD
+      - ID_CARD
+      - PASSPORT
+      - POPULATION_REGISTER
+      - RESIDENCE_PERMIT
+      - DRIVERS_LICENCE
+      - COMPANY_REGISTER
+      - COMPANY_STATEMENT
+      - BANK_ACCOUNT
+      - ONLINE_PAYMENT_ACCOUNT
+      - UTILITY_ACCOUNT
+      - BANK_STATEMENT
+      - TAX_STATEMENT
+      - ADDRESS_DATABASE
+
+  VerificationClaim:
+    description: Contact attribute claimed by a verification entry.
+    values: [EMAIL, ADDRESS, ORGANIZATION, NAME, VOICE]
+
+  DisclosedField:
+    description: RDAP-disclosable contact fields.
+    values:
+      - registryContactId
+      - email
+      - name
+      - organization
+      - addressLine
+      - city
+      - postalCode
+      - voice
+      - fax
+      - state
+      - country
+
+  TldFeature:
+    values: [CREATE, RENEW, TRANSFER, RESTORE, UPDATE, PRIVACY_PROTECT, PUSH_TRANSFER, LOCAL_CONTACT, REGISTRY_LOCK]
+
+  ContactPropertyType:
+    values: [String, Date, Integer]
+
+  NotificationType:
+    description: Event category emitted to notifications and webhooks.
+    values:
+      - DOMAIN
+      - CONTACT
+      - HOST
+      - SSL_CERT
+      - ACCOUNT
+      - TRANSFER
+
+  CountryCode:
+    format: ISO-3166-1 alpha-2
+    example: NL
+
+  CurrencyCode:
+    format: ISO-4217
+    example: EUR
+
+  LanguageTag:
+    description: "IDN language tag; TLD-specific. Must be 1\u201310 chars."
+    example: nl-NL
+
+types:
+  Contact:
+    description: Full RTR contact record. See Contacts/Get.
+    fields:
+      handle:      { type: string, required: true, maxLength: 40, description: "Unique customer-scoped handle." }
+      name:        { type: string, required: true }
+      organization: { type: string }
+      addressLine: { type: array, items: string, required: true, minItems: 1, maxItems: 3 }
+      postalCode:  { type: string, required: true }
+      city:        { type: string, required: true }
+      state:       { type: string }
+      country:     { type: string, required: true, enumRef: CountryCode }
+      email:       { type: string, required: true, format: email }
+      voice:       { type: string, required: true, format: e164 }
+      fax:         { type: string, format: e164 }
+      properties:  { type: object, description: "Free-form TLD-specific properties; see Add/Update properties." }
+      disclosedFields: { type: array, items: string }
+
+  DomainContactRef:
+    description: Contact assignment inside createDomain/updateDomain/transferDomain.
+    fields:
+      role:   { type: string, required: true, enumRef: ContactRole }
+      handle: { type: string, required: true, maxLength: 40 }
+
+  KeyData:
+    description: DNSSEC DNSKEY record.
+    fields:
+      protocol:  { type: integer, required: true, enumRef: DnssecProtocol }
+      flags:     { type: integer, required: true, enumRef: DnssecFlags }
+      algorithm: { type: integer, required: true, enumRef: DsAlgorithm }
+      publicKey: { type: string, required: true, description: "Base64-encoded public key." }
+
+  DsData:
+    description: DNSSEC DS record; alternative to keyData.
+    fields:
+      keyTag:     { type: integer, required: true, minimum: 0, maximum: 65535 }
+      algorithm:  { type: integer, required: true, enumRef: DsAlgorithm }
+      digestType: { type: integer, required: true, enumRef: DsDigestType }
+      digest:     { type: string,  required: true, format: hex }
+
+  Billable:
+    description: Entry in a `billables` array used to acknowledge a BillableAcknowledgmentNeededException.
+    fields:
+      product:  { type: string,  required: true, description: "Product identifier returned by the exception." }
+      action:   { type: string,  required: true, enumRef: BillableAction }
+      quantity: { type: integer, description: "Maximum quantity; defaults to 1." }
+
+  Zone:
+    description: DNS zone attached to a domain at registration.
+    fields:
+      service:  { type: string,  enumRef: DnsService, description: "Defaults to BASIC." }
+      template: { type: string,  description: "Template handle for new zones." }
+      link:     { type: boolean, description: "Unless false, the zone is linked to the template." }
+      master:   { type: string,  description: "Hidden-master IP (new zones only)." }
+      dnssec:   { type: boolean, description: "Provision a new zone with DNSSEC." }
+
+  HostAddress:
+    description: IP address assigned to a Host (nameserver glue).
+    fields:
+      ipVersion: { type: string, required: true, enumRef: IpVersion }
+      address:   { type: string, required: true, description: "IPv4 or IPv6 literal address." }
+
+  DnsRecord:
+    description: DNS record inside a managed zone or template.
+    fields:
+      name:    { type: string,  required: true, description: "Full record name (FQDN)." }
+      type:    { type: string,  required: true, enumRef: DnsRecordType }
+      content: { type: string,  required: true, description: "Type-specific record content." }
+      ttl:     { type: integer, description: "Cache TTL in seconds." }
+      prio:    { type: integer, description: "Priority (required for MX and SRV)." }
+
+  Approver:
+    description: Approver identity for SSL request.
+    fields:
+      firstName: { type: string, required: true, maxLength: 40 }
+      lastName:  { type: string, required: true, maxLength: 40 }
+      jobTitle:  { type: string, maxLength: 40 }
+      email:     { type: string, required: true, format: email }
+      voice:     { type: string, required: true, format: e164 }
+
+  Dcv:
+    description: Domain Control Validation entry for an SSL certificate.
+    fields:
+      commonName: { type: string, required: true, format: fqdn }
+      type:       { type: string, required: true, enumRef: DcvType }
+      email:      { type: string, format: email, description: "Required when type=EMAIL." }
+
+  ContactValidation:
+    description: Pre-validation record for a Contact (CONTACT_VALIDATION permission).
+    fields:
+      category:    { type: string, required: true }
+      termsVersion: { type: string, required: true }
+      validatedOn: { type: string, format: "date-time" }
+      validatedBy: { type: string, required: true, description: "IP address used during validation." }
+
+  ContactVerification:
+    description: |
+      Verification record for a Contact (CONTACT_VERIFICATION permission). See
+      the allowed claim/method/proof combinations at
+      https://dm.realtimeregister.com/docs/api/contacts/verification-matrix.
+    fields:
+      verificationDate: { type: string, required: true, format: "date-time", description: "The date the contact was verified." }
+      method:  { type: string, required: true, enumRef: VerificationMethod }
+      proof:   { type: string, required: true, enumRef: VerificationProof }
+      claims:  { type: array,  required: true, items: string, enumRef: VerificationClaim, description: "Claims made with this verification." }
+      externalId: { type: string, required: true, maxLength: 255, description: "The ID of the verification you have on file." }
+
+  SslOrganization:
+    description: Organization details attached to OV/EV certificate orders.
+    fields:
+      name:         { type: string, required: true, maxLength: 64 }
+      department:   { type: string, maxLength: 64 }
+      addressLine:  { type: array,  items: string, minItems: 1, maxItems: 3 }
+      postalCode:   { type: string, maxLength: 16 }
+      city:         { type: string, required: true, maxLength: 64 }
+      state:        { type: string, maxLength: 64 }
+      country:      { type: string, required: true, minLength: 2, maxLength: 2, enumRef: CountryCode }
+      voice:        { type: string, required: true, format: e164 }
+      registrationNumber: { type: string, description: "Business registration number (required for EV)." }
+      duns:         { type: string, description: "D-U-N-S number." }
+
+errors:
+  - { code: InvalidParameter, httpStatus: 400 }
+  - code: BillableAcknowledgmentNeededException
+    httpStatus: 400
+    description: "Mutation is billable. Copy the exception's billables array into the request and re-submit."
+  - { code: DnsConfigurationException, httpStatus: 400, description: "The DNS records contain errors." }
+  - { code: AuthenticationFailed, httpStatus: 401 }
+  - { code: AuthorizationFailed, httpStatus: 403 }
+  - { code: ObjectDoesNotExist, httpStatus: 404 }
+  - { code: ObjectExists, httpStatus: 409 }
+  - { code: RateLimitExceeded, httpStatus: 429 }
+  - { code: InternalServerError, httpStatus: 500 }

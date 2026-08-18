@@ -1,0 +1,118 @@
+# DNS Templates category. Reusable record-sets applied at zone creation time.
+
+category: dnsTemplates
+label: DNS Templates
+description: |
+  DNS templates bundle a common record set for reuse across zones. Linking a
+  zone to a template keeps its records in sync with later template edits
+  unless the zone is created with `link: false`.
+
+operations:
+
+  - operationId: getDnsTemplate
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/dnstemplates/{template}
+    docUrl: /templates/get
+    async: false
+    authScope: customer
+    summary: Retrieve a DNS template.
+    pathParams:
+      - { name: customer, type: string, required: true, minLength: 3, maxLength: 40 }
+      - { name: template, type: string, required: true, minLength: 3, maxLength: 40 }
+    queryParams:
+      - { name: fields, type: string, description: "Comma-separated field selector." }
+    responses:
+      "200": { description: "Template object with `records`, SOA metadata, and DNSSEC flag." }
+    errors: [ObjectDoesNotExist]
+
+  - operationId: listDnsTemplates
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/dnstemplates
+    docUrl: /templates/list
+    async: false
+    authScope: customer
+    summary: List DNS templates for the authenticated customer.
+    pathParams:
+      - { name: customer, type: string, required: true, minLength: 3, maxLength: 40 }
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string }
+      - { name: limit,  type: integer, default: 100, maximum: 1000 }
+      - { name: offset, type: integer, default: 0 }
+      - { name: order,  type: string }
+    responses:
+      "200": { description: "Paginated envelope." }
+    errors: [InvalidParameter]
+    gotchas:
+      - "Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering)."
+
+  - operationId: createDnsTemplate
+    verified: docs
+    method: POST
+    path: /v2/customers/{customer}/dnstemplates/{template}
+    docUrl: /templates/create
+    async: false
+    authScope: customer
+    summary: Create a DNS template.
+    pathParams:
+      - { name: customer, type: string, required: true, minLength: 3, maxLength: 40 }
+      - { name: template, type: string, required: true, minLength: 3, maxLength: 40 }
+    requestBody:
+      contentType: application/json
+      fields:
+        hostMaster: { type: string,  required: true, description: "Hostmaster email address used in SOA." }
+        refresh:    { type: integer, required: true, description: "SOA refresh in seconds." }
+        retry:      { type: integer, required: true, default: 3600,    minimum: 1 }
+        expire:     { type: integer, required: true, default: 1209600, minimum: 86400, maximum: 4838400 }
+        ttl:        { type: integer, required: true, default: 3600,    minimum: 60,    maximum: 2419200 }
+        records:    { type: array,   itemsRef: DnsRecord }
+    responses:
+      "201": { description: "Template created." }
+    errors: [InvalidParameter, DnsConfigurationException, ObjectExists]
+
+  - operationId: updateDnsTemplate
+    verified: docs
+    method: POST
+    path: /v2/customers/{customer}/dnstemplates/{template}/update
+    docUrl: /templates/update
+    async: false
+    authScope: customer
+    summary: Update template metadata and/or records. All SOA fields remain required on update.
+    pathParams:
+      - { name: customer, type: string, required: true, minLength: 3, maxLength: 40 }
+      - { name: template, type: string, required: true, minLength: 3, maxLength: 40 }
+    requestBody:
+      contentType: application/json
+      fields:
+        hostMaster: { type: string,  required: true }
+        refresh:    { type: integer, required: true }
+        retry:      { type: integer, required: true, default: 3600,    minimum: 1 }
+        expire:     { type: integer, required: true, default: 1209600, minimum: 86400, maximum: 4838400 }
+        ttl:        { type: integer, required: true, default: 3600,    minimum: 60,    maximum: 2419200 }
+        records:    { type: array,   itemsRef: DnsRecord,
+                      description: "If provided, replaces the full record set." }
+    responses:
+      "200": { description: "Template updated." }
+    errors: [InvalidParameter, DnsConfigurationException, ObjectDoesNotExist]
+    gotchas:
+      - "Zones with `link: true` inherit the change immediately."
+      - "All SOA fields (hostMaster, refresh, retry, expire, ttl) must be sent on every update; omitting one rejects the request."
+
+  - operationId: deleteDnsTemplate
+    verified: docs
+    method: DELETE
+    path: /v2/customers/{customer}/dnstemplates/{template}
+    docUrl: /templates/delete
+    async: false
+    authScope: customer
+    summary: Delete a DNS template.
+    pathParams:
+      - { name: customer, type: string, required: true, minLength: 3, maxLength: 40 }
+      - { name: template, type: string, required: true, minLength: 3, maxLength: 40 }
+    responses:
+      "204": { description: "Template deleted." }
+    errors: [ObjectDoesNotExist, InvalidParameter]
+    gotchas:
+      - "Registry rejects deletion while any zone is still linked to the template."

@@ -1,0 +1,126 @@
+# Misc category. Miscellaneous endpoints that do not belong to a larger
+# category (IsProxy, ADAC authentication codes, etc.).
+
+category: misc
+label: Miscellaneous
+description: |
+  Low-traffic endpoints grouped to keep the top-level category list focused.
+
+operations:
+
+  - operationId: isProxy
+    verified: docs
+    method: GET
+    path: /v2/isproxy/{ip}
+    docUrl: /isproxy
+    async: false
+    authScope: customer
+    liveDiff: false
+    summary: Check whether an IP is a known proxy/VPN/Tor exit.
+    pathParams:
+      - { name: ip, type: string, required: true, description: "IPv4 or IPv6 address." }
+    responses:
+      "200": { description: "{ proxy: boolean, categories: string[] }" }
+    errors: [InvalidParameter]
+    gotchas:
+      - "Method verified manually (GET); docs page lacks a machine-readable method span, so it is excluded from the live diff."
+
+  - operationId: adacInput
+    verified: docs
+    method: POST
+    path: "wss://adac.api.yoursrs.com/ws?session_id={sessionId}"
+    docUrl: /adac/input
+    async: false
+    authScope: customer
+    liveDiff: false
+    summary: ADAC WebSocket action. Perform an availability check and optional suggestion run for a domain-name query.
+    pathParams:
+      - { name: sessionId, type: string, required: true, description: "UUID4 unique per session, included as `session_id` query parameter." }
+    requestBody:
+      contentType: application/json
+      fields:
+        api_key: { type: string, required: true, description: "ADAC API key (separate from REST API key)." }
+        action:  { type: string, required: true, const: "input" }
+        data:    { type: object, required: true,
+                   description: "See gotchas; expects `tld_set_token`, `categories`, `input`, plus optional `priority_list_token` and `hints` (per-provider overrides for domainsbot/sidn/rns/prefixes-suffixes/namesuggestion)." }
+    responses:
+      "200": { description: "WebSocket frame with availability + suggestion results." }
+    errors: [InvalidParameter]
+    gotchas:
+      - "This endpoint is WebSocket, not REST. Connect to `wss://adac.api.yoursrs.com/ws?session_id=<uuid4>` and send the JSON payload as a text frame."
+      - "`api_key` is the ADAC-specific key, not your customer REST key."
+      - "`data.input` minimum length 1; `data.tld_set_token` and `data.priority_list_token` max length 64."
+
+  - operationId: adacCategories
+    verified: docs
+    method: POST
+    path: "wss://adac.api.yoursrs.com/ws?session_id={sessionId}"
+    docUrl: /adac/categories
+    async: false
+    authScope: customer
+    liveDiff: false
+    summary: ADAC WebSocket action. Fetch the TLD categories configured for a given TLD set.
+    pathParams:
+      - { name: sessionId, type: string, required: true }
+    requestBody:
+      contentType: application/json
+      fields:
+        api_key: { type: string, required: true }
+        action:  { type: string, required: true, const: "categories" }
+        data:    { type: object, required: true,
+                   description: "Expects `tld_set_token` (string, max 64)." }
+    responses:
+      "200": { description: "WebSocket frame with the list of category IDs and labels." }
+    errors: [InvalidParameter]
+    gotchas:
+      - "WebSocket transport; see `adacInput` for connection details."
+
+  - operationId: adacCheck
+    verified: docs
+    method: POST
+    path: "wss://adac.api.yoursrs.com/ws?session_id={sessionId}"
+    docUrl: /adac/check
+    async: false
+    authScope: customer
+    liveDiff: false
+    summary: ADAC WebSocket action. Perform a plain availability check (no suggestions) for one or more FQDNs.
+    pathParams:
+      - { name: sessionId, type: string, required: true }
+    requestBody:
+      contentType: application/json
+      fields:
+        api_key: { type: string, required: true }
+        action:  { type: string, required: true, const: "check" }
+        data:    { type: object, required: true,
+                   description: "Expects a list of FQDNs under `domains`." }
+    responses:
+      "200": { description: "WebSocket frame with per-domain availability status." }
+    errors: [InvalidParameter]
+    gotchas:
+      - "WebSocket transport; see `adacInput` for connection details."
+      - "For pure availability without suggestions, prefer this over `adacInput` to save quota."
+
+  - operationId: adacSuggest
+    verified: docs
+    method: POST
+    path: "wss://adac.api.yoursrs.com/ws?session_id={sessionId}"
+    docUrl: /adac/suggest
+    async: false
+    authScope: customer
+    liveDiff: false
+    summary: ADAC WebSocket action. Run only the configured suggestion engines (no availability checks) for a query.
+    pathParams:
+      - { name: sessionId, type: string, required: true }
+    requestBody:
+      contentType: application/json
+      fields:
+        api_key: { type: string, required: true }
+        action:  { type: string, required: true, const: "suggest" }
+        data:    { type: object, required: true,
+                   description: "Expects `tld_set_token`, `input`, and optional per-engine `hints` identical to `adacInput`." }
+    responses:
+      "200": { description: "WebSocket frame with suggested domain names grouped by engine." }
+    errors: [InvalidParameter]
+    gotchas:
+      - "WebSocket transport; see `adacInput` for connection details."
+      - "Suggestion engines must be enabled in the ADAC Management Panel for your account."

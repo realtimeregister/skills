@@ -1,0 +1,237 @@
+# Brands category. Reseller-facing identity/branding used in emails, WHOIS,
+# and registrar correspondence.
+
+category: brands
+label: Brands
+description: |
+  A brand groups customer-facing configuration (branding, support addresses,
+  mail templates, WHOIS footer). Every customer is assigned a brand; the
+  `default` brand is auto-provisioned.
+
+operations:
+
+  - operationId: getBrand
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/brands/{handle}
+    docUrl: /brands/get
+    async: false
+    authScope: customer
+    summary: Retrieve a brand.
+    pathParams:
+      - { name: customer, type: string, required: true, minLength: 3, maxLength: 40 }
+      - { name: handle,   type: string, required: true, minLength: 3, maxLength: 40 }
+    queryParams:
+      - { name: fields, type: string, description: "Comma-separated field selector." }
+    responses:
+      "200": { description: "Brand object with contact, mail, and WHOIS settings." }
+    errors: [ObjectDoesNotExist]
+
+  - operationId: listBrands
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/brands
+    docUrl: /brands/list
+    async: false
+    authScope: customer
+    summary: List brands for a customer.
+    pathParams:
+      - { name: customer, type: string, required: true, minLength: 3, maxLength: 40 }
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string }
+      - { name: limit,  type: integer, default: 100, maximum: 1000 }
+      - { name: offset, type: integer, default: 0 }
+      - { name: order,  type: string }
+    responses:
+      "200": { description: "Paginated envelope of Brand objects." }
+    errors: [InvalidParameter]
+    gotchas:
+      - "Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering)."
+
+  - operationId: createBrand
+    verified: docs
+    method: POST
+    path: /v2/customers/{customer}/brands/{handle}
+    docUrl: /brands/create
+    async: false
+    authScope: customer
+    summary: Create a brand under a customer.
+    pathParams:
+      - { name: customer, type: string, required: true, minLength: 3, maxLength: 40 }
+      - { name: handle,   type: string, required: true, minLength: 3, maxLength: 40 }
+    requestBody:
+      contentType: application/json
+      fields:
+        hideOptionalTerms: { type: boolean, description: "If true, contact validations under this brand hide optional terms." }
+        locale:            { type: string,  default: "en-US", description: "Locale to use for notification templates." }
+        organization:      { type: string,  required: true, minLength: 1, maxLength: 255 }
+        addressLine:       { type: array,   required: true, items: string, minItems: 1, maxItems: 3 }
+        postalCode:        { type: string,  required: true, minLength: 1, maxLength: 16 }
+        city:              { type: string,  required: true, minLength: 1, maxLength: 255 }
+        state:             { type: string,  minLength: 1, maxLength: 255 }
+        country:           { type: string,  required: true, minLength: 2, maxLength: 2, enumRef: CountryCode }
+        email:             { type: string,  required: true, format: email }
+        contactEmail:      { type: string,  format: email, description: "Contact email address." }
+        replyToEmail:      { type: string,  format: email, description: "Reply-to email address." }
+        voice:             { type: string,  required: true, minLength: 6, maxLength: 25, description: "Voice telephone number (E.164 without separator required by some registries)." }
+        fax:               { type: string,  minLength: 6, maxLength: 25 }
+        contactUrl:        { type: string,  maxLength: 255, description: "URL for the brand's contact page." }
+        url:               { type: string,  maxLength: 255, description: "Brand website URL." }
+        privacyContact:    { type: string,  maxLength: 40, description: "Contact handle used for privacy-protected WHOIS records. Requires BRAND_PRIVACY permission." }
+        abuseContact:      { type: string,  maxLength: 40, description: "Contact handle exposed in WHOIS/RDAP for abuse reports." }
+    responses:
+      "201": { description: "Brand created." }
+    errors: [InvalidParameter, ObjectExists]
+    gotchas:
+      - "`privacyContact` and `abuseContact` are contact handles, not email addresses."
+
+  - operationId: updateBrand
+    verified: docs
+    method: POST
+    path: /v2/customers/{customer}/brands/{handle}/update
+    docUrl: /brands/update
+    async: false
+    authScope: customer
+    summary: Update a brand. Fields accept an empty string to clear where noted.
+    pathParams:
+      - { name: customer, type: string, required: true, minLength: 3, maxLength: 40 }
+      - { name: handle,   type: string, required: true, minLength: 3, maxLength: 40 }
+    requestBody:
+      contentType: application/json
+      fields:
+        hideOptionalTerms: { type: boolean }
+        locale:            { type: string }
+        organization:      { type: string, minLength: 1, maxLength: 255 }
+        addressLine:       { type: array,  items: string, minItems: 1, maxItems: 3 }
+        postalCode:        { type: string, minLength: 1, maxLength: 16 }
+        city:              { type: string, minLength: 1, maxLength: 255 }
+        state:             { type: string, maxLength: 255, description: "Pass an empty string to remove." }
+        country:           { type: string, minLength: 2, maxLength: 2, enumRef: CountryCode }
+        email:             { type: string, format: email }
+        contactEmail:      { type: string, format: email, description: "Contact email address." }
+        replyToEmail:      { type: string, format: email, description: "Reply-to email address." }
+        voice:             { type: string, minLength: 6, maxLength: 25 }
+        fax:               { type: string, maxLength: 25, description: "Pass an empty string to remove." }
+        contactUrl:        { type: string, maxLength: 255 }
+        url:               { type: string, maxLength: 255, description: "Pass an empty string to remove." }
+        privacyContact:    { type: string, maxLength: 40, description: "Empty string clears the privacy contact." }
+        abuseContact:      { type: string, maxLength: 40 }
+    responses:
+      "200": { description: "Brand updated." }
+    errors: [InvalidParameter, ObjectDoesNotExist]
+
+  - operationId: deleteBrand
+    verified: docs
+    method: DELETE
+    path: /v2/customers/{customer}/brands/{handle}
+    docUrl: /brands/delete
+    async: false
+    authScope: customer
+    summary: Delete a brand.
+    pathParams:
+      - { name: customer, type: string, required: true, minLength: 3, maxLength: 40 }
+      - { name: handle,   type: string, required: true, minLength: 3, maxLength: 40 }
+    responses:
+      "204": { description: "Brand deleted." }
+    errors: [ObjectDoesNotExist, InvalidParameter]
+    gotchas:
+      - "The `default` brand cannot be deleted."
+      - "Reassign contacts before deleting a brand; orphaned contacts are rejected."
+
+  - operationId: getBrandTemplate
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/brands/{brand}/templates/{name}
+    docUrl: /brands/templates/get
+    async: false
+    authScope: customer
+    summary: Retrieve a brand-specific notification/mail template override.
+    pathParams:
+      - { name: customer, type: string, required: true }
+      - { name: brand,    type: string, required: true }
+      - { name: name,     type: string, required: true,
+          description: "Template identifier (e.g. TRANSFER_FOA, CONTACT_VERIFICATION)." }
+    queryParams:
+      - { name: fields, type: string, description: "Comma-separated field selector." }
+    responses:
+      "200": { description: "Template object with `subject`, `text`, `html`, `locale`." }
+    errors: [ObjectDoesNotExist]
+
+  - operationId: listBrandTemplates
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/brands/{brand}/templates
+    docUrl: /brands/templates/list
+    async: false
+    authScope: customer
+    summary: List configured template overrides for a brand.
+    pathParams:
+      - { name: customer, type: string, required: true }
+      - { name: brand,    type: string, required: true }
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string }
+      - { name: limit,  type: integer, default: 100, maximum: 1000 }
+      - { name: offset, type: integer, default: 0 }
+      - { name: order,  type: string }
+    responses:
+      "200": { description: "Paginated envelope of Template objects." }
+    errors: [InvalidParameter]
+
+  - operationId: updateBrandTemplate
+    verified: docs
+    method: POST
+    path: /v2/customers/{customer}/brands/{brand}/templates/{name}/update
+    docUrl: /brands/templates/update
+    async: false
+    authScope: customer
+    summary: Create or update a brand template override. Omit a field to inherit the platform default.
+    pathParams:
+      - { name: customer, type: string, required: true }
+      - { name: brand,    type: string, required: true }
+      - { name: name,     type: string, required: true }
+    requestBody:
+      contentType: application/json
+      fields:
+        subject: { type: string, maxLength: 255, description: "The subject, for mail templates." }
+        text:    { type: string, description: "Plain-text body with `{{placeholder}}` variables." }
+        html:    { type: string, description: "HTML body with `{{placeholder}}` variables." }
+    responses:
+      "200": { description: "Override saved." }
+    errors: [InvalidParameter, ObjectDoesNotExist]
+    gotchas:
+      - "Sending empty strings clears the override for that locale; sending null is rejected."
+      - "The `template` path parameter already scopes the override to a single locale-neutral template name; the live body table has no separate `locale` field."
+
+  - operationId: previewBrandTemplate
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/brands/{brand}/templates/{name}/preview
+    docUrl: /brands/templates/preview
+    async: false
+    authScope: customer
+    summary: Render a template with sample data to preview the rendered subject/body.
+    pathParams:
+      - { name: customer, type: string, required: true }
+      - { name: brand,    type: string, required: true }
+      - { name: name,     type: string, required: true }
+    queryParams:
+      - { name: context, type: string, description: "The context to request a preview for." }
+    responses:
+      "200": { description: "Rendered `{ subject, text, html }` preview." }
+    errors: [InvalidParameter, ObjectDoesNotExist]
+    gotchas:
+      - "GET, not POST; a GET has no request body. The live docs page for this operation has no `locale` field at all (query or body) — the previously spec'd required `locale` body field does not exist on the live page and has been dropped rather than moved to a query param."
+
+  - operationId: listBrandLocales
+    verified: docs
+    method: GET
+    path: /v2/brands/locales
+    docUrl: /brands/locales
+    async: false
+    authScope: customer
+    summary: List supported locales for brand templates.
+    responses:
+      "200": { description: "Array of locale identifiers (e.g. `en_US`, `nl_NL`, `de_DE`)." }
+    errors: []
