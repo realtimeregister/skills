@@ -29,3 +29,7 @@ bun run verify     # typecheck, tests, static audit
 Weekly drift checks run in GitHub Actions. If drift is detected, the workflow
 opens or updates a `Fidelity drift verification` pull request on
 `auto/fidelity-drift`.
+
+
+## License
+This project is licensed under the MIT license.
