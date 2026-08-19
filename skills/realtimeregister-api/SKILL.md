@@ -22,6 +22,17 @@ Use this skill for tasks involving the Realtime Register REST API, including:
 - Reading notifications or processes
 - Constructing requests to `https://api.yoursrs.com/v2/...`
 
+## Hard rules
+
+- Authentication is `Authorization: ApiKey <key>`.
+- Request and response fields use camelCase.
+- `period` values are expressed in months; `12` means one year.
+- Contact roles are `ADMIN`, `BILLING`, and `TECH`.
+- DNSSEC uses `keyData` XOR `dsData`; never provide both.
+- `renewDomain` requires the current `expiryDate`.
+- Endpoints with `authScope: gateway` require registry-account credentials rather than customer credentials.
+- Never invent enum values. Read them from the relevant operation or `_shared.yaml`.
+
 ## Workflow
 
 1. **Find the operation.**
@@ -71,17 +82,6 @@ Use this skill for tasks involving the Realtime Register REST API, including:
    `GET /v2/processes/{processId}`
 
    until the process reaches `COMPLETED` or `FAILED`.
-
-## Hard rules
-
-- Authentication is `Authorization: ApiKey <key>`.
-- Request and response fields use camelCase.
-- `period` values are expressed in months; `12` means one year.
-- Contact roles are `ADMIN`, `BILLING`, and `TECH`.
-- DNSSEC uses `keyData` XOR `dsData`; never provide both.
-- `renewDomain` requires the current `expiryDate`.
-- Endpoints with `authScope: gateway` require registry-account credentials rather than customer credentials.
-- Never invent enum values. Read them from the relevant operation or `_shared.yaml`.
 
 ## Fidelity markers
 
