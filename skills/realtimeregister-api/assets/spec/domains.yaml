@@ -103,7 +103,7 @@ operations:
         billables:      { type: array,  itemsRef: Billable, description: "Copy from BillableAcknowledgmentNeededException to retry." }
     responses:
       "201": { description: "Domain registered synchronously." }
-      "202": { description: "{ processId } \u2014 async; poll /v2/processes/{id}." }
+      "202": { description: "{ processId } - async; poll /v2/processes/{id}." }
     errors: [InvalidParameter, BillableAcknowledgmentNeededException, AuthorizationFailed]
     examples:
       - name: minimal
@@ -215,7 +215,7 @@ operations:
         keyData:          { type: array,   itemsRef: KeyData }
         billables:        { type: array,   itemsRef: Billable }
     responses:
-      "202": { description: "{ processId } \u2014 transfer process may remain PENDING for days." }
+      "202": { description: "{ processId } - transfer process may remain PENDING for days." }
     errors: [InvalidParameter, ObjectExists, AuthorizationFailed, BillableAcknowledgmentNeededException]
     gotchas:
       - "Some TLDs require out-of-band trade forms; see docs/api/domains/transfer."

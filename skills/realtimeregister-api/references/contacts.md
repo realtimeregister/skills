@@ -43,7 +43,7 @@ Retrieve a single contact.
 
 **Responses**
 
-- `200` — Full Contact object.
+- `200` - Full Contact object.
 
 **Errors:** `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -75,7 +75,7 @@ List contacts for a customer.
 
 **Responses**
 
-- `200` — Paginated envelope of Contact objects.
+- `200` - Paginated envelope of Contact objects.
 
 **Errors:** `InvalidParameter`
 
@@ -121,7 +121,7 @@ Create a new contact under the given customer.
 
 **Responses**
 
-- `201` — Contact created.
+- `201` - Contact created.
 
 **Errors:** `InvalidParameter`, `ObjectExists`, `AuthorizationFailed`
 
@@ -171,7 +171,7 @@ Update mutable contact fields. Omitted fields are preserved.
 
 **Responses**
 
-- `200` — Contact updated.
+- `200` - Contact updated.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -205,7 +205,7 @@ Submit pre-validation records for a contact.
 
 **Responses**
 
-- `200` — Contact validation recorded.
+- `200` - Contact validation recorded.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -239,7 +239,7 @@ Split a shared contact into a new handle to avoid cross-brand mutation side effe
 
 **Responses**
 
-- `201` — New contact created with the split identity.
+- `201` - New contact created with the split identity.
 
 **Errors:** `InvalidParameter`, `ObjectExists`
 
@@ -262,7 +262,7 @@ Delete a contact.
 
 **Responses**
 
-- `204` — Contact deleted.
+- `204` - Contact deleted.
 
 **Errors:** `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -297,7 +297,7 @@ Add TLD-specific contact properties for a given registry (e.g. `nl-legalForm`).
 
 **Responses**
 
-- `200` — Properties added.
+- `200` - Properties added.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -327,7 +327,7 @@ Replace existing TLD-specific contact properties for a given registry.
 
 **Responses**
 
-- `200` — Properties updated.
+- `200` - Properties updated.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -355,7 +355,7 @@ Lookup a single country by ISO 3166-1 alpha-2 code.
 
 **Responses**
 
-- `200` — Country object (code, name, flags).
+- `200` - Country object (code, name, flags).
 
 **Errors:** `ObjectDoesNotExist`
 
@@ -371,6 +371,6 @@ List all known countries.
 
 **Responses**
 
-- `200` — Paginated envelope of Country objects.
+- `200` - Paginated envelope of Country objects.
 
 

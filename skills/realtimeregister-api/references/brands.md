@@ -43,7 +43,7 @@ Retrieve a brand.
 
 **Responses**
 
-- `200` — Brand object with contact, mail, and WHOIS settings.
+- `200` - Brand object with contact, mail, and WHOIS settings.
 
 **Errors:** `ObjectDoesNotExist`
 
@@ -75,7 +75,7 @@ List brands for a customer.
 
 **Responses**
 
-- `200` — Paginated envelope of Brand objects.
+- `200` - Paginated envelope of Brand objects.
 
 **Errors:** `InvalidParameter`
 
@@ -124,7 +124,7 @@ Create a brand under a customer.
 
 **Responses**
 
-- `201` — Brand created.
+- `201` - Brand created.
 
 **Errors:** `InvalidParameter`, `ObjectExists`
 
@@ -173,7 +173,7 @@ Update a brand. Fields accept an empty string to clear where noted.
 
 **Responses**
 
-- `200` — Brand updated.
+- `200` - Brand updated.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -196,7 +196,7 @@ Delete a brand.
 
 **Responses**
 
-- `204` — Brand deleted.
+- `204` - Brand deleted.
 
 **Errors:** `ObjectDoesNotExist`, `InvalidParameter`
 
@@ -231,7 +231,7 @@ Retrieve a brand-specific notification/mail template override.
 
 **Responses**
 
-- `200` — Template object with `subject`, `text`, `html`, `locale`.
+- `200` - Template object with `subject`, `text`, `html`, `locale`.
 
 **Errors:** `ObjectDoesNotExist`
 
@@ -264,7 +264,7 @@ List configured template overrides for a brand.
 
 **Responses**
 
-- `200` — Paginated envelope of Template objects.
+- `200` - Paginated envelope of Template objects.
 
 **Errors:** `InvalidParameter`
 
@@ -296,7 +296,7 @@ Create or update a brand template override. Omit a field to inherit the platform
 
 **Responses**
 
-- `200` — Override saved.
+- `200` - Override saved.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -331,13 +331,13 @@ Render a template with sample data to preview the rendered subject/body.
 
 **Responses**
 
-- `200` — Rendered `{ subject, text, html }` preview.
+- `200` - Rendered `{ subject, text, html }` preview.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
 **Gotchas**
 
-- GET, not POST; a GET has no request body. The live docs page for this operation has no `locale` field at all (query or body) — the previously spec'd required `locale` body field does not exist on the live page and has been dropped rather than moved to a query param.
+- GET, not POST; a GET has no request body. The live docs page for this operation has no `locale` field at all (query or body) - the previously spec'd required `locale` body field does not exist on the live page and has been dropped rather than moved to a query param.
 
 
 ### `listBrandLocales`
@@ -351,6 +351,6 @@ List supported locales for brand templates.
 
 **Responses**
 
-- `200` — Array of locale identifiers (e.g. `en_US`, `nl_NL`, `de_DE`).
+- `200` - Array of locale identifiers (e.g. `en_US`, `nl_NL`, `de_DE`).
 
 

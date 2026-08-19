@@ -37,7 +37,7 @@ Retrieve the metadata envelope for a single TLD.
 
 **Responses**
 
-- `200` — { provider: string,
+- `200` - { provider: string,
   applicableFor: string[],   # other extensions that share this metadata (e.g. ["es","com.es"])
   metadata: {
     createDomainPeriods: integer[],        # months
@@ -109,7 +109,7 @@ Human-readable table of every TLD grouped by shared metadata. Not an HTTP endpoi
 
 **Responses**
 
-- `200` — HTML reference page listing extensions, provider, domain syntax,
+- `200` - HTML reference page listing extensions, provider, domain syntax,
 nameservers, hosts, registrant/contact rules, transfer requirements,
 DNSSEC, whois exposure and privacy posture for every supported TLD.
 Use `getTldInfo` programmatically; this page is for human exploration.

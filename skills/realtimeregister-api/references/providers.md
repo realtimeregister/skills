@@ -43,7 +43,7 @@ Retrieve provider metadata (supported TLDs, type).
 
 **Responses**
 
-- `200` — { name, providerType: "REGISTRY", tlds?: [{ name }] }
+- `200` - { name, providerType: "REGISTRY", tlds?: [{ name }] }
 
 
 **Errors:** `ObjectDoesNotExist`
@@ -76,7 +76,7 @@ Search / list providers.
 
 **Responses**
 
-- `200` — Paginated envelope of Provider objects.
+- `200` - Paginated envelope of Provider objects.
 
 **Errors:** `InvalidParameter`
 
@@ -104,7 +104,7 @@ Retrieve a single registry downtime window.
 
 **Responses**
 
-- `200` — { id, startDate, endDate, reason?, provider }
+- `200` - { id, startDate, endDate, reason?, provider }
 
 
 **Errors:** `ObjectDoesNotExist`
@@ -131,7 +131,7 @@ List downtime windows (past + scheduled).
 
 **Responses**
 
-- `200` — Paginated envelope of downtime records.
+- `200` - Paginated envelope of downtime records.
 
 **Errors:** `InvalidParameter`
 
@@ -160,7 +160,7 @@ Gateway-only. Inspect a registry-account configuration.
 
 **Responses**
 
-- `200` — RegistryAccount object (transport + masked credentials).
+- `200` - RegistryAccount object (transport + masked credentials).
 
 **Errors:** `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -190,7 +190,7 @@ Gateway-only. List registry accounts.
 
 **Responses**
 
-- `200` — Paginated envelope of RegistryAccount objects.
+- `200` - Paginated envelope of RegistryAccount objects.
 
 **Errors:** `InvalidParameter`, `AuthorizationFailed`
 
@@ -212,7 +212,7 @@ DEPRECATED. Legacy provider info endpoint; use `getProvider` + `getTldInfo`.
 
 **Responses**
 
-- `200` — Legacy provider info envelope.
+- `200` - Legacy provider info envelope.
 
 **Errors:** `ObjectDoesNotExist`
 

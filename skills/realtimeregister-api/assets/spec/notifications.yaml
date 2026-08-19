@@ -56,7 +56,7 @@ operations:
     pathParams:
       - { name: customer, type: string, required: true }
     responses:
-      "200": { description: "`{ count, notification }` \u2014 `count` is total unacknowledged; `notification` is the next one (same shape as getNotification) or omitted when the queue is empty." }
+      "200": { description: "`{ count, notification }` - `count` is total unacknowledged; `notification` is the next one (same shape as getNotification) or omitted when the queue is empty." }
     errors: []
     gotchas:
       - "Acknowledge the returned notification via ackNotification to advance the queue; otherwise subsequent polls return the same item."
@@ -93,4 +93,4 @@ operations:
       - "Payload is identical to getNotification but omits `acknowledgeDate`."
       - "Authentication: HMAC-SHA256 of the raw body using the shared key (Base64 encoded) is sent in the `Signature` header. Basic-auth credentials configured in the portal are also supported."
       - "Retries: up to 5 attempts at 10s / 30s / 2m / 5m / 15m. After the last failure an email alert is sent and the global queue stalls until delivery succeeds."
-      - "The event queue is global per user \u2014 a failing webhook blocks delivery of unrelated notifications."
+      - "The event queue is global per user - a failing webhook blocks delivery of unrelated notifications."

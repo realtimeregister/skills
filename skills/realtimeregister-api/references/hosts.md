@@ -41,7 +41,7 @@ Retrieve a single host and its address records.
 
 **Responses**
 
-- `200` — Host object with `addresses` array.
+- `200` - Host object with `addresses` array.
 
 **Errors:** `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -67,7 +67,7 @@ List hosts owned by the authenticated customer.
 
 **Responses**
 
-- `200` — Paginated envelope.
+- `200` - Paginated envelope.
 
 **Errors:** `InvalidParameter`, `AuthenticationFailed`
 
@@ -99,7 +99,7 @@ Create a new host with one or more glue IP addresses.
 
 **Responses**
 
-- `201` — Host created.
+- `201` - Host created.
 
 **Errors:** `InvalidParameter`, `ObjectExists`
 
@@ -154,7 +154,7 @@ Replace the address set for an existing host.
 
 **Responses**
 
-- `200` — Host updated.
+- `200` - Host updated.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -180,7 +180,7 @@ Delete a host.
 
 **Responses**
 
-- `204` — Host deleted.
+- `204` - Host deleted.
 
 **Errors:** `ObjectDoesNotExist`, `AuthorizationFailed`
 

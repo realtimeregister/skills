@@ -42,7 +42,7 @@ Retrieve a single notification.
 
 **Responses**
 
-- `200` — Notification object with `type`, `data`, `createdDate`, optional `acknowledgeDate`.
+- `200` - Notification object with `type`, `data`, `createdDate`, optional `acknowledgeDate`.
 
 **Errors:** `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -74,7 +74,7 @@ List notifications for the customer.
 
 **Responses**
 
-- `200` — Paginated envelope.
+- `200` - Paginated envelope.
 
 **Errors:** `InvalidParameter`
 
@@ -96,7 +96,7 @@ Poll for the next unacknowledged notification.
 
 **Responses**
 
-- `200` — `{ count, notification }` — `count` is total unacknowledged; `notification` is the next one (same shape as getNotification) or omitted when the queue is empty.
+- `200` - `{ count, notification }` - `count` is total unacknowledged; `notification` is the next one (same shape as getNotification) or omitted when the queue is empty.
 
 **Gotchas**
 
@@ -121,7 +121,7 @@ Acknowledge a notification.
 
 **Responses**
 
-- `200` — Notification acknowledged.
+- `200` - Notification acknowledged.
 
 **Errors:** `ObjectDoesNotExist`
 
@@ -137,7 +137,7 @@ Documentation-only. Describes the POST that Realtime Register delivers to a cust
 
 **Responses**
 
-- `200` — Any 200/201/202 response marks the delivery as successful and dequeues the notification.
+- `200` - Any 200/201/202 response marks the delivery as successful and dequeues the notification.
 
 **Gotchas**
 
@@ -145,6 +145,6 @@ Documentation-only. Describes the POST that Realtime Register delivers to a cust
 - Payload is identical to getNotification but omits `acknowledgeDate`.
 - Authentication: HMAC-SHA256 of the raw body using the shared key (Base64 encoded) is sent in the `Signature` header. Basic-auth credentials configured in the portal are also supported.
 - Retries: up to 5 attempts at 10s / 30s / 2m / 5m / 15m. After the last failure an email alert is sent and the global queue stalls until delivery succeeds.
-- The event queue is global per user — a failing webhook blocks delivery of unrelated notifications.
+- The event queue is global per user - a failing webhook blocks delivery of unrelated notifications.
 
 

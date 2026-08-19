@@ -43,7 +43,7 @@ Retrieve a single ACME subscription.
 
 **Responses**
 
-- `200` — { id, product, domainNames?, organization?, address?, city?, state?,
+- `200` - { id, product, domainNames?, organization?, address?, city?, state?,
   postalCode?, country?, createdDate, updatedDate?, expiryDate,
   period, directoryUrl, autoRenew, certValidity?, orgValidUntil?,
   status: AcmeStatus,
@@ -80,7 +80,7 @@ List ACME subscriptions.
 
 **Responses**
 
-- `200` — Paginated envelope of ACME subscription objects.
+- `200` - Paginated envelope of ACME subscription objects.
 
 **Errors:** `InvalidParameter`
 
@@ -120,9 +120,9 @@ Create an ACME subscription; returns directoryUrl + account credentials (once).
 
 **Responses**
 
-- `201` — { id, directoryUrl, accountKey, hmacKey }
+- `201` - { id, directoryUrl, accountKey, hmacKey }
 `accountKey` and `hmacKey` are the External Account Binding credentials
-for ACME. They are ONLY returned in this response \u2014 store them now.
+for ACME. They are ONLY returned in this response - store them now.
 
 
 **Errors:** `InvalidParameter`, `QuoteOnly`
@@ -172,7 +172,7 @@ Update subscription metadata (e.g. autoRenew, approver, domainNames).
 
 **Responses**
 
-- `200` — Subscription updated.
+- `200` - Subscription updated.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -206,7 +206,7 @@ Extend subscription validity by another `period` months.
 
 **Responses**
 
-- `200` — Subscription renewed; new expiryDate returned.
+- `200` - Subscription renewed; new expiryDate returned.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -228,7 +228,7 @@ Delete an ACME subscription.
 
 **Responses**
 
-- `204` — Subscription deleted.
+- `204` - Subscription deleted.
 
 **Errors:** `ObjectDoesNotExist`
 
@@ -250,7 +250,7 @@ Rotate the External Account Binding (accountKey + hmacKey). Invalidates the old 
 
 **Responses**
 
-- `200` — { accountKey, hmacKey } — shown once.
+- `200` - { accountKey, hmacKey } - shown once.
 
 **Errors:** `ObjectDoesNotExist`
 

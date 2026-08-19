@@ -115,7 +115,7 @@ operations:
         billables:    { type: array, itemsRef: Billable }
     responses:
       "201": { description: "Certificate order created; poll for issuance." }
-      "202": { description: "{ processId } \u2014 async issuance via SDK-level workflow." }
+      "202": { description: "{ processId } - async issuance via SDK-level workflow." }
     errors: [InvalidParameter, BillableAcknowledgmentNeededException]
     gotchas:
       - "`period` is MONTHS; industry-standard max is 13."
@@ -384,5 +384,5 @@ operations:
         product: { type: string, required: true, description: "The SSL product." }
         csr:     { type: string, required: true, description: "The Certificate Signing Request." }
     responses:
-      "200": { description: "`{ authKey }` \u2014 store securely; re-generating invalidates prior keys." }
+      "200": { description: "`{ authKey }` - store securely; re-generating invalidates prior keys." }
     errors: []

@@ -34,7 +34,7 @@ Check whether an IP is a known proxy/VPN/Tor exit.
 
 **Responses**
 
-- `200` — { proxy: boolean, categories: string[] }
+- `200` - { proxy: boolean, categories: string[] }
 
 **Errors:** `InvalidParameter`
 
@@ -68,7 +68,7 @@ ADAC WebSocket action. Perform an availability check and optional suggestion run
 
 **Responses**
 
-- `200` — WebSocket frame with availability + suggestion results.
+- `200` - WebSocket frame with availability + suggestion results.
 
 **Errors:** `InvalidParameter`
 
@@ -104,7 +104,7 @@ ADAC WebSocket action. Fetch the TLD categories configured for a given TLD set.
 
 **Responses**
 
-- `200` — WebSocket frame with the list of category IDs and labels.
+- `200` - WebSocket frame with the list of category IDs and labels.
 
 **Errors:** `InvalidParameter`
 
@@ -138,7 +138,7 @@ ADAC WebSocket action. Perform a plain availability check (no suggestions) for o
 
 **Responses**
 
-- `200` — WebSocket frame with per-domain availability status.
+- `200` - WebSocket frame with per-domain availability status.
 
 **Errors:** `InvalidParameter`
 
@@ -173,7 +173,7 @@ ADAC WebSocket action. Run only the configured suggestion engines (no availabili
 
 **Responses**
 
-- `200` — WebSocket frame with suggested domain names grouped by engine.
+- `200` - WebSocket frame with suggested domain names grouped by engine.
 
 **Errors:** `InvalidParameter`
 

@@ -40,7 +40,7 @@ List domains owned by the authenticated customer.
 
 **Responses**
 
-- `200` — Paginated envelope with an `entities` array of Domain objects.
+- `200` - Paginated envelope with an `entities` array of Domain objects.
 
 **Errors:** `InvalidParameter`, `AuthenticationFailed`
 
@@ -73,7 +73,7 @@ Fetch a single domain and all sub-objects.
 
 **Responses**
 
-- `200` — Full Domain object (contacts, nameservers, DNSSEC, status list).
+- `200` - Full Domain object (contacts, nameservers, DNSSEC, status list).
 
 **Errors:** `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -105,7 +105,7 @@ Availability and price check for a domain name.
 
 **Responses**
 
-- `200` — { "available": boolean, "premium": boolean, "reason": string, "price": Money, "renewPrice": Integer }
+- `200` - { "available": boolean, "premium": boolean, "reason": string, "price": Money, "renewPrice": Integer }
 
 **Errors:** `InvalidParameter`
 
@@ -157,8 +157,8 @@ Register a new domain.
 
 **Responses**
 
-- `201` — Domain registered synchronously.
-- `202` — { processId } — async; poll /v2/processes/{id}.
+- `201` - Domain registered synchronously.
+- `202` - { processId } - async; poll /v2/processes/{id}.
 
 **Errors:** `InvalidParameter`, `BillableAcknowledgmentNeededException`, `AuthorizationFailed`
 
@@ -242,7 +242,7 @@ Update contacts, nameservers, DNSSEC, status flags, autoRenew, or privacy protec
 
 **Responses**
 
-- `202` — { processId }
+- `202` - { processId }
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`, `BillableAcknowledgmentNeededException`, `AuthorizationFailed`
 
@@ -283,7 +283,7 @@ Renew a domain for N additional months.
 
 **Responses**
 
-- `202` — { processId }
+- `202` - { processId }
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`, `BillableAcknowledgmentNeededException`
 
@@ -332,7 +332,7 @@ Initiate an inbound transfer from another registrar.
 
 **Responses**
 
-- `202` — { processId } — transfer process may remain PENDING for days.
+- `202` - { processId } - transfer process may remain PENDING for days.
 
 **Errors:** `InvalidParameter`, `ObjectExists`, `AuthorizationFailed`, `BillableAcknowledgmentNeededException`
 
@@ -365,7 +365,7 @@ Push a domain to another customer within RTR.
 
 **Responses**
 
-- `202` — { processId }
+- `202` - { processId }
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -392,7 +392,7 @@ Inspect the status of an in-flight transfer by process id.
 
 **Responses**
 
-- `200` — Transfer status, type (IN/OUT), requested/completed timestamps, FOA state.
+- `200` - Transfer status, type (IN/OUT), requested/completed timestamps, FOA state.
 
 **Errors:** `ObjectDoesNotExist`
 
@@ -431,7 +431,7 @@ Restore a domain in redemption grace.
 
 **Responses**
 
-- `202` — { processId }
+- `202` - { processId }
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`, `BillableAcknowledgmentNeededException`
 
@@ -457,7 +457,7 @@ Delete a domain; enters the registry redemption grace period.
 
 **Responses**
 
-- `202` — { processId }
+- `202` - { processId }
 
 **Errors:** `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -485,7 +485,7 @@ Gateway-only. Approve or reject an outbound transfer request.
 
 **Responses**
 
-- `202` — { processId }
+- `202` - { processId }
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -520,7 +520,7 @@ Gateway-only read of a domain across all customers.
 
 **Responses**
 
-- `200` — Extended Domain object including internal flags.
+- `200` - Extended Domain object including internal flags.
 
 **Errors:** `ObjectDoesNotExist`, `AuthorizationFailed`
 

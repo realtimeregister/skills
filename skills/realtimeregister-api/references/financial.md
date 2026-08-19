@@ -43,7 +43,7 @@ Retrieve a single financial transaction.
 
 **Responses**
 
-- `200` — { id, customer, date, amount, currency,
+- `200` - { id, customer, date, amount, currency,
   processId, processType, processIdentifier, processAction,
   chargesPerAccount?: { <currency>: <cents> },
   billables?: [{ product, action, quantity, amount, providerName }] }
@@ -85,7 +85,7 @@ List financial transactions.
 
 **Responses**
 
-- `200` — Paginated envelope of transaction objects.
+- `200` - Paginated envelope of transaction objects.
 
 **Errors:** `InvalidParameter`
 
@@ -118,7 +118,7 @@ Retrieve the exchange-rate set for a specific date (defaults to latest).
 
 **Responses**
 
-- `200` — { date, rates: { <currencyFrom>: { <currencyTo>: <rate> } } }
+- `200` - { date, rates: { <currencyFrom>: { <currencyTo>: <rate> } } }
 Rates are decimals (e.g. 1.0823 for EUR\u2192USD). Only EUR and USD
 are quoted today.
 
@@ -151,7 +151,7 @@ List historical exchange rates across a date range.
 
 **Responses**
 
-- `200` — Paginated envelope of daily exchange-rate records.
+- `200` - Paginated envelope of daily exchange-rate records.
 
 **Errors:** `InvalidParameter`
 

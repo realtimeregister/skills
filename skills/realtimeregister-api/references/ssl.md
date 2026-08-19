@@ -42,7 +42,7 @@ Retrieve a certificate order and its current state.
 
 **Responses**
 
-- `200` — Certificate object with `status`, `commonName`, `sans`, `dcv`, `validFrom`, `validUntil`.
+- `200` - Certificate object with `status`, `commonName`, `sans`, `dcv`, `validFrom`, `validUntil`.
 
 **Errors:** `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -68,7 +68,7 @@ List certificate orders.
 
 **Responses**
 
-- `200` — Paginated envelope of Certificate objects.
+- `200` - Paginated envelope of Certificate objects.
 
 **Errors:** `InvalidParameter`
 
@@ -96,7 +96,7 @@ Retrieve SSL product metadata (validation type, SAN limits, warranty).
 
 **Responses**
 
-- `200` — Product object with `brand`, `validationType`, `maxSans`, `periods`.
+- `200` - Product object with `brand`, `validationType`, `maxSans`, `periods`.
 
 **Errors:** `ObjectDoesNotExist`
 
@@ -121,7 +121,7 @@ List SSL products available to the authenticated customer.
 
 **Responses**
 
-- `200` — Paginated envelope of Product objects.
+- `200` - Paginated envelope of Product objects.
 
 **Errors:** `InvalidParameter`
 
@@ -170,8 +170,8 @@ Place a new certificate order.
 
 **Responses**
 
-- `201` — Certificate order created; poll for issuance.
-- `202` — { processId } — async issuance via SDK-level workflow.
+- `201` - Certificate order created; poll for issuance.
+- `202` - { processId } - async issuance via SDK-level workflow.
 
 **Errors:** `InvalidParameter`, `BillableAcknowledgmentNeededException`
 
@@ -226,7 +226,7 @@ Reissue a certificate with a new CSR or SAN set.
 
 **Responses**
 
-- `202` — { processId }
+- `202` - { processId }
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -281,7 +281,7 @@ Renew an existing certificate.
 
 **Responses**
 
-- `202` — { processId }
+- `202` - { processId }
 
 **Errors:** `InvalidParameter`, `BillableAcknowledgmentNeededException`
 
@@ -309,7 +309,7 @@ Revoke a certificate.
 
 **Responses**
 
-- `202` — { processId }
+- `202` - { processId }
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -341,7 +341,7 @@ Re-send the DCV email or re-check a DNS/HTTP DCV token for a pending certificate
 
 **Responses**
 
-- `200` — DCV request re-queued; response may include a `warning` string on partial success.
+- `200` - DCV request re-queued; response may include a `warning` string on partial success.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -373,7 +373,7 @@ Download the issued certificate in PEM or PKCS#7 format.
 
 **Responses**
 
-- `200` — Certificate chain.
+- `200` - Certificate chain.
 
 **Errors:** `ObjectDoesNotExist`, `InvalidParameter`
 
@@ -405,7 +405,7 @@ Schedule an EV validation call with the CA for a pending certificate request.
 
 **Responses**
 
-- `200` — Validation call scheduled.
+- `200` - Validation call scheduled.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -433,7 +433,7 @@ List the approver email addresses accepted for EMAIL DCV on a given domain.
 
 **Responses**
 
-- `200` — Array of candidate email addresses (WHOIS + constructed).
+- `200` - Array of candidate email addresses (WHOIS + constructed).
 
 **Errors:** `InvalidParameter`
 
@@ -462,7 +462,7 @@ Send (or re-send) the CA Subscriber Agreement email to the approver for a pendin
 
 **Responses**
 
-- `200` — Subscriber-agreement email dispatched.
+- `200` - Subscriber-agreement email dispatched.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -494,7 +494,7 @@ Attach a free-form note to a certificate order. DEPRECATED; use a ticketing syst
 
 **Responses**
 
-- `200` — Note stored.
+- `200` - Note stored.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -526,7 +526,7 @@ Import an externally issued certificate so it can be tracked and renewed through
 
 **Responses**
 
-- `201` — Certificate imported; `id` returned for subsequent renew/revoke operations.
+- `201` - Certificate imported; `id` returned for subsequent renew/revoke operations.
 
 **Errors:** `InvalidParameter`
 
@@ -548,7 +548,7 @@ Decode a PEM-encoded CSR and return its parsed fields (commonName, SANs, organiz
 
 **Responses**
 
-- `200` — Decoded CSR object.
+- `200` - Decoded CSR object.
 
 **Errors:** `InvalidParameter`
 
@@ -575,6 +575,6 @@ Generate a new authKey used for ACME external-account-binding (EAB) or programma
 
 **Responses**
 
-- `200` — `{ authKey }` — store securely; re-generating invalidates prior keys.
+- `200` - `{ authKey }` - store securely; re-generating invalidates prior keys.
 
 

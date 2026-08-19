@@ -43,7 +43,7 @@ Retrieve the effective pricelist for a customer, with upcoming price changes and
 
 **Responses**
 
-- `200` — { prices: {product, action, currency, price}[],
+- `200` - { prices: {product, action, currency, price}[],
   priceChanges: {product, action, currency, price, fromDate}[],
   promos: {product, action, currency, price, fromDate, endDate, active}[] }
 Prices and promo prices are integers in the smallest currency unit (cents).
@@ -75,7 +75,7 @@ Retrieve available credits for a customer, split per currency account.
 
 **Responses**
 
-- `200` — { accounts: {currency, balance, reservation, locked}[] } where balance is
+- `200` - { accounts: {currency, balance, reservation, locked}[] } where balance is
 spendable credits, reservation is funds held for in-process transactions,
 and locked is pending authorized-person approval.
 

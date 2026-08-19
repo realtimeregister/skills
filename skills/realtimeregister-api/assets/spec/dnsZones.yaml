@@ -166,7 +166,7 @@ operations:
     pathParams:
       - { name: zoneId, type: integer, required: true }
     responses:
-      "202": { description: "{ processId } \u2014 rollover is staged." }
+      "202": { description: "{ processId } - rollover is staged." }
     errors: [ObjectDoesNotExist, InvalidParameter]
     gotchas:
       - "Only permitted once the previous rollover has completed."

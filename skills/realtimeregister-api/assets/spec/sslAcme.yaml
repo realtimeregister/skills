@@ -92,7 +92,7 @@ operations:
         description: |
           { id, directoryUrl, accountKey, hmacKey }
           `accountKey` and `hmacKey` are the External Account Binding credentials
-          for ACME. They are ONLY returned in this response \u2014 store them now.
+          for ACME. They are ONLY returned in this response - store them now.
     errors: [InvalidParameter, QuoteOnly]
     gotchas:
       - "`period` is in MONTHS; `certValidity` is in DAYS. Do not confuse them."
@@ -173,7 +173,7 @@ operations:
     pathParams:
       - { name: acmeSubscriptionId, type: integer, required: true }
     responses:
-      "200": { description: "{ accountKey, hmacKey } \u2014 shown once." }
+      "200": { description: "{ accountKey, hmacKey } - shown once." }
     errors: [ObjectDoesNotExist]
     gotchas:
       - "Old ACME account credentials are revoked immediately; update your ACME client before rotating."

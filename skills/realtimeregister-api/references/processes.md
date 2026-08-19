@@ -41,7 +41,7 @@ Retrieve a single process and its current status.
 
 **Responses**
 
-- `200` — Process object with `status`, `type`, `createdDate`, `result`, and `errors`.
+- `200` - Process object with `status`, `type`, `createdDate`, `result`, and `errors`.
 
 **Errors:** `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -67,7 +67,7 @@ Retrieve process-type specific info (e.g. certificate request validation state).
 
 **Responses**
 
-- `200` — Type-specific info response. Currently defined for `certificate` and `acme` processes; includes `requiresAttention`, `validations`, and (non-ACME) `notes`/`dcv` lists.
+- `200` - Type-specific info response. Currently defined for `certificate` and `acme` processes; includes `requiresAttention`, `validations`, and (non-ACME) `notes`/`dcv` lists.
 
 **Errors:** `ObjectDoesNotExist`, `InvalidParameter`
 
@@ -97,7 +97,7 @@ List recent processes scoped to the authenticated customer.
 
 **Responses**
 
-- `200` — Paginated envelope of Process objects.
+- `200` - Paginated envelope of Process objects.
 
 **Errors:** `InvalidParameter`
 
@@ -119,7 +119,7 @@ Resend the request a process is pending on (e.g. a FOA mail to a registrant).
 
 **Responses**
 
-- `200` — Resend accepted.
+- `200` - Resend accepted.
 
 **Errors:** `ObjectDoesNotExist`, `InvalidParameter`
 
@@ -146,7 +146,7 @@ Request cancellation of a PENDING or RUNNING process.
 
 **Responses**
 
-- `200` — Cancellation accepted; poll getProcess to confirm final status.
+- `200` - Cancellation accepted; poll getProcess to confirm final status.
 
 **Errors:** `ObjectDoesNotExist`, `InvalidParameter`
 

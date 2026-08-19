@@ -222,7 +222,7 @@ operations:
       "200": { description: "Rendered `{ subject, text, html }` preview." }
     errors: [InvalidParameter, ObjectDoesNotExist]
     gotchas:
-      - "GET, not POST; a GET has no request body. The live docs page for this operation has no `locale` field at all (query or body) — the previously spec'd required `locale` body field does not exist on the live page and has been dropped rather than moved to a query param."
+      - "GET, not POST; a GET has no request body. The live docs page for this operation has no `locale` field at all (query or body) - the previously spec'd required `locale` body field does not exist on the live page and has been dropped rather than moved to a query param."
 
   - operationId: listBrandLocales
     verified: docs

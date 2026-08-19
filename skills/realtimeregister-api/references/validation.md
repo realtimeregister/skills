@@ -41,7 +41,7 @@ Retrieve the schema for a validation category.
 
 **Responses**
 
-- `200` — Schema describing required validation fields and accepted evidence types.
+- `200` - Schema describing required validation fields and accepted evidence types.
 
 **Errors:** `ObjectDoesNotExist`
 
@@ -67,7 +67,7 @@ List validation categories supported by the platform.
 
 **Responses**
 
-- `200` — Paginated envelope of ValidationCategory objects.
+- `200` - Paginated envelope of ValidationCategory objects.
 
 **Errors:** `InvalidParameter`
 

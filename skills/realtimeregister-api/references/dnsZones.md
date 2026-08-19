@@ -42,7 +42,7 @@ Retrieve a single DNS zone and its records.
 
 **Responses**
 
-- `200` — Zone with `records`, SOA metadata, and DNSSEC state.
+- `200` - Zone with `records`, SOA metadata, and DNSSEC state.
 
 **Errors:** `ObjectDoesNotExist`, `AuthorizationFailed`
 
@@ -72,7 +72,7 @@ List managed DNS zones.
 
 **Responses**
 
-- `200` — Paginated envelope.
+- `200` - Paginated envelope.
 
 **Errors:** `InvalidParameter`
 
@@ -111,7 +111,7 @@ Create an unmanaged or template-linked DNS zone.
 
 **Responses**
 
-- `201` — Zone created; response includes `id`.
+- `201` - Zone created; response includes `id`.
 
 **Errors:** `InvalidParameter`, `DnsConfigurationException`, `ObjectExists`, `BillableAcknowledgmentNeededException`
 
@@ -155,7 +155,7 @@ Replace zone metadata and/or records.
 
 **Responses**
 
-- `200` — Zone updated.
+- `200` - Zone updated.
 
 **Errors:** `InvalidParameter`, `DnsConfigurationException`, `ObjectDoesNotExist`
 
@@ -177,7 +177,7 @@ Delete a managed DNS zone.
 
 **Responses**
 
-- `204` — Zone deleted.
+- `204` - Zone deleted.
 
 **Errors:** `ObjectDoesNotExist`
 
@@ -203,7 +203,7 @@ Query traffic counters for a managed zone.
 
 **Responses**
 
-- `200` — Counts per record type and response code.
+- `200` - Counts per record type and response code.
 
 **Errors:** `InvalidParameter`, `ObjectDoesNotExist`
 
@@ -225,7 +225,7 @@ Re-fetch zone contents from the configured master (secondary zones).
 
 **Responses**
 
-- `200` — Current zone contents after retrieval.
+- `200` - Current zone contents after retrieval.
 
 **Errors:** `ObjectDoesNotExist`
 
@@ -247,7 +247,7 @@ Trigger a DNSSEC key rollover for the zone.
 
 **Responses**
 
-- `202` — { processId } — rollover is staged.
+- `202` - { processId } - rollover is staged.
 
 **Errors:** `ObjectDoesNotExist`, `InvalidParameter`
 
@@ -273,7 +273,7 @@ Acknowledge that the registry DS record matches the current DNSKEY.
 
 **Responses**
 
-- `200` — Rollover advanced to the next stage.
+- `200` - Rollover advanced to the next stage.
 
 **Errors:** `ObjectDoesNotExist`
 

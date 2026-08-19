@@ -43,7 +43,7 @@ Retrieve a DNS template.
 
 **Responses**
 
-- `200` — Template object with `records`, SOA metadata, and DNSSEC flag.
+- `200` - Template object with `records`, SOA metadata, and DNSSEC flag.
 
 **Errors:** `ObjectDoesNotExist`
 
@@ -75,7 +75,7 @@ List DNS templates for the authenticated customer.
 
 **Responses**
 
-- `200` — Paginated envelope.
+- `200` - Paginated envelope.
 
 **Errors:** `InvalidParameter`
 
@@ -113,7 +113,7 @@ Create a DNS template.
 
 **Responses**
 
-- `201` — Template created.
+- `201` - Template created.
 
 **Errors:** `InvalidParameter`, `DnsConfigurationException`, `ObjectExists`
 
@@ -147,7 +147,7 @@ Update template metadata and/or records. All SOA fields remain required on updat
 
 **Responses**
 
-- `200` — Template updated.
+- `200` - Template updated.
 
 **Errors:** `InvalidParameter`, `DnsConfigurationException`, `ObjectDoesNotExist`
 
@@ -175,7 +175,7 @@ Delete a DNS template.
 
 **Responses**
 
-- `204` — Template deleted.
+- `204` - Template deleted.
 
 **Errors:** `ObjectDoesNotExist`, `InvalidParameter`
 
