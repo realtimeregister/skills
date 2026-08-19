@@ -1,0 +1,91 @@
+name: Fidelity drift
+
+on:
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: fidelity-drift
+  cancel-in-progress: false
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Check live docs and auto-fix safe drift
+        id: drift
+        continue-on-error: true
+        run: |
+          set +e
+          bun scripts/diff-live.ts --fix > fidelity-drift-report.json
+          EXIT_CODE=$?
+          bun -e "const r=await import('./fidelity-drift-report.json'); const report=r.default; const hasDrift=(report.drifts||[]).length>0; const hasFixes=(report.fixedFiles||[]).some(f => (f.operationIds||[]).length > 0); console.log('has-drift=' + hasDrift); console.log('has-fixes=' + hasFixes)" >> "$GITHUB_OUTPUT"
+          exit $EXIT_CODE
+
+      - name: Regenerate references and fingerprint lock for safe fixes
+        if: steps.drift.outputs.has-fixes == 'true'
+        run: |
+          bun scripts/generate-refs.ts
+          bun scripts/audit-refs.ts --update-lock
+
+      - name: Verify auto-fixed output
+        if: steps.drift.outputs.has-fixes == 'true'
+        run: bun run verify
+
+      - name: Open or update verification PR
+        if: always() && steps.drift.outputs.has-drift == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_BRANCH: ${{ github.event.repository.default_branch }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          BRANCH="auto/fidelity-drift"
+          git checkout -B "$BRANCH"
+          git add skills/realtimeregister-api/assets/spec skills/realtimeregister-api/references fidelity-drift-report.json
+
+          if git diff --cached --quiet; then
+            echo "No commit needed even though drift was reported."
+            exit 0
+          fi
+
+          git commit -m "chore: update fidelity drift verification"
+          git push -f origin "$BRANCH"
+
+          {
+            echo "The weekly Realtime Register live-docs check detected fidelity drift."
+            echo
+            echo "- Safe method/path drift, if present, was auto-applied."
+            echo "- Field-count, fetch, and parser drift still require human verification."
+            echo "- Workflow run: $RUN_URL"
+            echo
+            echo '```json'
+            bun -e "const r=await import('./fidelity-drift-report.json'); console.log(JSON.stringify(r.default, null, 2).slice(0, 12000))"
+            echo '```'
+          } > pr-body.md
+
+          gh label create fidelity-drift --description "Live documentation drift detected" --color D93F0B || true
+
+          EXISTING=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh pr edit "$EXISTING" --title "Fidelity drift verification" --body-file pr-body.md --add-label fidelity-drift
+          else
+            gh pr create --title "Fidelity drift verification" --body-file pr-body.md --label fidelity-drift --base "$BASE_BRANCH" --head "$BRANCH"
+          fi

@@ -1,0 +1,46 @@
+# Validation category. Contact pre-validation records used to satisfy TLD
+# identity checks (e.g. trademark validation for .BRAND, ID upload for .ES).
+
+category: validation
+label: Validation
+description: |
+  Pre-validation artifacts are linked to contact handles and re-used across
+  domain registrations to avoid repeated proof submissions.
+
+operations:
+
+  - operationId: getValidationCategory
+    verified: docs
+    method: GET
+    path: /v2/validation/categories/{categoryName}
+    docUrl: /validation/get
+    async: false
+    authScope: customer
+    summary: Retrieve the schema for a validation category.
+    pathParams:
+      - { name: categoryName, type: string, required: true, description: "Validation category identifier (e.g. `trademark`)." }
+    queryParams:
+      - { name: fields, type: string, description: "Comma-separated field selector." }
+    responses:
+      "200": { description: "Schema describing required validation fields and accepted evidence types." }
+    errors: [ObjectDoesNotExist]
+
+  - operationId: listValidationCategories
+    verified: docs
+    method: GET
+    path: /v2/validation/categories
+    docUrl: /validation/list
+    async: false
+    authScope: customer
+    summary: List validation categories supported by the platform.
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string }
+      - { name: limit,  type: integer, default: 100, maximum: 1000 }
+      - { name: offset, type: integer, default: 0 }
+      - { name: order,  type: string }
+    responses:
+      "200": { description: "Paginated envelope of ValidationCategory objects." }
+    errors: [InvalidParameter]
+    gotchas:
+      - "Required validation categories for a given TLD are listed in /v2/tlds/{name}/info under `validationCategories`."

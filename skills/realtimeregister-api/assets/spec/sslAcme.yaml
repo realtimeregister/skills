@@ -1,0 +1,179 @@
+# SSL (ACME) category. Subscription-based ACME CA access. Verified against
+# https://dm.realtimeregister.com/docs/api/ssl/acme/*.
+# An ACME subscription is a DV/OV certificate commitment: the issuing cert
+# chain, domain coverage, and validity window are fixed by the subscription;
+# the ACME protocol is spoken against the returned `directoryUrl`.
+
+category: sslAcme
+label: SSL (ACME)
+description: |
+  ACME subscriptions wrap the RTR-hosted ACME CA. Create a subscription to
+  obtain ACME credentials (accountKey + hmacKey + directoryUrl), then drive the
+  standard ACME client against `directoryUrl` for order/challenge/finalize.
+  Subscriptions are billed up front via `period` (months).
+
+operations:
+
+  - operationId: getAcmeSubscription
+    verified: docs
+    method: GET
+    path: /v2/ssl/acme/{acmeSubscriptionId}
+    docUrl: /ssl/acme/get
+    async: false
+    authScope: customer
+    summary: Retrieve a single ACME subscription.
+    pathParams:
+      - { name: acmeSubscriptionId, type: integer, required: true, description: "Subscription ID." }
+    queryParams:
+      - { name: fields, type: string }
+    responses:
+      "200":
+        description: |
+          { id, product, domainNames?, organization?, address?, city?, state?,
+            postalCode?, country?, createdDate, updatedDate?, expiryDate,
+            period, directoryUrl, autoRenew, certValidity?, orgValidUntil?,
+            status: AcmeStatus,
+            approver?: { firstName, lastName, jobTitle?, email, voice } }
+    errors: [ObjectDoesNotExist]
+    gotchas:
+      - "`status` enum: ACTIVE, SUSPENDED, REVOKED, PENDING_ORGANIZATION_VALIDATION."
+      - "`accountKey` and `hmacKey` are NOT returned by get; they are only shown at create/recreate."
+
+  - operationId: listAcmeSubscriptions
+    verified: docs
+    method: GET
+    path: /v2/ssl/acme
+    docUrl: /ssl/acme/list
+    async: false
+    authScope: customer
+    summary: List ACME subscriptions.
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string, description: "Filter expression (e.g. status:ACTIVE)." }
+      - { name: limit,  type: integer, default: 100, maximum: 1000 }
+      - { name: offset, type: integer, default: 0 }
+      - { name: order,  type: string }
+      - { name: export, type: boolean }
+    responses:
+      "200": { description: "Paginated envelope of ACME subscription objects." }
+    errors: [InvalidParameter]
+
+  - operationId: createAcmeSubscription
+    verified: docs
+    method: POST
+    path: /v2/ssl/acme
+    docUrl: /ssl/acme/create
+    async: false
+    authScope: customer
+    summary: Create an ACME subscription; returns directoryUrl + account credentials (once).
+    queryParams:
+      - { name: quote, type: boolean, description: "Validate and price without committing." }
+    requestBody:
+      contentType: application/json
+      fields:
+        customer:     { type: string,  required: true, minLength: 3, maxLength: 40,
+                        description: "Customer handle. Matches ^[a-zA-Z0-9\\-_@.]+$." }
+        product:      { type: string,  required: true, description: "SSL product identifier; see ssl/products/list." }
+        domainNames:  { type: array,   items: string,
+                        description: "FQDNs covered by the subscription (4\u2013255 chars each)." }
+        organization: { type: string,  maxLength: 64 }
+        country:      { type: string,  minLength: 2, maxLength: 2, description: "ISO 3166-1 alpha-2." }
+        state:        { type: string,  maxLength: 60 }
+        address:      { type: string,  maxLength: 60 }
+        postalCode:   { type: string,  maxLength: 10 }
+        city:         { type: string,  maxLength: 60 }
+        autoRenew:    { type: boolean, description: "Auto-renew subscription before expiry." }
+        period:       { type: integer, required: true, description: "Subscription validity in months." }
+        certValidity: { type: integer, minimum: 47, maximum: 200,
+                        description: "Per-cert validity in **days**; DigiCert products only." }
+        approver:     { type: object,  fieldsRef: Approver }
+    responses:
+      "201":
+        description: |
+          { id, directoryUrl, accountKey, hmacKey }
+          `accountKey` and `hmacKey` are the External Account Binding credentials
+          for ACME. They are ONLY returned in this response - store them now.
+    errors: [InvalidParameter, QuoteOnly]
+    gotchas:
+      - "`period` is in MONTHS; `certValidity` is in DAYS. Do not confuse them."
+      - "`accountKey`/`hmacKey` cannot be retrieved later. Use `recreateAcmeCredentials` if lost."
+      - "Field requirements (organization, address, etc.) vary by SSL product; check ssl/products/get."
+
+  - operationId: updateAcmeSubscription
+    verified: docs
+    method: POST
+    path: /v2/ssl/acme/{acmeSubscriptionId}/update
+    docUrl: /ssl/acme/update
+    async: false
+    authScope: customer
+    summary: Update subscription metadata (e.g. autoRenew, approver, domainNames).
+    pathParams:
+      - { name: acmeSubscriptionId, type: integer, required: true }
+    queryParams:
+      - { name: quote, type: boolean }
+    requestBody:
+      contentType: application/json
+      fields:
+        domainNames:  { type: array,   items: string, description: "List of domain names." }
+        organization: { type: string,  minLength: 1, maxLength: 64 }
+        country:      { type: string,  minLength: 2, maxLength: 2, enumRef: CountryCode }
+        state:        { type: string,  minLength: 1, maxLength: 60 }
+        address:      { type: string,  minLength: 1, maxLength: 60 }
+        postalCode:   { type: string,  minLength: 1, maxLength: 10 }
+        city:         { type: string,  minLength: 1, maxLength: 60 }
+        autoRenew:    { type: boolean, description: "Automatically renew the subscription." }
+        period:       { type: integer, description: "Validity period to use for auto-renewal of the subscription." }
+        approver:     { type: object,  fieldsRef: Approver }
+    responses:
+      "200": { description: "Subscription updated." }
+    errors: [InvalidParameter, ObjectDoesNotExist]
+
+  - operationId: renewAcmeSubscription
+    verified: docs
+    method: POST
+    path: /v2/ssl/acme/{acmeSubscriptionId}/renew
+    docUrl: /ssl/acme/renew
+    async: false
+    authScope: customer
+    summary: Extend subscription validity by another `period` months.
+    pathParams:
+      - { name: acmeSubscriptionId, type: integer, required: true }
+    queryParams:
+      - { name: quote, type: boolean }
+    requestBody:
+      contentType: application/json
+      fields:
+        period: { type: integer, required: true, description: "Additional validity in months." }
+    responses:
+      "200": { description: "Subscription renewed; new expiryDate returned." }
+    errors: [InvalidParameter, ObjectDoesNotExist]
+
+  - operationId: deleteAcmeSubscription
+    verified: docs
+    method: DELETE
+    path: /v2/ssl/acme/{acmeSubscriptionId}
+    docUrl: /ssl/acme/delete
+    async: false
+    authScope: customer
+    summary: Delete an ACME subscription.
+    pathParams:
+      - { name: acmeSubscriptionId, type: integer, required: true }
+    responses:
+      "204": { description: "Subscription deleted." }
+    errors: [ObjectDoesNotExist]
+
+  - operationId: recreateAcmeCredentials
+    verified: docs
+    method: POST
+    path: /v2/ssl/acme/{acmeSubscriptionId}/credentials
+    docUrl: /ssl/acme/credentials
+    async: false
+    authScope: customer
+    summary: Rotate the External Account Binding (accountKey + hmacKey). Invalidates the old pair.
+    pathParams:
+      - { name: acmeSubscriptionId, type: integer, required: true }
+    responses:
+      "200": { description: "{ accountKey, hmacKey } - shown once." }
+    errors: [ObjectDoesNotExist]
+    gotchas:
+      - "Old ACME account credentials are revoked immediately; update your ACME client before rotating."

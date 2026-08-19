@@ -1,0 +1,4 @@
+category: bar
+label: Foo
+description: Fixture with a mismatched category name.
+operations: []

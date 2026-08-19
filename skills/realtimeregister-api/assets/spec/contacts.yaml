@@ -1,0 +1,272 @@
+# Contacts category. `createContact` and the Contact type verified against
+# https://dm.realtimeregister.com/docs/api/contacts/create. Other operations
+# follow the same customer-scoped path pattern `/v2/customers/{customer}/contacts/{handle}`.
+
+category: contacts
+label: Contacts
+description: |
+  Contacts are registrant/admin/tech/billing identities. They live under a
+  customer and a brand. Use `createContact` first, then reference the returned
+  handle in domain operations.
+
+operations:
+
+  - operationId: getContact
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/contacts/{handle}
+    docUrl: /contacts/get
+    async: false
+    authScope: customer
+    summary: Retrieve a single contact.
+    pathParams:
+      - { name: customer, type: string, required: true, maxLength: 40 }
+      - { name: handle,   type: string, required: true, maxLength: 40 }
+    queryParams:
+      - { name: fields, type: string, description: "Comma-separated field selector." }
+    responses:
+      "200": { description: "Full Contact object." }
+    errors: [ObjectDoesNotExist, AuthorizationFailed]
+
+  - operationId: listContacts
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/contacts
+    docUrl: /contacts/list
+    async: false
+    authScope: customer
+    summary: List contacts for a customer.
+    pathParams:
+      - { name: customer, type: string, required: true }
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string }
+      - { name: limit,  type: integer, default: 100, maximum: 1000 }
+      - { name: offset, type: integer, default: 0 }
+      - { name: order,  type: string }
+    responses:
+      "200": { description: "Paginated envelope of Contact objects." }
+    errors: [InvalidParameter]
+    gotchas:
+      - "Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering)."
+
+  - operationId: createContact
+    verified: docs
+    method: POST
+    path: /v2/customers/{customer}/contacts/{handle}
+    docUrl: /contacts/create
+    async: false
+    authScope: customer
+    summary: Create a new contact under the given customer.
+    pathParams:
+      - { name: customer, type: string, required: true, maxLength: 40,
+          description: "Customer handle." }
+      - { name: handle,   type: string, required: true, maxLength: 40,
+          description: "Desired contact handle." }
+    requestBody:
+      contentType: application/json
+      fields:
+        brand:        { type: string, description: "Brand handle; defaults to 'default'." }
+        organization: { type: string, maxLength: 255 }
+        name:         { type: string, required: true, minLength: 1, maxLength: 255 }
+        addressLine:  { type: array, required: true, items: string, minItems: 1, maxItems: 3 }
+        postalCode:   { type: string, required: true, maxLength: 16 }
+        city:         { type: string, required: true, maxLength: 255 }
+        state:        { type: string, maxLength: 255 }
+        country:      { type: string, required: true, minLength: 2, maxLength: 2,
+                        description: "ISO 3166-1 alpha-2 country code." }
+        email:        { type: string, required: true, format: email, maxLength: 255 }
+        voice:        { type: string, required: true, format: e164,
+                        description: "E164a format, e.g. +31.384530759." }
+        fax:          { type: string, format: e164 }
+        disclosedFields:
+          type: array
+          items: string
+          enum: [registryContactId, email, name, organization, addressLine, city, postalCode, voice, fax, state, country]
+          description: "Fields to disclose in RDAP. `country` and `state` are always public."
+        validations:
+          type: array
+          itemsRef: ContactValidation
+          description: "Pre-validation records; requires CONTACT_VALIDATION permission."
+        verifications:
+          type: array
+          itemsRef: ContactVerification
+          description: "Verifications performed for this contact; requires CONTACT_VERIFICATION permission."
+    responses:
+      "201": { description: "Contact created." }
+    errors: [InvalidParameter, ObjectExists, AuthorizationFailed]
+    gotchas:
+      - "Contact `handle` is in the URL, not the body."
+      - "`voice` must match `\\+[0-9]{1,3}\\.[0-9]{1,14}` (E164a format with a dot)."
+      - "`country` must be 2 uppercase letters; the SDK incorrectly accepted `countryCode`."
+      - "Allowed claim/method/proof combinations: https://dm.realtimeregister.com/docs/api/contacts/verification-matrix"
+
+  - operationId: updateContact
+    verified: docs
+    method: POST
+    path: /v2/customers/{customer}/contacts/{handle}/update
+    docUrl: /contacts/update
+    async: false
+    authScope: customer
+    summary: Update mutable contact fields. Omitted fields are preserved.
+    pathParams:
+      - { name: customer, type: string, required: true }
+      - { name: handle,   type: string, required: true }
+    requestBody:
+      contentType: application/json
+      fields:
+        brand:           { type: string, description: "Brand handle to move this contact to." }
+        organization:    { type: string, maxLength: 255 }
+        name:            { type: string, minLength: 1, maxLength: 255 }
+        addressLine:     { type: array, items: string, minItems: 1, maxItems: 3 }
+        postalCode:      { type: string, maxLength: 16 }
+        city:            { type: string, maxLength: 255 }
+        state:           { type: string }
+        country:         { type: string, minLength: 2, maxLength: 2 }
+        email:           { type: string, format: email }
+        voice:           { type: string, format: e164 }
+        fax:             { type: string, format: e164 }
+        designatedAgent: { type: string, enumRef: DesignatedAgent,
+                           description: "Requires the DESIGNATED_AGENT permission for any value other than NONE." }
+        disclosedFields: { type: array, items: string, enumRef: DisclosedField }
+        validations:     { type: array, itemsRef: ContactValidation,
+                           description: "Optional pre-validation records to attach alongside the update." }
+        verifications:   { type: array, itemsRef: ContactVerification,
+                           description: "Verifications performed for this contact; requires CONTACT_VERIFICATION permission." }
+    responses:
+      "200": { description: "Contact updated." }
+    errors: [InvalidParameter, ObjectDoesNotExist]
+    gotchas:
+      - "Country and state are always publicly disclosed regardless of `disclosedFields`."
+      - "Allowed claim/method/proof combinations: https://dm.realtimeregister.com/docs/api/contacts/verification-matrix"
+
+  - operationId: validateContact
+    verified: docs
+    method: POST
+    path: /v2/customers/{customer}/contacts/{handle}/validate
+    docUrl: /contacts/validate
+    async: false
+    authScope: customer
+    summary: Submit pre-validation records for a contact.
+    pathParams:
+      - { name: customer, type: string, required: true }
+      - { name: handle,   type: string, required: true }
+    requestBody:
+      contentType: application/json
+      fields:
+        categories: { type: array, required: true, items: string,
+                      description: "List of validation category names to certify (see listValidationCategories)." }
+    responses:
+      "200": { description: "Contact validation recorded." }
+    errors: [InvalidParameter, ObjectDoesNotExist, AuthorizationFailed]
+    gotchas:
+      - "The body is a list of category names; the server attaches the active `termsVersion` automatically."
+
+  - operationId: splitContact
+    verified: docs
+    method: POST
+    path: /v2/customers/{customer}/contacts/{handle}/split
+    docUrl: /contacts/split
+    async: false
+    authScope: customer
+    summary: Split a shared contact into a new handle to avoid cross-brand mutation side effects.
+    pathParams:
+      - { name: customer, type: string, required: true }
+      - { name: handle,   type: string, required: true }
+    requestBody:
+      contentType: application/json
+      fields:
+        newHandle:  { type: string, required: true, maxLength: 40 }
+        registries: { type: array,  items: string,
+                      description: "Optional list of registry identifiers to scope the split; defaults to all registries using the contact." }
+    responses:
+      "201": { description: "New contact created with the split identity." }
+    errors: [InvalidParameter, ObjectExists]
+
+  - operationId: deleteContact
+    verified: docs
+    method: DELETE
+    path: /v2/customers/{customer}/contacts/{handle}
+    docUrl: /contacts/delete
+    async: false
+    authScope: customer
+    summary: Delete a contact.
+    pathParams:
+      - { name: customer, type: string, required: true }
+      - { name: handle,   type: string, required: true }
+    responses:
+      "204": { description: "Contact deleted." }
+    errors: [ObjectDoesNotExist, AuthorizationFailed]
+    gotchas:
+      - "Registry rejects deletion while the contact is referenced by an active domain."
+
+  - operationId: addContactProperties
+    verified: docs
+    method: POST
+    path: /v2/customers/{customer}/contacts/{handle}/{registry}
+    docUrl: /contacts/properties/add
+    async: false
+    authScope: customer
+    summary: Add TLD-specific contact properties for a given registry (e.g. `nl-legalForm`).
+    pathParams:
+      - { name: customer, type: string, required: true }
+      - { name: handle,   type: string, required: true }
+      - { name: registry, type: string, required: true, description: "Registry identifier (e.g. sidn, dns-be)." }
+    requestBody:
+      contentType: application/json
+      fields:
+        properties:    { type: object, required: true,
+                         description: "Map of property name to value. See /tlds/{tld}/info contactProperties." }
+        intendedUsage: { type: string, enumRef: IntendedUsage,
+                         description: "Intended usage for the contact; defaults to REGISTRANT." }
+    responses:
+      "200": { description: "Properties added." }
+    errors: [InvalidParameter, ObjectDoesNotExist]
+
+  - operationId: updateContactProperties
+    verified: docs
+    method: POST
+    path: /v2/customers/{customer}/contacts/{handle}/{registry}/update
+    docUrl: /contacts/properties/update
+    async: false
+    authScope: customer
+    summary: Replace existing TLD-specific contact properties for a given registry.
+    pathParams:
+      - { name: customer, type: string, required: true }
+      - { name: handle,   type: string, required: true }
+      - { name: registry, type: string, required: true }
+    requestBody:
+      contentType: application/json
+      fields:
+        properties: { type: object, required: true }
+    responses:
+      "200": { description: "Properties updated." }
+    errors: [InvalidParameter, ObjectDoesNotExist]
+
+  - operationId: getCountry
+    verified: docs
+    method: GET
+    path: /v2/countries/{country}
+    docUrl: /countries/get
+    async: false
+    authScope: customer
+    summary: Lookup a single country by ISO 3166-1 alpha-2 code.
+    pathParams:
+      - { name: country, type: string, required: true, minLength: 2, maxLength: 2, description: "ISO 3166-1 alpha-2 code." }
+    queryParams:
+      - { name: fields, type: string, description: "Comma-separated field selector." }
+    responses:
+      "200": { description: "Country object (code, name, flags)." }
+    errors: [ObjectDoesNotExist]
+
+  - operationId: listCountries
+    verified: docs
+    method: GET
+    path: /v2/countries
+    docUrl: /countries/list
+    async: false
+    authScope: customer
+    summary: List all known countries.
+    responses:
+      "200": { description: "Paginated envelope of Country objects." }
+    errors: []

@@ -1,0 +1,6 @@
+version: 1
+baseUrl: x
+docsBaseUrl: y
+enums: {}
+types: {}
+errors: []

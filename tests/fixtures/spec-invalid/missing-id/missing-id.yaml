@@ -1,0 +1,6 @@
+category: missing-id
+label: Missing Id
+description: Fixture with an operation that has no operationId.
+operations:
+  - method: GET
+    path: /v2/missing-id/a

@@ -1,0 +1,96 @@
+# Notifications category. Webhook delivery and message archive.
+
+category: notifications
+label: Notifications
+description: |
+  Notifications are platform-generated events (process completion, transfer
+  status, expiry warnings, registry announcements) deliverable via webhook.
+
+operations:
+
+  - operationId: getNotification
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/notifications/{notificationId}
+    docUrl: /notifications/get
+    async: false
+    authScope: customer
+    summary: Retrieve a single notification.
+    pathParams:
+      - { name: customer,       type: string,  required: true }
+      - { name: notificationId, type: integer, required: true }
+    queryParams:
+      - { name: fields, type: string, description: "Comma-separated field selector." }
+    responses:
+      "200": { description: "Notification object with `type`, `data`, `createdDate`, optional `acknowledgeDate`." }
+    errors: [ObjectDoesNotExist, AuthorizationFailed]
+
+  - operationId: listNotifications
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/notifications
+    docUrl: /notifications/list
+    async: false
+    authScope: customer
+    summary: List notifications for the customer.
+    pathParams:
+      - { name: customer, type: string, required: true }
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string, description: "Filter expression, e.g. acknowledgeDate:null." }
+      - { name: limit,  type: integer, default: 100, maximum: 1000 }
+      - { name: offset, type: integer, default: 0 }
+      - { name: order,  type: string, example: "createdDate:desc" }
+    responses:
+      "200": { description: "Paginated envelope." }
+    errors: [InvalidParameter]
+
+  - operationId: pollNotification
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/notifications/poll
+    docUrl: /notifications/poll
+    async: false
+    authScope: customer
+    summary: Poll for the next unacknowledged notification.
+    pathParams:
+      - { name: customer, type: string, required: true }
+    responses:
+      "200": { description: "`{ count, notification }` - `count` is total unacknowledged; `notification` is the next one (same shape as getNotification) or omitted when the queue is empty." }
+    errors: []
+    gotchas:
+      - "Acknowledge the returned notification via ackNotification to advance the queue; otherwise subsequent polls return the same item."
+
+  - operationId: ackNotification
+    verified: docs
+    method: POST
+    path: /v2/customers/{customer}/notifications/{notificationId}/ack
+    docUrl: /notifications/ack
+    async: false
+    authScope: customer
+    summary: Acknowledge a notification.
+    pathParams:
+      - { name: customer,       type: string,  required: true }
+      - { name: notificationId, type: integer, required: true }
+    responses:
+      "200": { description: "Notification acknowledged." }
+    errors: [ObjectDoesNotExist]
+
+  - operationId: webhookNotification
+    verified: docs
+    method: POST
+    path: "(customer-configured webhook URL)"
+    docUrl: /notifications/webhook
+    async: false
+    authScope: customer
+    liveDiff: false
+    summary: Documentation-only. Describes the POST that Realtime Register delivers to a customer-configured webhook URL.
+    responses:
+      "200": { description: "Any 200/201/202 response marks the delivery as successful and dequeues the notification." }
+    errors: []
+    gotchas:
+      - "Webhook URLs are configured in the customer portal (Account details -> Notifications), not via this API."
+      - "Payload is identical to getNotification but omits `acknowledgeDate`."
+      - "Authentication: HMAC-SHA256 of the raw body using the shared key (Base64 encoded) is sent in the `Signature` header. Basic-auth credentials configured in the portal are also supported."
+      - "Retries: up to 5 attempts at 10s / 30s / 2m / 5m / 15m. After the last failure an email alert is sent and the global queue stalls until delivery succeeds."
+      - "The event queue is global per user - a failing webhook blocks delivery of unrelated notifications."

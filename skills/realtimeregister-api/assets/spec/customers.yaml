@@ -1,0 +1,59 @@
+# Customers category. Per-customer financial summaries (pricelist, credit
+# balance). The customer handle in the URL is the subject account; auth is the
+# authenticated reseller principal.
+
+category: customers
+label: Customers
+description: |
+  Customer endpoints expose per-account financial views: the effective
+  pricelist (with scheduled changes and active promos) and current credit
+  balance. There is no separate getCustomer/listCustomers endpoint in the
+  public REST API; customer records are managed through the portal.
+
+operations:
+
+  - operationId: getPricelist
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/pricelist
+    docUrl: /customers/pricelist
+    async: false
+    authScope: customer
+    summary: Retrieve the effective pricelist for a customer, with upcoming price changes and active promos.
+    pathParams:
+      - { name: customer, type: string, required: true, minLength: 3, maxLength: 40, description: "Customer handle." }
+    queryParams:
+      - { name: currency, type: string, description: "Convert prices to this currency (USD or EUR). Conversion uses daily exchange rates." }
+    responses:
+      "200":
+        description: |
+          { prices: {product, action, currency, price}[],
+            priceChanges: {product, action, currency, price, fromDate}[],
+            promos: {product, action, currency, price, fromDate, endDate, active}[] }
+          Prices and promo prices are integers in the smallest currency unit (cents).
+    errors: [ObjectDoesNotExist, AuthorizationFailed, InvalidParameter]
+    gotchas:
+      - "All monetary amounts are in cents (integer)."
+      - "`currency` query param accepts only USD or EUR (case-insensitive)."
+      - "`action` values come from the BillableAction enum (CREATE, RENEW, TRANSFER, \u2026)."
+
+  - operationId: getCredits
+    verified: docs
+    method: GET
+    path: /v2/customers/{customer}/credit
+    docUrl: /customers/credits
+    async: false
+    authScope: customer
+    summary: Retrieve available credits for a customer, split per currency account.
+    pathParams:
+      - { name: customer, type: string, required: true, minLength: 3, maxLength: 40, description: "Customer handle." }
+    responses:
+      "200":
+        description: |
+          { accounts: {currency, balance, reservation, locked}[] } where balance is
+          spendable credits, reservation is funds held for in-process transactions,
+          and locked is pending authorized-person approval.
+    errors: [ObjectDoesNotExist, AuthorizationFailed]
+    gotchas:
+      - "Path ends in `credit` (singular), docs slug is `credits` (plural)."
+      - "All amounts are in cents (integer)."

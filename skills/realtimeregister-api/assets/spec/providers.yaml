@@ -1,0 +1,145 @@
+# Providers category. Registry metadata plus downtime windows and
+# gateway-only registry-account configuration. Verified against
+# https://dm.realtimeregister.com/docs/api/providers/* and
+# https://dm.realtimeregister.com/docs/api/registryAccount/*.
+
+category: providers
+label: Providers
+description: |
+  A provider is an upstream registry (e.g. Verisign, SIDN, DENIC). Customer
+  scope covers provider metadata and downtime windows. Registry-account
+  configuration (credentials, transport) is gateway-only and lives under a
+  separate `/v2/registryAccount` root.
+
+operations:
+
+  - operationId: getProvider
+    verified: docs
+    method: GET
+    path: /v2/providers/REGISTRY/{name}
+    docUrl: /providers/get
+    async: false
+    authScope: customer
+    summary: Retrieve provider metadata (supported TLDs, type).
+    pathParams:
+      - { name: name, type: string, required: true, description: "Provider name." }
+    queryParams:
+      - { name: fields, type: string }
+    responses:
+      "200":
+        description: |
+          { name, providerType: "REGISTRY", tlds?: [{ name }] }
+    errors: [ObjectDoesNotExist]
+    gotchas:
+      - "Path segment `REGISTRY` is literal: `providerType` only has one value today."
+
+  - operationId: listProviders
+    verified: docs
+    method: GET
+    path: /v2/providers
+    docUrl: /providers/list
+    async: false
+    authScope: customer
+    summary: Search / list providers.
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string, description: "Filter on name, providerType, tlds." }
+      - { name: limit,  type: integer, default: 10, maximum: 1000,
+          description: "Use 0 for a count-only query." }
+      - { name: offset, type: integer, default: 0 }
+      - { name: order,  type: string, description: "Sort field; prefix with `-` for descending." }
+      - { name: export, type: boolean }
+      - { name: "no-total", type: boolean }
+    responses:
+      "200": { description: "Paginated envelope of Provider objects." }
+    errors: [InvalidParameter]
+
+  - operationId: getProviderDowntime
+    verified: docs
+    method: GET
+    path: /v2/providers/downtime/{id}
+    docUrl: /providers/downtime/get
+    async: false
+    authScope: customer
+    summary: Retrieve a single registry downtime window.
+    pathParams:
+      - { name: id, type: integer, required: true, description: "Downtime ID." }
+    queryParams:
+      - { name: fields, type: string }
+    responses:
+      "200":
+        description: |
+          { id, startDate, endDate, reason?, provider }
+    errors: [ObjectDoesNotExist]
+
+  - operationId: listProviderDowntime
+    verified: docs
+    method: GET
+    path: /v2/providers/downtime
+    docUrl: /providers/downtime/list
+    async: false
+    authScope: customer
+    summary: List downtime windows (past + scheduled).
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string, description: "Filter by provider, startDate, endDate." }
+      - { name: limit,  type: integer, default: 10, maximum: 1000 }
+      - { name: offset, type: integer, default: 0 }
+      - { name: order,  type: string }
+    responses:
+      "200": { description: "Paginated envelope of downtime records." }
+    errors: [InvalidParameter]
+
+  - operationId: getRegistryAccount
+    verified: docs
+    method: GET
+    path: /v2/registryAccounts/{registry}/{loginName}
+    docUrl: /registryAccount/get
+    async: false
+    authScope: gateway
+    summary: Gateway-only. Inspect a registry-account configuration.
+    pathParams:
+      - { name: registry,   type: string, required: true, description: "The name of the registry." }
+      - { name: loginName,  type: string, required: true, description: "The registry account login name." }
+    queryParams:
+      - { name: fields, type: string }
+    responses:
+      "200": { description: "RegistryAccount object (transport + masked credentials)." }
+    errors: [ObjectDoesNotExist, AuthorizationFailed]
+    gotchas:
+      - "Requires gateway credentials; customer-scope API keys are rejected."
+
+  - operationId: listRegistryAccounts
+    verified: docs
+    method: GET
+    path: /v2/registryAccounts
+    docUrl: /registryAccount/list
+    async: false
+    authScope: gateway
+    summary: Gateway-only. List registry accounts.
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string }
+      - { name: limit,  type: integer, default: 10, maximum: 1000 }
+      - { name: offset, type: integer, default: 0 }
+      - { name: order,  type: string }
+    responses:
+      "200": { description: "Paginated envelope of RegistryAccount objects." }
+    errors: [InvalidParameter, AuthorizationFailed]
+
+  - operationId: providerInfoDeprecated
+    verified: docs
+    method: GET
+    path: /v2/providers/REGISTRY/{name}/info
+    docUrl: /providers/info
+    async: false
+    authScope: customer
+    summary: DEPRECATED. Legacy provider info endpoint; use `getProvider` + `getTldInfo`.
+    pathParams:
+      - { name: name, type: string, required: true }
+    responses:
+      "200": { description: "Legacy provider info envelope." }
+    errors: [ObjectDoesNotExist]
+    gotchas:
+      - "Marked Deprecated in live docs. New integrations MUST NOT use this endpoint."
+      - "No replacement with identical shape; split across `getProvider`, `getTldInfo`, and `listProviderDowntime`."

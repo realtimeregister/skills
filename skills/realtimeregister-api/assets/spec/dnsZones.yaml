@@ -1,0 +1,189 @@
+# DNS Zones. `createDnsZone` and the DnsRecord type verified against
+# https://dm.realtimeregister.com/docs/api/dns/zones/create. Other operations
+# use `/v2/dns/zones/{name}` path pattern.
+
+category: dnsZones
+label: DNS Zones
+description: |
+  Managed DNS zones hosted by Realtime Register. Only one zone can exist per
+  service per domain name. Modifying a zone that is pending deletion triggers
+  immediate re-creation.
+
+operations:
+
+  - operationId: getDnsZone
+    verified: docs
+    method: GET
+    path: /v2/dns/zones/{zoneId}
+    docUrl: /dns/zones/get
+    async: false
+    authScope: customer
+    summary: Retrieve a single DNS zone and its records.
+    pathParams:
+      - { name: zoneId, type: integer, required: true, description: "Numeric DNS zone ID returned by createDnsZone/listDnsZones." }
+    queryParams:
+      - { name: fields, type: string, description: "Comma-separated field selector." }
+    responses:
+      "200": { description: "Zone with `records`, SOA metadata, and DNSSEC state." }
+    errors: [ObjectDoesNotExist, AuthorizationFailed]
+    gotchas:
+      - "Zones are addressed by numeric `zoneId`, not by domain name."
+
+  - operationId: listDnsZones
+    verified: docs
+    method: GET
+    path: /v2/dns/zones
+    docUrl: /dns/zones/list
+    async: false
+    authScope: customer
+    summary: List managed DNS zones.
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string }
+      - { name: limit,  type: integer, default: 100, maximum: 1000 }
+      - { name: offset, type: integer, default: 0 }
+      - { name: order,  type: string }
+    responses:
+      "200": { description: "Paginated envelope." }
+    errors: [InvalidParameter]
+    gotchas:
+      - "Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering)."
+
+  - operationId: createDnsZone
+    verified: docs
+    method: POST
+    path: /v2/dns/zones
+    docUrl: /dns/zones/create
+    async: false
+    authScope: customer
+    summary: Create an unmanaged or template-linked DNS zone.
+    requestBody:
+      contentType: application/json
+      fields:
+        name:       { type: string, required: true, format: fqdn, minLength: 3, maxLength: 255 }
+        service:    { type: string, enumRef: DnsService, description: "Defaults to BASIC." }
+        template:   { type: string, description: "Template name to clone records from." }
+        link:       { type: boolean, description: "Unless false, zone is linked to the template." }
+        master:     { type: string, description: "IP of a hidden master (secondary-zone setup)." }
+        ns:         { type: array, items: string, maxItems: 10, description: "Custom nameservers." }
+        dnssec:     { type: boolean, description: "Provision with DNSSEC." }
+        hostMaster: { type: string, description: "SOA MNAME email contact." }
+        refresh:    { type: integer, description: "SOA REFRESH in seconds." }
+        retry:      { type: integer, default: 3600, minimum: 1 }
+        expire:     { type: integer, default: 1209600, minimum: 86400, maximum: 4838400 }
+        ttl:        { type: integer, default: 3600, minimum: 60, maximum: 2419200 }
+        records:    { type: array, itemsRef: DnsRecord }
+        billables:  { type: array, itemsRef: Billable, description: "Copy verbatim from BillableAcknowledgmentNeededException and re-submit." }
+    responses:
+      "201": { description: "Zone created; response includes `id`." }
+    errors: [InvalidParameter, DnsConfigurationException, ObjectExists, BillableAcknowledgmentNeededException]
+    gotchas:
+      - "Set `link: false` when cloning from a template but intending to diverge."
+      - "`prio` is required on MX and SRV records."
+      - "When `service` is PREMIUM, pricing is billable; expect BillableAcknowledgmentNeededException on first call."
+
+  - operationId: updateDnsZone
+    verified: docs
+    method: POST
+    path: /v2/dns/zones/{zoneId}/update
+    docUrl: /dns/zones/update
+    async: false
+    authScope: customer
+    summary: Replace zone metadata and/or records.
+    pathParams:
+      - { name: zoneId, type: integer, required: true }
+    requestBody:
+      contentType: application/json
+      fields:
+        template:   { type: string,  description: "Name of a template to clone records from." }
+        link:       { type: boolean, description: "Unless false, keep the zone linked to the template." }
+        master:     { type: string,  description: "IP of the hidden master. Send empty string to convert a slave zone to a master zone." }
+        ns:         { type: array,   items: string, maxItems: 10, description: "Custom nameservers (FQDNs)." }
+        dnssec:     { type: boolean }
+        hostMaster: { type: string,  description: "Hostmaster email address used in SOA." }
+        refresh:    { type: integer, description: "SOA refresh in seconds." }
+        retry:      { type: integer, default: 3600, minimum: 1 }
+        expire:     { type: integer, default: 1209600, minimum: 86400, maximum: 4838400 }
+        ttl:        { type: integer, default: 3600, minimum: 60, maximum: 2419200 }
+        records:    { type: array,   itemsRef: DnsRecord,
+                      description: "If provided, replaces the full record set." }
+    responses:
+      "200": { description: "Zone updated." }
+    errors: [InvalidParameter, DnsConfigurationException, ObjectDoesNotExist]
+
+  - operationId: deleteDnsZone
+    verified: docs
+    method: DELETE
+    path: /v2/dns/zones/{zoneId}
+    docUrl: /dns/zones/delete
+    async: false
+    authScope: customer
+    summary: Delete a managed DNS zone.
+    pathParams:
+      - { name: zoneId, type: integer, required: true }
+    responses:
+      "204": { description: "Zone deleted." }
+    errors: [ObjectDoesNotExist]
+    gotchas:
+      - "Deletion is soft; re-creating the zone cancels the pending delete."
+
+  - operationId: getDnsZoneStatistics
+    verified: docs
+    method: GET
+    path: /v2/dns/zones/{zoneId}/stats
+    docUrl: /dns/zones/stats
+    async: false
+    authScope: customer
+    summary: Query traffic counters for a managed zone.
+    pathParams:
+      - { name: zoneId, type: integer, required: true }
+    responses:
+      "200": { description: "Counts per record type and response code." }
+    errors: [InvalidParameter, ObjectDoesNotExist]
+
+  - operationId: retrieveDnsZone
+    verified: docs
+    method: POST
+    path: /v2/dns/zones/{zoneId}/retrieve
+    docUrl: /dns/zones/retrieve
+    async: false
+    authScope: customer
+    summary: Re-fetch zone contents from the configured master (secondary zones).
+    pathParams:
+      - { name: zoneId, type: integer, required: true }
+    responses:
+      "200": { description: "Current zone contents after retrieval." }
+    errors: [ObjectDoesNotExist]
+
+  - operationId: dnsZoneKeyRollover
+    verified: docs
+    method: POST
+    path: /v2/dns/zones/{zoneId}/key-rollover
+    docUrl: /dns/zones/key-rollover
+    async: true
+    authScope: customer
+    summary: Trigger a DNSSEC key rollover for the zone.
+    pathParams:
+      - { name: zoneId, type: integer, required: true }
+    responses:
+      "202": { description: "{ processId } - rollover is staged." }
+    errors: [ObjectDoesNotExist, InvalidParameter]
+    gotchas:
+      - "Only permitted once the previous rollover has completed."
+
+  - operationId: dnsZoneAckDsUpdate
+    verified: docs
+    method: POST
+    path: /v2/processes/{processId}/ack-ds-update
+    docUrl: /dns/ack-ds-update
+    async: false
+    authScope: customer
+    summary: Acknowledge that the registry DS record matches the current DNSKEY.
+    pathParams:
+      - { name: processId, type: integer, required: true, description: "Process ID returned by dnsZoneKeyRollover." }
+    responses:
+      "200": { description: "Rollover advanced to the next stage." }
+    errors: [ObjectDoesNotExist]
+    gotchas:
+      - "Endpoint is rooted under /v2/processes/, not /v2/dns/zones/."
+      - "Required mid-rollover; the registry only removes the retired key once the ack is received."

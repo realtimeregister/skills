@@ -1,0 +1,96 @@
+# Processes category. Async mutation tracking. Every 202 response from the
+# API contains a `processId` resolvable here.
+
+category: processes
+label: Processes
+description: |
+  Processes represent asynchronous work items. Poll `/v2/processes/{id}` until
+  `status` is one of COMPLETED, FAILED, or CANCELLED. See _shared.ProcessStatus.
+
+operations:
+
+  - operationId: getProcess
+    verified: docs
+    method: GET
+    path: /v2/processes/{processId}
+    docUrl: /processes/get
+    async: false
+    authScope: customer
+    summary: Retrieve a single process and its current status.
+    pathParams:
+      - { name: processId, type: integer, required: true, description: "processId returned from the originating mutation." }
+    queryParams:
+      - { name: fields, type: string, description: "Comma-separated field selector." }
+    responses:
+      "200": { description: "Process object with `status`, `type`, `createdDate`, `result`, and `errors`." }
+    errors: [ObjectDoesNotExist, AuthorizationFailed]
+    gotchas:
+      - "Poll with exponential backoff (start 1s, cap 30s). Most processes complete within 10s."
+
+  - operationId: getProcessInfo
+    verified: docs
+    method: GET
+    path: /v2/processes/{processId}/info
+    docUrl: /processes/info
+    async: false
+    authScope: customer
+    summary: Retrieve process-type specific info (e.g. certificate request validation state).
+    pathParams:
+      - { name: processId, type: integer, required: true }
+    responses:
+      "200": { description: "Type-specific info response. Currently defined for `certificate` and `acme` processes; includes `requiresAttention`, `validations`, and (non-ACME) `notes`/`dcv` lists." }
+    errors: [ObjectDoesNotExist, InvalidParameter]
+    gotchas:
+      - "Call this when `detailStatus=SSL_REQUIRES_ATTENTION` surfaces in listProcesses to discover which validation step is blocking."
+
+  - operationId: listProcesses
+    verified: docs
+    method: GET
+    path: /v2/processes
+    docUrl: /processes/list
+    async: false
+    authScope: customer
+    summary: List recent processes scoped to the authenticated customer.
+    queryParams:
+      - { name: fields, type: string }
+      - { name: q,      type: string, description: "Filter expression, e.g. status:RUNNING AND type:CREATE_DOMAIN." }
+      - { name: limit,  type: integer, default: 100, maximum: 1000 }
+      - { name: offset, type: integer, default: 0 }
+      - { name: order,  type: string, example: "createdDate:desc" }
+    responses:
+      "200": { description: "Paginated envelope of Process objects." }
+    errors: [InvalidParameter]
+
+  - operationId: resendProcess
+    verified: docs
+    method: POST
+    path: /v2/processes/{processId}/resend
+    docUrl: /processes/resend
+    async: false
+    authScope: customer
+    summary: Resend the request a process is pending on (e.g. a FOA mail to a registrant).
+    pathParams:
+      - { name: processId, type: integer, required: true }
+    responses:
+      "200": { description: "Resend accepted." }
+    errors: [ObjectDoesNotExist, InvalidParameter]
+    gotchas:
+      - "Only applicable when the process's `resumeType` is `RESEND`."
+      - "For certificate request DCV a process-type-specific request body is accepted; consult the live docs."
+
+  - operationId: cancelProcess
+    verified: docs
+    method: DELETE
+    path: /v2/processes/{processId}
+    docUrl: /processes/cancel
+    async: false
+    authScope: customer
+    summary: Request cancellation of a PENDING or RUNNING process.
+    pathParams:
+      - { name: processId, type: integer, required: true }
+    responses:
+      "200": { description: "Cancellation accepted; poll getProcess to confirm final status." }
+    errors: [ObjectDoesNotExist, InvalidParameter]
+    gotchas:
+      - "Not all process types are cancellable; COMPLETED/FAILED processes return InvalidParameter."
+      - "DELETE on the bare process resource, not POST .../cancel. The live docs page slug (`/processes/cancel`) is retained for docUrl fidelity even though the HTTP method is DELETE."

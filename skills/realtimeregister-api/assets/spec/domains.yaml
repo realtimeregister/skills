@@ -1,0 +1,336 @@
+# Domain category operations. Reference template for all other category YAMLs.
+# Wire format is camelCase. All operations in this file carry `verified: docs`,
+# meaning path, parameters, and field names have been reconciled against the
+# live HTML at https://dm.realtimeregister.com/docs/api/domains/<op>.
+
+category: domains
+label: Domains
+description: |
+  Register, update, renew, transfer, restore, push, delete, query, and price
+  domain names. Mutating operations return HTTP 202 with { processId } and are
+  completed asynchronously; poll /v2/processes/{id} to confirm.
+
+operations:
+
+  - operationId: listDomains
+    verified: docs
+    method: GET
+    path: /v2/domains
+    docUrl: /domains/list
+    async: false
+    authScope: customer
+    summary: List domains owned by the authenticated customer.
+    queryParams:
+      - { name: fields, type: string, description: "Comma-separated top-level fields to include." }
+      - { name: q,      type: string, description: "Filter expression, e.g. status:OK AND name:*.nl" }
+      - { name: limit,  type: integer, default: 100, maximum: 1000 }
+      - { name: offset, type: integer, default: 0,   minimum: 0 }
+      - { name: order,  type: string,  example: "name:asc" }
+    responses:
+      "200": { description: "Paginated envelope with an `entities` array of Domain objects." }
+    errors: [InvalidParameter, AuthenticationFailed]
+    gotchas:
+      - "Use `fields` to trim the response; full Domain objects are large."
+      - "Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering)."
+
+  - operationId: getDomain
+    verified: docs
+    method: GET
+    path: /v2/domains/{domainName}
+    docUrl: /domains/get
+    async: false
+    authScope: customer
+    summary: Fetch a single domain and all sub-objects.
+    pathParams:
+      - { name: domainName, type: string, required: true, format: fqdn }
+    queryParams:
+      - { name: fields, type: string, description: "Comma-separated field selector; identifying fields are always included." }
+    responses:
+      "200": { description: "Full Domain object (contacts, nameservers, DNSSEC, status list)." }
+    errors: [ObjectDoesNotExist, AuthorizationFailed]
+    gotchas:
+      - "`authcode` is present only for domains the caller owns."
+
+  - operationId: checkDomain
+    verified: docs
+    method: GET
+    path: /v2/domains/{domainName}/check
+    docUrl: /domains/check
+    async: false
+    authScope: customer
+    summary: Availability and price check for a domain name.
+    pathParams:
+      - { name: domainName, type: string, required: true, format: fqdn }
+    queryParams:
+      - { name: renewPrice, type: boolean, description: "If true, include a renewal price alongside the acquisition price for available premium domains." }
+    responses:
+      "200":
+        description: '{ "available": boolean, "premium": boolean, "reason": string, "price": Money, "renewPrice": Integer }'
+    errors: [InvalidParameter]
+    gotchas:
+      - "`reason` populated only when `available` is false."
+      - "`renewPrice` is included only when the `renewPrice=true` query param is set and the domain is a premium name."
+
+  - operationId: createDomain
+    verified: docs
+    method: POST
+    path: /v2/domains/{domainName}
+    docUrl: /domains/create
+    async: true
+    authScope: customer
+    summary: Register a new domain.
+    pathParams:
+      - { name: domainName, type: string, required: true, format: fqdn,
+          description: "Domain name (min 3, max 255 chars; lowercase letters/digits/hyphen)." }
+    queryParams:
+      - { name: quote, type: boolean, description: "If true, only validate and quote the action." }
+    requestBody:
+      contentType: application/json
+      fields:
+        customer:       { type: string, required: true, maxLength: 40, description: "Owning customer handle." }
+        registrant:     { type: string, required: true, maxLength: 40, description: "Registrant contact handle." }
+        privacyProtect: { type: boolean, description: "Defaults to the account's Privacy Protect setting." }
+        period:         { type: integer, description: "Initial registration period in MONTHS. Defaults to registry minimum." }
+        authcode:       { type: string, maxLength: 64, description: "Domain auth code; auto-generated if omitted." }
+        languageCode:   { type: string, minLength: 1, maxLength: 10, description: "TLD-specific IDN language tag." }
+        autoRenew:      { type: boolean, description: "Defaults to true." }
+        ns:             { type: array, items: string, maxItems: 10, description: "Nameserver FQDNs (min 4, max 255 each)." }
+        skipValidation: { type: boolean, description: "Skip contact validation; rejects PENDING_VALIDATION domains until resolved." }
+        launchPhase:    { type: string, maxLength: 64, description: "Required only when TLD is in a non-GA launch phase." }
+        zone:           { type: object, fieldsRef: Zone }
+        contacts:       { type: array,  itemsRef: DomainContactRef }
+        keyData:        { type: array,  itemsRef: KeyData,  description: "DNSSEC DNSKEY records. Mutually exclusive with dsData." }
+        billables:      { type: array,  itemsRef: Billable, description: "Copy from BillableAcknowledgmentNeededException to retry." }
+    responses:
+      "201": { description: "Domain registered synchronously." }
+      "202": { description: "{ processId } - async; poll /v2/processes/{id}." }
+    errors: [InvalidParameter, BillableAcknowledgmentNeededException, AuthorizationFailed]
+    examples:
+      - name: minimal
+        request:
+          method: POST
+          path: /v2/domains/example.nl
+          body:
+            customer: MYCUST
+            registrant: CUST-001
+            period: 12
+            ns: [ns1.example.nl, ns2.example.nl]
+            contacts:
+              - { role: ADMIN, handle: CUST-001 }
+              - { role: TECH,  handle: CUST-001 }
+    gotchas:
+      - "`period` is MONTHS, not years. Pass 12 for one year."
+      - "First call typically returns 400 BillableAcknowledgmentNeededException; re-submit with its `billables` array verbatim."
+      - "`keyData` and `dsData` are mutually exclusive per domain."
+      - "Some TLDs require `languageCode`; others require `launchPhase` while in Sunrise/Landrush."
+      - "Contact roles are ADMIN, BILLING, TECH only."
+
+  - operationId: updateDomain
+    verified: docs
+    method: POST
+    path: /v2/domains/{domainName}/update
+    docUrl: /domains/update
+    async: true
+    authScope: customer
+    summary: Update contacts, nameservers, DNSSEC, status flags, autoRenew, or privacy protection.
+    pathParams:
+      - { name: domainName, type: string, required: true, format: fqdn }
+    queryParams:
+      - { name: quote, type: boolean, description: "Validate and quote only." }
+    requestBody:
+      contentType: application/json
+      fields:
+        registrant:      { type: string,  maxLength: 40 }
+        privacyProtect:  { type: boolean }
+        authcode:        { type: string,  maxLength: 64 }
+        autoRenew:       { type: boolean }
+        autoRenewPeriod: { type: integer, description: "Auto-renew length in MONTHS. Defaults to the registry minimum." }
+        ns:              { type: array,   items: string, maxItems: 10 }
+        status:          { type: array,   items: string, enumRef: DomainStatus,
+                           description: "New status list. Only CLIENT_* flags are mutable by default; gateway users with SET_REGISTRAR_STATUS may also manage REGISTRAR_* flags. IRTPC_TRANSFER_PROHIBITED can only be removed." }
+        designatedAgent: { type: string,  enumRef: DesignatedAgent,
+                           description: "Requires the DESIGNATED_AGENT permission for any value other than NONE." }
+        zone:            { type: object,  fieldsRef: Zone,
+                           description: "DNS zone changes to apply (service, template, link, master, dnssec)." }
+        contacts:        { type: array,   itemsRef: DomainContactRef }
+        keyData:         { type: array,   itemsRef: KeyData }
+        dsData:          { type: array,   itemsRef: DsData }
+        billables:       { type: array,   itemsRef: Billable }
+    responses:
+      "202": { description: "{ processId }" }
+    errors: [InvalidParameter, ObjectDoesNotExist, BillableAcknowledgmentNeededException, AuthorizationFailed]
+    gotchas:
+      - "Omitted fields are left untouched."
+      - "`status` is the full desired list; the server diffs it against the current status to compute adds/removes."
+      - "`keyData` and `dsData` are mutually exclusive per domain."
+
+  - operationId: renewDomain
+    verified: docs
+    method: POST
+    path: /v2/domains/{domainName}/renew
+    docUrl: /domains/renew
+    async: true
+    authScope: customer
+    summary: Renew a domain for N additional months.
+    pathParams:
+      - { name: domainName, type: string, required: true, format: fqdn }
+    queryParams:
+      - { name: quote, type: boolean, description: "Validate and quote only." }
+    requestBody:
+      contentType: application/json
+      fields:
+        period:     { type: integer, required: true, description: "Months to add (live docs type the field as String but the server accepts the numeric month count)." }
+        billables:  { type: array,   itemsRef: Billable }
+    responses:
+      "202": { description: "{ processId }" }
+    errors: [InvalidParameter, ObjectDoesNotExist, BillableAcknowledgmentNeededException]
+    gotchas:
+      - "`period` is MONTHS, not years."
+
+  - operationId: transferDomain
+    verified: docs
+    method: POST
+    path: /v2/domains/{domainName}/transfer
+    docUrl: /domains/transfer
+    async: true
+    authScope: customer
+    summary: Initiate an inbound transfer from another registrar.
+    pathParams:
+      - { name: domainName, type: string, required: true, format: fqdn }
+    queryParams:
+      - { name: quote, type: boolean }
+    requestBody:
+      contentType: application/json
+      fields:
+        customer:         { type: string,  required: true, maxLength: 40 }
+        registrant:       { type: string,  required: true, maxLength: 40 }
+        privacyProtect:   { type: boolean }
+        period:           { type: integer, description: "Optional months to add on top of the transferred expiry." }
+        authcode:         { type: string,  maxLength: 64, description: "Code obtained from the losing registrar. Some TLDs (e.g. .uk) do not require one." }
+        autoRenew:        { type: boolean }
+        ns:               { type: array,   items: string, maxItems: 10 }
+        designatedAgent:  { type: string,  enumRef: DesignatedAgent }
+        zone:             { type: object,  fieldsRef: Zone }
+        contacts:         { type: array,   itemsRef: DomainContactRef }
+        keyData:          { type: array,   itemsRef: KeyData }
+        billables:        { type: array,   itemsRef: Billable }
+    responses:
+      "202": { description: "{ processId } - transfer process may remain PENDING for days." }
+    errors: [InvalidParameter, ObjectExists, AuthorizationFailed, BillableAcknowledgmentNeededException]
+    gotchas:
+      - "Some TLDs require out-of-band trade forms; see docs/api/domains/transfer."
+      - "`authcode` is technically optional but required by most registries."
+
+  - operationId: pushTransferDomain
+    verified: docs
+    method: POST
+    path: /v2/domains/{domainName}/transfer/push
+    docUrl: /domains/pushtransfer
+    async: true
+    authScope: customer
+    summary: Push a domain to another customer within RTR.
+    pathParams:
+      - { name: domainName, type: string, required: true, format: fqdn }
+    requestBody:
+      contentType: application/json
+      fields:
+        recipient: { type: string, required: true, maxLength: 40, description: "Target customer handle." }
+    responses:
+      "202": { description: "{ processId }" }
+    errors: [InvalidParameter, ObjectDoesNotExist, AuthorizationFailed]
+    gotchas:
+      - "Internal only. Use `transferDomain` for inbound transfers from other registrars."
+
+  - operationId: transferInfo
+    verified: docs
+    method: GET
+    path: /v2/domains/{domainName}/transfer/{processId}
+    docUrl: /domains/transferinfo
+    async: false
+    authScope: customer
+    summary: Inspect the status of an in-flight transfer by process id.
+    pathParams:
+      - { name: domainName, type: string, required: true, format: fqdn }
+      - { name: processId, type: string, required: true, description: "Process id returned by the original transferDomain call." }
+    responses:
+      "200": { description: "Transfer status, type (IN/OUT), requested/completed timestamps, FOA state." }
+    errors: [ObjectDoesNotExist]
+    gotchas:
+      - "Transfer status values: pendingwhois, pendingfoa, pendingvalidation, pending, approved, cancelled, rejected, failed, completed."
+
+  - operationId: restoreDomain
+    verified: docs
+    method: POST
+    path: /v2/domains/{domainName}/restore
+    docUrl: /domains/restore
+    async: true
+    authScope: customer
+    summary: Restore a domain in redemption grace.
+    pathParams:
+      - { name: domainName, type: string, required: true, format: fqdn }
+    queryParams:
+      - { name: quote, type: boolean }
+    requestBody:
+      contentType: application/json
+      fields:
+        reason:    { type: string, required: true, description: "Registry-required restore reason." }
+        billables: { type: array,  itemsRef: Billable }
+    responses:
+      "202": { description: "{ processId }" }
+    errors: [InvalidParameter, ObjectDoesNotExist, BillableAcknowledgmentNeededException]
+    gotchas:
+      - "Restore fees are high; quote via `?quote=true` first."
+
+  - operationId: deleteDomain
+    verified: docs
+    method: DELETE
+    path: /v2/domains/{domainName}
+    docUrl: /domains/delete
+    async: true
+    authScope: customer
+    summary: Delete a domain; enters the registry redemption grace period.
+    pathParams:
+      - { name: domainName, type: string, required: true, format: fqdn }
+    responses:
+      "202": { description: "{ processId }" }
+    errors: [ObjectDoesNotExist, AuthorizationFailed]
+    gotchas:
+      - "Reversible via `restoreDomain` during the redemption grace period (~30 days)."
+
+  - operationId: transferAuthorize
+    verified: docs
+    method: POST
+    path: /v2/domains/{domainName}/transfer/{processId}/{action}
+    docUrl: /domains/transferauth
+    async: true
+    authScope: gateway
+    summary: Gateway-only. Approve or reject an outbound transfer request.
+    pathParams:
+      - { name: domainName, type: string, required: true, format: fqdn }
+      - { name: processId, type: string, required: true, description: "Process id of the pending outbound transfer." }
+      - { name: action, type: string, required: true, enumRef: TransferAction, description: "`approve` or `reject` (lowercase)." }
+    responses:
+      "202": { description: "{ processId }" }
+    errors: [InvalidParameter, ObjectDoesNotExist, AuthorizationFailed]
+    gotchas:
+      - "Requires gateway credentials; customer-scope API keys cannot invoke this endpoint."
+      - "`action` is a path segment, not a body field, and must be lowercase."
+      - "No request body; the endpoint is authorised purely by URL."
+
+  - operationId: gatewayDomainInfo
+    verified: docs
+    method: GET
+    path: /v2/domains/{domainName}/info
+    docUrl: /domains/info
+    async: false
+    authScope: gateway
+    summary: Gateway-only read of a domain across all customers.
+    pathParams:
+      - { name: domainName, type: string, required: true, format: fqdn }
+    queryParams:
+      - { name: authcode, type: string, description: "If set, the endpoint checks the provided auth code against the domain." }
+      - { name: type, type: string, description: "Transfer type filter for info lookups (IN, OUT)." }
+    responses:
+      "200": { description: "Extended Domain object including internal flags." }
+    errors: [ObjectDoesNotExist, AuthorizationFailed]
+
