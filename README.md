@@ -10,8 +10,10 @@ npx skills add realtimeregister/skills
 ```
 or, alternatively: `npx skills add realtimeregister/skills --skill {skill}`
 
+
 ## Available Skills
 - [Working with the Realtime Register API](./skills/realtimeregister-api)
+
 
 ## Maintenance
 
