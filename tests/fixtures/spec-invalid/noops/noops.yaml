@@ -1,0 +1,4 @@
+category: noops
+label: No Ops
+description: Fixture where operations is a mapping instead of an array.
+operations: {}

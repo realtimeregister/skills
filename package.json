@@ -1,12 +1,21 @@
 {
   "name": "@realtimeregister/skills",
   "private": true,
-  "version": "0.0.1",
   "type": "module",
-  "devDependencies": {
-    "@types/bun": "latest"
+  "scripts": {
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "bun test",
+    "audit": "bun scripts/audit-refs.ts",
+    "generate": "bun scripts/generate-refs.ts",
+    "doctor": "bun scripts/check-doc-links.ts",
+    "drift": "bun scripts/diff-live.ts",
+    "drift:fix": "bun scripts/diff-live.ts --fix",
+    "verify": "bun run lint && bun test && bun run audit"
   },
-  "peerDependencies": {
-    "typescript": "^5"
+  "devDependencies": {
+    "@types/bun": "latest",
+    "cheerio": "^1.0.0",
+    "typescript": "^5.7.2",
+    "yaml": "^2.6.1"
   }
 }

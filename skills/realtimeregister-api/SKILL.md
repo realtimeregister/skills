@@ -1,6 +1,7 @@
 ---
 name: realtime-register
 description: Realtime Register REST API v2 reference. Use when operating on domains, DNS zones, contacts, SSL certificates, hosts, brands, notifications, billing, or processes against api.yoursrs.com. Includes machine-readable specifications and per-operation reference documentation for every non-SiteLock endpoint.
+author: Realtime Register
 ---
 
 # Realtime Register

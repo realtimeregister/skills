@@ -1,0 +1,3878 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="googlebot" content="noindex" />
+
+    <title>Realtime Register - Create Domain</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <link rel="icon" href="/static/images/favicon.svg">
+    <link rel="shortcut icon" href="/static/images/favicon.svg">
+
+    <link href="/static/css/rtr.css" rel="stylesheet" type="text/css" />
+    <!--[if IE]> <link href="/static/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
+</head>
+
+<body>
+
+
+    <div id="top">
+        
+            <div class="top-wrapper">
+                
+                    <ul class="topnav">
+                        
+                            <li class="sidebar-button"><a href="#"><b class="responsive-nav"></b></a></li>
+                            <li class="logout"><a class="hovertip" data-placement="bottom" title="Login" href="/app/login/"><b class="logout"></b></a></li>
+                        
+                    </ul>
+                
+                <p class="live-support"><span class="info">Need help? Call Live Support at </span><span class="tel">+31 (0) 38 453 07 59</span></p>
+            </div>
+        
+    </div>
+
+
+
+    <div class="notice">
+        
+
+        
+            
+        
+    </div>
+
+
+
+    <div class="wrapper">
+        
+            <div class="sidebar" id="left-sidebar">
+                <a class="rtr-logo" href="https://www.realtimeregister.com/"><img width="180" src="/static/images/logo.svg" alt="RTR logo"></a>
+
+                
+                    <ul class="navigation standard">
+                        <li class="">
+                            <a href="/docs/api/"><i class="font-home"></i>Index</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/access">Access and Authentication</a></li>
+                                <li class=""><a href="/docs/api/types">Types</a></li>
+                                <li class=""><a href="/docs/api/listings">Listings</a></li>
+                                <li class=""><a href="/docs/api/quotes">Quotes</a></li>
+                                <li class=""><a href="/docs/api/errors">Errors</a></li>
+                                <li class=""><a href="/docs/api/samples">Code samples</a></li>
+                                <li class=""><a href="/docs/api/changelog">Changelog</a></li>
+                                <li class=""><a href="/docs/api/acceptable_use">Acceptable use policy</a></li>
+                                <li class=""><a href="/docs/api/session">Create Session <span class="label label-warning" style="margin-left: 20px;">Deprecated</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/customers"><i class="font-user"></i>Customers</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/customers/pricelist">Pricelist</a></li>
+                                <li class=""><a href="/docs/api/customers/credits">Credits</a></li>
+                            </ul>
+                        </li>
+                        <li class="active">
+                            <a href="/docs/api/domains"><i class="font-list"></i>Domains</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/domains/check">Check availability</a></li>
+                                <li class=""><a href="/docs/api/domains/get">Get</a></li>
+                                <li class=""><a href="/docs/api/domains/list">List</a></li>
+                                <li class="current"><a href="/docs/api/domains/create">Register</a></li>
+                                <li class=""><a href="/docs/api/domains/update">Update</a></li>
+                                <li class=""><a href="/docs/api/domains/transfer">Transfer</a></li>
+                                <li class=""><a href="/docs/api/domains/pushtransfer">Push transfer</a></li>
+                                <li class=""><a href="/docs/api/domains/transferinfo">Transfer info</a></li>
+                                <li class=""><a href="/docs/api/domains/transferauth">Transfer authorize <span class="label label-info" style="margin-left: 20px;">Gateway</span></a></li>
+                                <li class=""><a href="/docs/api/domains/renew">Renew</a></li>
+                                <li class=""><a href="/docs/api/domains/restore">Restore</a></li>
+                                <li class=""><a href="/docs/api/domains/delete">Delete</a></li>
+                                <li class=""><a href="/docs/api/domains/info">Info <span class="label label-info" style="margin-left: 20px;">Gateway</span></a></li>
+                                <li class=""><a href="/docs/api/domains/simulation">Simulation <span class="label label-warning" style="margin-left: 20px;">OT&E only</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/ssl"><i class="font-lock"></i>SSL (Standard)</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/ssl/get">Get certificate</a></li>
+                                <li class=""><a href="/docs/api/ssl/list">List certificates</a></li>
+                                <li class=""><a href="/docs/api/ssl/download">Download certificate</a></li>
+                                <li class=""><a href="/docs/api/ssl/dcvemailaddresslist">List DCV email addresses</a></li>
+                                <li class=""><a href="/docs/api/ssl/resenddcv">Resend DCV</a></li>
+                                <li class=""><a href="/docs/api/ssl/products/get">Get product</a></li>
+                                <li class=""><a href="/docs/api/ssl/products/list">List products</a></li>
+                                <li class=""><a href="/docs/api/ssl/request">Request certificate</a></li>
+                                <li class=""><a href="/docs/api/ssl/renew">Renew certificate</a></li>
+                                <li class=""><a href="/docs/api/ssl/reissue">Reissue certificate</a></li>
+                                <li class=""><a href="/docs/api/ssl/revoke">Revoke certificate</a></li>
+                                <li class=""><a href="/docs/api/ssl/send-subscriber-agreement">Send subscriber agreement</a></li>
+                                <li class=""><a href="/docs/api/ssl/add-note">Add note</a> <span class="label label-warning" style="margin-left: 20px;">Deprecated</span></li>
+                                <li class=""><a href="/docs/api/ssl/schedule-validation-call">Schedule validation call</a></li>
+                                <li class=""><a href="/docs/api/ssl/import">Import certificate</a></li>
+                                <li class=""><a href="/docs/api/ssl/decocdecsr">Decode CSR</a></li>
+                                <li class=""><a href="/docs/api/ssl/generate-authkey">Generate authKey</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/ssl/acme"><i class="font-lock"></i>SSL (ACME)</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/ssl/acme/get">Get ACME Subscription</a></li>
+                                <li class=""><a href="/docs/api/ssl/acme/list">List ACME Subscriptions</a></li>
+                                <li class=""><a href="/docs/api/ssl/acme/create">Create ACME Subscription</a></li>
+                                <li class=""><a href="/docs/api/ssl/acme/update">Update ACME Subscription</a></li>
+                                <li class=""><a href="/docs/api/ssl/acme/renew">Renew ACME Subscription</a></li>
+                                <li class=""><a href="/docs/api/ssl/acme/delete">Delete ACME Subscription</a></li>
+                                <li class=""><a href="/docs/api/ssl/acme/credentials">Recreate ACME Credentials</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/sitelock"><i class="font-lock"></i>SiteLock</a>
+                            <ul>
+                              <li class=""><a href="/docs/api/sitelock/accounts/get">Get account</a></li>
+                              <li class=""><a href="/docs/api/sitelock/accounts/list">List accounts</a></li>
+                              <li class=""><a href="/docs/api/sitelock/accounts/create">Create account</a></li>
+                              <li class=""><a href="/docs/api/sitelock/accounts/sso">Single sign-on</a></li>
+                              <li class=""><a href="/docs/api/sitelock/accounts/resetpassword">Reset account password</a></li>
+                              <li class=""><a href="/docs/api/sitelock/accounts/delete">Delete account</a></li>
+                              <li class=""><a href="/docs/api/sitelock/sites/get">Get site</a></li>
+                              <li class=""><a href="/docs/api/sitelock/sites/list">List sites</a></li>
+                              <li class=""><a href="/docs/api/sitelock/sites/create">Create site</a></li>
+                              <li class=""><a href="/docs/api/sitelock/sites/update">Update site</a></li>
+                              <li class=""><a href="/docs/api/sitelock/sites/delete">Delete site</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/hosts"><i class="font-hdd"></i>Hosts</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/hosts/get">Get</a></li>
+                                <li class=""><a href="/docs/api/hosts/list">List</a></li>
+                                <li class=""><a href="/docs/api/hosts/create">Create</a></li>
+                                <li class=""><a href="/docs/api/hosts/update">Update</a></li>
+                                <li class=""><a href="/docs/api/hosts/delete">Delete</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/contacts"><i class="font-book"></i>Contacts</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/contacts/get">Get</a></li>
+                                <li class=""><a href="/docs/api/contacts/list">List</a></li>
+                                <li class=""><a href="/docs/api/contacts/create">Create</a></li>
+                                <li class=""><a href="/docs/api/contacts/update">Update</a></li>
+                                <li class=""><a href="/docs/api/contacts/validate">Validate</a></li>
+                                <li class=""><a href="/docs/api/contacts/split">Split</a></li>
+                                <li class=""><a href="/docs/api/contacts/delete">Delete</a></li>
+                                <li class=""><a href="/docs/api/contacts/properties/add">Add properties</a></li>
+                                <li class=""><a href="/docs/api/contacts/properties/update">Update properties</a></li>
+                                <li class=""><a href="/docs/api/countries/get">Get country</a></li>
+                                <li class=""><a href="/docs/api/countries/list">List countries</a></li>
+                                <li class=""><a href="/docs/api/contacts/verification-matrix">Verification matrix</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/validation"><i class="font-check"></i>Validation</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/validation/get">Get validation category</a></li>
+                                <li class=""><a href="/docs/api/validation/list">List validation categories</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/templates"><i class="font-paste"></i>DNS Templates</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/templates/get">Get</a></li>
+                                <li class=""><a href="/docs/api/templates/list">List</a></li>
+                                <li class=""><a href="/docs/api/templates/create">Create</a></li>
+                                <li class=""><a href="/docs/api/templates/update">Update</a></li>
+                                <li class=""><a href="/docs/api/templates/delete">Delete</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                          <a href="/docs/api/dns/zones"><i class="font-reorder"></i>DNS Zones</a>
+                          <ul>
+                            <li class=""><a href="/docs/api/dns/zones/get">Get</a></li>
+                            <li class=""><a href="/docs/api/dns/zones/list">List</a></li>
+                            <li class=""><a href="/docs/api/dns/zones/create">Create</a></li>
+                            <li class=""><a href="/docs/api/dns/zones/update">Update</a></li>
+                            <li class=""><a href="/docs/api/dns/zones/delete">Delete</a></li>
+                            <li class=""><a href="/docs/api/dns/zones/stats">Statistics</a></li>
+                            <li class=""><a href="/docs/api/dns/zones/retrieve">Retrieve</a></li>
+                            <li class=""><a href="/docs/api/dns/zones/key-rollover">Key rollover</a></li>
+                            <li class=""><a href="/docs/api/dns/ack-ds-update">Ack DS update</a></li>
+                          </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/providers"><i class="font-globe"></i>Providers</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/providers/get">Get</a></li>
+                                <li class=""><a href="/docs/api/providers/list">List</a></li>
+                                <li class=""><a href="/docs/api/providers/downtime/get">Get downtime</a></li>
+                                <li class=""><a href="/docs/api/providers/downtime/list">List downtime</a></li>
+                                <li class=""><a href="/docs/api/registryAccount/get">Get registry account</a> <span class="label label-info" style="margin-left: 20px;">Gateway</span></li>
+                                <li class=""><a href="/docs/api/registryAccount/list">List registry account</a> <span class="label label-info" style="margin-left: 20px;">Gateway</span></li>
+                                <li class=""><a href="/docs/api/providers/info">Info <span class="label label-warning" style="margin-left: 20px;">Deprecated</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/tlds"><i class="font-globe"></i>TLDs</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/tlds/info">Info</a></li>
+                                <li class=""><a href="/docs/api/tlds/metadata">Metadata overview</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/brands"><i class="font-user"></i>Brands</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/brands/get">Get</a></li>
+                                <li class=""><a href="/docs/api/brands/list">List</a></li>
+                                <li class=""><a href="/docs/api/brands/create">Create</a></li>
+                                <li class=""><a href="/docs/api/brands/update">Update</a></li>
+                                <li class=""><a href="/docs/api/brands/delete">Delete</a></li>
+                                <li class=""><a href="/docs/api/brands/templates/get">Get template</a></li>
+                                <li class=""><a href="/docs/api/brands/templates/list">List templates</a></li>
+                                <li class=""><a href="/docs/api/brands/templates/update">Update template</a></li>
+                                <li class=""><a href="/docs/api/brands/templates/preview">Preview template</a></li>
+                                <li class=""><a href="/docs/api/brands/locales">List Locales</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/processes"><i class="font-cogs"></i>Processes</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/processes/get">Get</a></li>
+                                <li class=""><a href="/docs/api/processes/info">Info</a></li>
+                                <li class=""><a href="/docs/api/processes/list">List</a></li>
+                                <li class=""><a href="/docs/api/processes/resend">Resend</a></li>
+                                <li class=""><a href="/docs/api/processes/cancel">Cancel</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/notifications"><i class="font-comments"></i>Notifications</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/notifications/get">Get</a></li>
+                                <li class=""><a href="/docs/api/notifications/list">List</a></li>
+                                <li class=""><a href="/docs/api/notifications/poll">Poll</a></li>
+                                <li class=""><a href="/docs/api/notifications/ack">Ack</a></li>
+                                <li class=""><a href="/docs/api/notifications/webhook">Webhook</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/financial"><i class="font-money"></i>Financial</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/transactions/get">Get transaction</a></li>
+                                <li class=""><a href="/docs/api/transactions/list">List transactions</a></li>
+                                <li class=""><a href="/docs/api/exchangerates/list">List exchange rates</a></li>
+                                <li class=""><a href="/docs/api/exchangerates">Get exchange rates</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/isproxy"><i class=" font-ok-circle"></i>IsProxy</a>
+                        </li>
+                        <li class="">
+                            <a href="/docs/api/adac"><i class="font-ok-circle"></i>ADAC</a>
+                            <ul>
+                                <li class=""><a href="/docs/api/adac/input">Action: Input</a></li>
+                                <li class=""><a href="/docs/api/adac/categories">Action: Categories</a></li>
+                                <li class=""><a href="/docs/api/adac/check">Action: Check</a></li>
+                                <li class=""><a href="/docs/api/adac/suggest">Action: Suggest</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                
+            </div>
+        
+
+        
+            <div class="content api-docs">
+                
+                    <ul class="breadcrumb">
+                        
+    
+
+
+
+
+<li><a href="/docs/api/">API Docs</a><span class="divider">/</span></li>
+
+<li><a href="/docs/api/domains">Domains</a><span class="divider">/</span></li>
+
+    <li>Create Domain</li>
+
+                    </ul>
+                
+
+                
+                    <div class="body">
+                        
+                            <div class="page-header">
+                                
+    <h5>Create Domain</h5>
+
+                                
+                            </div>
+                        
+
+                        
+
+  
+<p style="margin-top: 10px;">Used to register a new domain name</p>
+
+  <p>
+    For more information about DNS zone operations and the interactions with domains see our <a rel="noreferrer noopener" target="_blank" href="https://kb.realtimeregister.com/article/355-dns-zones">Knowledge Base</a>.
+  </p>
+
+
+<div class="page-tabs">
+
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            
+            <li class="active"><a href="#request" data-toggle="tab"><i class="font-circle-arrow-right"></i>Request</a></li>
+            <li><a href="#response" data-toggle="tab"><i class="font-circle-arrow-left"></i>Response</a></li>
+            
+            <li><a href="#try" data-toggle="tab"><i class="font-play-circle"></i>Try</a></li>
+            
+            
+        </ul>
+        <div class="tab-content">
+            
+            <div class="tab-pane body active" id="request">
+                <div class="well-white body">
+                    <ul class="list-font">
+                    
+                        <li><i class="font-file"></i>POST<span class="pull-right">Method</span></li>
+                        <li><i class="font-link"></i>/v2/domains/<span class="label label-default">domainName</span><span class="pull-right">URL</span></li>
+                        
+                            <li><i class="font-list-ul"></i>application/json<span class="pull-right">Content-Type</span></li>
+                        
+                    
+                    </ul>
+                </div>
+
+                
+                    
+                    
+
+<div class="block well">
+    
+    <div class="navbar">
+        <div class="navbar-inner">
+            <h5>URL fields</h5>
+        </div>
+    </div>
+    
+    
+<div class="table-overflow">
+    <table class="table table-bordered table-striped table-block">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th>Description</th>
+            
+            <th>Restrictions</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        
+            
+
+<tr>
+    <td>domainName</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>
+    
+
+      The domain name
+    
+        </td>
+        <td>
+
+
+
+<div class="list">
+    <ul>
+    
+    
+        
+            <li>Regular expression: ^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+(?:[a-z][a-z0-9-]{0,61}[a-z0-9])$</li>
+        
+    
+        
+            <li>Minimum length: 3</li>
+        
+    
+        
+            <li>Maximum length: 255</li>
+        
+    
+        
+    
+        
+            <li>Registry specific restrictions may apply</li>
+        
+    
+    </ul>
+</div>
+
+</td>
+    
+</tr>
+
+        
+        
+        
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+
+
+
+
+
+
+                
+
+                
+                
+                    
+                    
+
+<div class="block well">
+    
+    <div class="navbar">
+        <div class="navbar-inner">
+            <h5>Request parameters</h5>
+        </div>
+    </div>
+    
+    
+<div class="table-overflow">
+    <table class="table table-bordered table-striped table-block">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th>Required / Optional</th>
+            
+            <th>Description</th>
+            
+            <th>Restrictions</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        
+            
+
+<tr>
+    <td>quote</td>
+    <td>
+
+<a href="/docs/api/types#Boolean">Boolean</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      If true, validate the request and request a quote for the action
+    
+        </td>
+        <td>
+
+
+
+</td>
+    
+</tr>
+
+        
+        
+        
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+
+
+
+
+
+
+                
+                
+
+                
+                    
+                    
+
+<div class="block well">
+    
+    <div class="navbar">
+        <div class="navbar-inner">
+            <h5>Request content fields</h5>
+        </div>
+    </div>
+    
+    
+<div class="table-overflow">
+    <table class="table table-bordered table-striped table-block">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th>Required / Optional</th>
+            
+            <th>Description</th>
+            
+            <th>Restrictions</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        
+            
+
+<tr>
+    <td>customer</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>Required</td>
+    
+    <td>
+    
+
+      The customer handle
+    
+        </td>
+        <td>
+
+
+
+<div class="list">
+    <ul>
+    
+    
+        
+            <li>Regular expression: [a-zA-Z0-9\-_@\.]+</li>
+        
+    
+        
+            <li>Minimum length: 3</li>
+        
+    
+        
+            <li>Maximum length: 40</li>
+        
+    
+        
+    
+    </ul>
+</div>
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>registrant</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>Required</td>
+    
+    <td>
+    
+
+      The handle of the contact to use as registrant
+    
+        </td>
+        <td>
+
+
+
+<div class="list">
+    <ul>
+    
+    
+        
+            <li>Regular expression: [a-zA-Z0-9\-_@\.]+</li>
+        
+    
+        
+            <li>Minimum length: 3</li>
+        
+    
+        
+            <li>Maximum length: 40</li>
+        
+    
+        
+    
+    </ul>
+</div>
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>privacyProtect</td>
+    <td>
+
+<a href="/docs/api/types#Boolean">Boolean</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      If set to True, privacy protect will be enabled, defaults to the &#x27;Privacy Protect&#x27; setting in your account
+    
+        </td>
+        <td>
+
+
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>period</td>
+    <td>
+
+<a href="/docs/api/types#Integer">Integer</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      The initial registration period for the domain name in months, defaults to the minimum period allowed by the registry
+    
+        </td>
+        <td>
+
+
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>authcode</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      The auth code for the domain name
+    
+        </td>
+        <td>
+
+
+
+<div class="list">
+    <ul>
+    
+    
+        
+            <li>Maximum length: 64</li>
+        
+    
+        
+    
+    </ul>
+</div>
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>languageCode</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      For IDN domains, the TLD specific language code for the domain name
+    
+        </td>
+        <td>
+
+
+
+<div class="list">
+    <ul>
+    
+    
+        
+            <li>Minimum length: 1</li>
+        
+    
+        
+            <li>Maximum length: 10</li>
+        
+    
+        
+    
+    </ul>
+</div>
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>autoRenew</td>
+    <td>
+
+<a href="/docs/api/types#Boolean">Boolean</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      If set to False, the domain will not be auto renewed upon expiration, defaults to True
+    
+        </td>
+        <td>
+
+
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>ns</td>
+    <td>
+
+<a href="/docs/api/types#List">List</a>
+
+
+    &lt;<a href="/docs/api/types#String">String</a>&gt;
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      List of name servers to use for the domain name
+    
+        </td>
+        <td>
+
+
+
+<div class="list">
+    <ul>
+    
+    
+        
+            <li>Regular expression: ^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+(?:[a-z][a-z0-9-]{0,61}[a-z0-9])$</li>
+        
+    
+        
+            <li>Maximum number of items: 10</li>
+        
+    
+        
+            <li>Minimum length: 4</li>
+        
+    
+        
+            <li>Maximum length: 255</li>
+        
+    
+    </ul>
+</div>
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>skipValidation</td>
+    <td>
+
+<a href="/docs/api/types#Boolean">Boolean</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      If set to True, contact validation will not be started. If validation is required before activation the domain will not be activated and get the PENDING_VALIDATION status. The domain will automatically be activated if validation is completed at a later time. This option cannot be used for TLD&#x27;s that require pre validation.
+    
+        </td>
+        <td>
+
+
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>launchPhase</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      The launch phase the domain is to be registered in, this field is only required if the TLD is not in General Availability yet
+    
+        </td>
+        <td>
+
+
+
+<div class="list">
+    <ul>
+    
+    
+        
+            <li>Maximum length: 64</li>
+        
+    
+        
+    
+    </ul>
+</div>
+
+</td>
+    
+</tr>
+
+        
+        
+            
+            <tr>
+                <td>zone</td>
+                
+                    <td><a href="#zone">zone</a></td>
+                
+                <td>Optional</td>
+                <td>DNS template to use for the domain name, transform an existing zone of the specified service into a managed zone or creates a new managed zone if not found. Vanity name servers can be specified on the &quot;ns&quot; field.</td>
+                
+                <td>
+
+
+<div class="list">
+    <ul>
+    
+        <li>In case a existing zone is used the values the values must match the existing zone or be left empty</li>
+    
+    </ul>
+</div>
+
+</td>
+                
+            </tr>
+            
+        
+        
+            
+            <tr>
+                <td>contacts</td>
+                <td><a href="/docs/api/types#List">List</a>
+                    &lt;
+                    
+                        <a href="#contacts">contacts</a>
+                    
+                    &gt;</td>
+                <td>Optional</td>
+                <td>
+                    
+                    Domain contacts and their role</td>
+                
+                <td>
+
+
+</td>
+                
+            </tr>
+            
+        
+            
+            <tr>
+                <td>keyData</td>
+                <td><a href="/docs/api/types#List">List</a>
+                    &lt;
+                    
+                        <a href="#keyData">keyData</a>
+                    
+                    &gt;</td>
+                <td>Optional</td>
+                <td>
+                    
+                    DNSSEC Key data for domain</td>
+                
+                <td>
+
+
+</td>
+                
+            </tr>
+            
+        
+            
+            <tr>
+                <td>billables</td>
+                <td><a href="/docs/api/types#List">List</a>
+                    &lt;
+                    
+                        <a href="#billables">billables</a>
+                    
+                    &gt;</td>
+                <td>Optional</td>
+                <td>
+                    
+                    Acknowledgment of billables for this request</td>
+                
+                <td>
+
+
+</td>
+                
+            </tr>
+            
+        
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+
+    
+    <div class="block well">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a id="zone"></a>
+                <h5>zone</h5>
+            </div>
+        </div>
+        
+<div class="table-overflow">
+    <table class="table table-bordered table-striped table-block">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th>Required / Optional</th>
+            
+            <th>Description</th>
+            
+            <th>Restrictions</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        
+            
+
+<tr>
+    <td>service</td>
+    <td>
+
+<a href="/docs/api/types#Enum">Enum</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      DNS service to provision, defaults to BASIC
+    
+        </td>
+        <td>
+
+
+
+    
+
+<p>Possible values:</p>
+<div class="list">
+    <ul>
+        
+            
+        
+            
+                <li><strong>BASIC</strong>: Basic, free DNS</li>
+            
+        
+            
+                <li><strong>PREMIUM</strong>: Premium DNS</li>
+            
+        
+    </ul>
+</div>
+
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>template</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      In case of a new zone, the template to use
+    
+        </td>
+        <td>
+
+
+
+<div class="list">
+    <ul>
+    
+    
+        
+            <li>Regular expression: [a-zA-Z0-9\-_@\.]+</li>
+        
+    
+        
+            <li>Minimum length: 3</li>
+        
+    
+        
+            <li>Maximum length: 40</li>
+        
+    
+        
+    
+    </ul>
+</div>
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>link</td>
+    <td>
+
+<a href="/docs/api/types#Boolean">Boolean</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      Unless false, the zone is linked to the template
+    
+        </td>
+        <td>
+
+
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>master</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      In case of a new zone, the IP address of the (hidden) master
+    
+        </td>
+        <td>
+
+
+
+<div class="list">
+    <ul>
+    
+    
+        
+    
+    </ul>
+</div>
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>dnssec</td>
+    <td>
+
+<a href="/docs/api/types#Boolean">Boolean</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      In case of a new zone, provision zone with DNSSEC
+    
+        </td>
+        <td>
+
+
+
+</td>
+    
+</tr>
+
+        
+        
+        
+        </tbody>
+    </table>
+</div>
+
+    </div>
+    
+
+
+
+    
+    <div class="block well">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a id="contacts"></a>
+                <h5>contacts</h5>
+            </div>
+        </div>
+        
+<div class="table-overflow">
+    <table class="table table-bordered table-striped table-block">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th>Required / Optional</th>
+            
+            <th>Description</th>
+            
+            <th>Restrictions</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        
+            
+
+<tr>
+    <td>role</td>
+    <td>
+
+<a href="/docs/api/types#Enum">Enum</a>
+
+
+</td>
+    
+    <td>Required</td>
+    
+    <td>
+    
+
+      The role for the contact
+    
+        </td>
+        <td>
+
+
+
+    
+
+<p>Possible values:</p>
+<div class="list">
+    <ul>
+        
+            
+                <li><strong>ADMIN</strong></li>
+            
+        
+            
+                <li><strong>BILLING</strong></li>
+            
+        
+            
+                <li><strong>TECH</strong></li>
+            
+        
+    </ul>
+</div>
+
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>handle</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>Required</td>
+    
+    <td>
+    
+
+      The contact handle
+    
+        </td>
+        <td>
+
+
+
+<div class="list">
+    <ul>
+    
+    
+        
+            <li>Regular expression: [a-zA-Z0-9\-_@\.]+</li>
+        
+    
+        
+            <li>Minimum length: 3</li>
+        
+    
+        
+            <li>Maximum length: 40</li>
+        
+    
+        
+    
+    </ul>
+</div>
+
+</td>
+    
+</tr>
+
+        
+        
+        
+        </tbody>
+    </table>
+</div>
+
+    </div>
+    
+
+    
+    <div class="block well">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a id="keyData"></a>
+                <h5>keyData</h5>
+            </div>
+        </div>
+        
+<div class="table-overflow">
+    <table class="table table-bordered table-striped table-block">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th>Required / Optional</th>
+            
+            <th>Description</th>
+            
+            <th>Restrictions</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        
+            
+
+<tr>
+    <td>protocol</td>
+    <td>
+
+<a href="/docs/api/types#Integer">Integer</a>
+
+
+</td>
+    
+    <td>Required</td>
+    
+    <td>
+    
+
+      The DNSSEC protocol
+    
+        </td>
+        <td>
+
+
+
+    
+
+<p>Possible values:</p>
+<div class="list">
+    <ul>
+        
+            
+                <li><strong>3</strong></li>
+            
+        
+    </ul>
+</div>
+
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>flags</td>
+    <td>
+
+<a href="/docs/api/types#Integer">Integer</a>
+
+
+</td>
+    
+    <td>Required</td>
+    
+    <td>
+    
+
+      The DNSSEC flags
+    
+        </td>
+        <td>
+
+
+
+    
+
+<p>Possible values:</p>
+<div class="list">
+    <ul>
+        
+            
+                <li><strong>256</strong>: 256 (ZSK)</li>
+            
+        
+            
+                <li><strong>257</strong>: 257 (KSK)</li>
+            
+        
+    </ul>
+</div>
+
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>algorithm</td>
+    <td>
+
+<a href="/docs/api/types#Integer">Integer</a>
+
+
+</td>
+    
+    <td>Required</td>
+    
+    <td>
+    
+
+      The DNSSEC algorithm
+    
+        </td>
+        <td>
+
+
+
+    
+
+<p>Possible values:</p>
+<div class="list">
+    <ul>
+        
+            
+                <li><strong>3</strong>: 3 (DSA/SHA1)</li>
+            
+        
+            
+                <li><strong>5</strong>: 5 (RSA/SHA-1)</li>
+            
+        
+            
+                <li><strong>6</strong>: 6 (DSA-NSEC3-SHA1)</li>
+            
+        
+            
+                <li><strong>7</strong>: 7 (RSASHA1-NSEC3-SHA1)</li>
+            
+        
+            
+                <li><strong>8</strong>: 8 (RSA/SHA-256)</li>
+            
+        
+            
+                <li><strong>10</strong>: 10 (RSA/SHA-512)</li>
+            
+        
+            
+                <li><strong>12</strong>: 12 (GOST R 34.10-2001)</li>
+            
+        
+            
+                <li><strong>13</strong>: 13 (ECDSA Curve P-256 with SHA-256)</li>
+            
+        
+            
+                <li><strong>14</strong>: 14 (ECDSA Curve P-384 with SHA-384)</li>
+            
+        
+            
+                <li><strong>15</strong>: 15 (Ed25519)</li>
+            
+        
+            
+                <li><strong>16</strong>: 16 (Ed448)</li>
+            
+        
+            
+                <li><strong>17</strong>: 17 (SM2 signing algorithm with SM3 hashing algorithm)</li>
+            
+        
+            
+                <li><strong>23</strong>: 23 (GOST R 34.10.2012)</li>
+            
+        
+    </ul>
+</div>
+
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>publicKey</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>Required</td>
+    
+    <td>
+    
+
+      The base64 encoded public key
+    
+        </td>
+        <td>
+
+
+
+<div class="list">
+    <ul>
+    
+    
+        
+    
+    </ul>
+</div>
+
+</td>
+    
+</tr>
+
+        
+        
+        
+        </tbody>
+    </table>
+</div>
+
+    </div>
+    
+
+    
+    <div class="block well">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a id="billables"></a>
+                <h5>billables</h5>
+            </div>
+        </div>
+        
+<div class="table-overflow">
+    <table class="table table-bordered table-striped table-block">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th>Required / Optional</th>
+            
+            <th>Description</th>
+            
+            <th>Restrictions</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        
+            
+
+<tr>
+    <td>product</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>Required</td>
+    
+    <td>
+    
+
+      The product
+    
+        </td>
+        <td>
+
+
+
+<div class="list">
+    <ul>
+    
+    
+        
+    
+    </ul>
+</div>
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>action</td>
+    <td>
+
+<a href="/docs/api/types#Enum">Enum</a>
+
+
+</td>
+    
+    <td>Required</td>
+    
+    <td>
+    
+
+      The action
+    
+        </td>
+        <td>
+
+
+
+    
+
+<p>Possible values:</p>
+<div class="list">
+    <ul>
+        
+            
+                <li><strong>CREATE</strong></li>
+            
+        
+            
+                <li><strong>REQUEST</strong></li>
+            
+        
+            
+                <li><strong>TRANSFER</strong></li>
+            
+        
+            
+                <li><strong>RENEW</strong></li>
+            
+        
+            
+                <li><strong>RESTORE</strong></li>
+            
+        
+            
+                <li><strong>TRANSFER_RESTORE</strong></li>
+            
+        
+            
+                <li><strong>UPDATE</strong></li>
+            
+        
+            
+                <li><strong>REGISTRANT_CHANGE</strong></li>
+            
+        
+            
+                <li><strong>LOCAL_CONTACT</strong></li>
+            
+        
+            
+                <li><strong>NEGATIVE_MARKUP</strong></li>
+            
+        
+            
+                <li><strong>PRIVACY_PROTECT</strong></li>
+            
+        
+            
+                <li><strong>EXTRA_WILDCARD</strong></li>
+            
+        
+            
+                <li><strong>EXTRA_DOMAIN</strong></li>
+            
+        
+            
+                <li><strong>REGISTRY_LOCK</strong></li>
+            
+        
+    </ul>
+</div>
+
+
+</td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>quantity</td>
+    <td>
+
+<a href="/docs/api/types#Integer">Integer</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      The maximum quantity, default 1
+    
+        </td>
+        <td>
+
+
+
+</td>
+    
+</tr>
+
+        
+        
+        
+        </tbody>
+    </table>
+</div>
+
+    </div>
+    
+
+
+
+    
+    
+
+
+                
+
+                
+            </div>
+            <div class="tab-pane body" id="response">
+                
+                <h4>Successful request</h4>
+
+                
+                <div class="block well">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <h5>Domain has been created successfully</h5>
+                        </div>
+                    </div>
+
+                    <div class="body">
+                        <ul class="list-font">
+                            <li><i class="font-file"></i>201 Created<span class="pull-right">HTTP Status</span></li>
+                            
+                            <li><i class="font-list-ul"></i>application/json<span class="pull-right">Content-Type</span></li>
+                            
+                        </ul>
+
+                        
+                        
+                        
+
+                        
+                            
+                            
+
+<div class="block well">
+    
+    <div class="navbar">
+        <div class="navbar-inner">
+            <h5>Response fields</h5>
+        </div>
+    </div>
+    
+    
+<div class="table-overflow">
+    <table class="table table-bordered table-striped table-block">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th>Required / Optional</th>
+            
+            <th>Description</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        
+            
+
+<tr>
+    <td>domainName</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>Required</td>
+    
+    <td>
+    
+
+      The domain name
+    
+        
+        </td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>expiryDate</td>
+    <td>
+
+<a href="/docs/api/types#Timestamp">Timestamp</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      The expiry date of the created domain name
+    
+        
+        </td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>status</td>
+    <td>
+
+<a href="/docs/api/types#List">List</a>
+
+
+    &lt;<a href="/docs/api/types#Enum">Enum</a>&gt;
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      
+    
+        
+            
+
+<p>Possible values:</p>
+<div class="list">
+    <ul>
+        
+            
+                <li><strong>OK</strong>: Ok</li>
+            
+        
+            
+                <li><strong>INACTIVE</strong>: Inactive</li>
+            
+        
+            
+                <li><strong>PENDING_TRANSFER</strong>: Pending transfer</li>
+            
+        
+            
+                <li><strong>PENDING_RENEW</strong>: Pending renew</li>
+            
+        
+            
+                <li><strong>PENDING_UPDATE</strong>: Pending update</li>
+            
+        
+            
+                <li><strong>DELETE_REQUESTED</strong>: Delete requested</li>
+            
+        
+            
+                <li><strong>PENDING_DELETE</strong>: Pending delete</li>
+            
+        
+            
+                <li><strong>ADD_PERIOD</strong>: Add period</li>
+            
+        
+            
+                <li><strong>RENEW_PERIOD</strong>: Renew period</li>
+            
+        
+            
+                <li><strong>AUTO_RENEW_PERIOD</strong>: Auto renew period</li>
+            
+        
+            
+                <li><strong>TRANSFER_PERIOD</strong>: Transfer period</li>
+            
+        
+            
+                <li><strong>REDEMPTION_PERIOD</strong>: Redemption period</li>
+            
+        
+            
+                <li><strong>PENDING_RESTORE</strong>: Pending restore</li>
+            
+        
+            
+                <li><strong>CLIENT_HOLD</strong>: Client hold</li>
+            
+        
+            
+                <li><strong>CLIENT_DELETE_PROHIBITED</strong>: Client delete prohibited</li>
+            
+        
+            
+                <li><strong>CLIENT_UPDATE_PROHIBITED</strong>: Client update prohibited</li>
+            
+        
+            
+                <li><strong>CLIENT_RENEW_PROHIBITED</strong>: Client renew prohibited</li>
+            
+        
+            
+                <li><strong>CLIENT_TRANSFER_PROHIBITED</strong>: Client transfer prohibited</li>
+            
+        
+            
+                <li><strong>REGISTRAR_HOLD</strong>: Registrar hold</li>
+            
+        
+            
+                <li><strong>REGISTRAR_DELETE_PROHIBITED</strong>: Registrar delete prohibited</li>
+            
+        
+            
+                <li><strong>REGISTRAR_UPDATE_PROHIBITED</strong>: Registrar update prohibited</li>
+            
+        
+            
+                <li><strong>REGISTRAR_RENEW_PROHIBITED</strong>: Registrar renew prohibited</li>
+            
+        
+            
+                <li><strong>REGISTRAR_TRANSFER_PROHIBITED</strong>: Registrar transfer prohibited</li>
+            
+        
+            
+                <li><strong>SERVER_HOLD</strong>: Server hold</li>
+            
+        
+            
+                <li><strong>SERVER_DELETE_PROHIBITED</strong>: Server delete prohibited</li>
+            
+        
+            
+                <li><strong>SERVER_UPDATE_PROHIBITED</strong>: Server update prohibited</li>
+            
+        
+            
+                <li><strong>SERVER_RENEW_PROHIBITED</strong>: Server renew prohibited</li>
+            
+        
+            
+                <li><strong>SERVER_TRANSFER_PROHIBITED</strong>: Server transfer prohibited</li>
+            
+        
+            
+                <li><strong>PENDING_VALIDATION</strong>: Domain pending registrant validation</li>
+            
+        
+            
+                <li><strong>PRIVACY_PROTECT_PROHIBITED</strong>: Privacy protect prohibited</li>
+            
+        
+            
+                <li><strong>EXPIRED</strong>: Domain has expired</li>
+            
+        
+            
+                <li><strong>IRTPC_TRANSFER_PROHIBITED</strong>: Transfer prohibited due to IRTP-C</li>
+            
+        
+    </ul>
+</div>
+
+        
+        </td>
+    
+</tr>
+
+        
+        
+        
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+
+
+
+
+
+
+                        
+                    </div>
+                </div>
+                
+                <div class="block well">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <h5>Domain has been requested successfully, you will be notified with the final result</h5>
+                        </div>
+                    </div>
+
+                    <div class="body">
+                        <ul class="list-font">
+                            <li><i class="font-file"></i>202 Accepted<span class="pull-right">HTTP Status</span></li>
+                            
+                            <li><i class="font-list-ul"></i>application/json<span class="pull-right">Content-Type</span></li>
+                            
+                        </ul>
+
+                        
+                        
+                        
+
+                        
+                            
+                            
+
+<div class="block well">
+    
+    <div class="navbar">
+        <div class="navbar-inner">
+            <h5>Response fields</h5>
+        </div>
+    </div>
+    
+    
+<div class="table-overflow">
+    <table class="table table-bordered table-striped table-block">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            
+            <th>Required / Optional</th>
+            
+            <th>Description</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        
+            
+
+<tr>
+    <td>domainName</td>
+    <td>
+
+<a href="/docs/api/types#String">String</a>
+
+
+</td>
+    
+    <td>Required</td>
+    
+    <td>
+    
+
+      The domain name
+    
+        
+        </td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>expiryDate</td>
+    <td>
+
+<a href="/docs/api/types#Timestamp">Timestamp</a>
+
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      The expiry date of the created domain name
+    
+        
+        </td>
+    
+</tr>
+
+        
+            
+
+<tr>
+    <td>status</td>
+    <td>
+
+<a href="/docs/api/types#List">List</a>
+
+
+    &lt;<a href="/docs/api/types#Enum">Enum</a>&gt;
+
+</td>
+    
+    <td>Optional</td>
+    
+    <td>
+    
+
+      
+    
+        
+            
+
+<p>Possible values:</p>
+<div class="list">
+    <ul>
+        
+            
+                <li><strong>OK</strong>: Ok</li>
+            
+        
+            
+                <li><strong>INACTIVE</strong>: Inactive</li>
+            
+        
+            
+                <li><strong>PENDING_TRANSFER</strong>: Pending transfer</li>
+            
+        
+            
+                <li><strong>PENDING_RENEW</strong>: Pending renew</li>
+            
+        
+            
+                <li><strong>PENDING_UPDATE</strong>: Pending update</li>
+            
+        
+            
+                <li><strong>DELETE_REQUESTED</strong>: Delete requested</li>
+            
+        
+            
+                <li><strong>PENDING_DELETE</strong>: Pending delete</li>
+            
+        
+            
+                <li><strong>ADD_PERIOD</strong>: Add period</li>
+            
+        
+            
+                <li><strong>RENEW_PERIOD</strong>: Renew period</li>
+            
+        
+            
+                <li><strong>AUTO_RENEW_PERIOD</strong>: Auto renew period</li>
+            
+        
+            
+                <li><strong>TRANSFER_PERIOD</strong>: Transfer period</li>
+            
+        
+            
+                <li><strong>REDEMPTION_PERIOD</strong>: Redemption period</li>
+            
+        
+            
+                <li><strong>PENDING_RESTORE</strong>: Pending restore</li>
+            
+        
+            
+                <li><strong>CLIENT_HOLD</strong>: Client hold</li>
+            
+        
+            
+                <li><strong>CLIENT_DELETE_PROHIBITED</strong>: Client delete prohibited</li>
+            
+        
+            
+                <li><strong>CLIENT_UPDATE_PROHIBITED</strong>: Client update prohibited</li>
+            
+        
+            
+                <li><strong>CLIENT_RENEW_PROHIBITED</strong>: Client renew prohibited</li>
+            
+        
+            
+                <li><strong>CLIENT_TRANSFER_PROHIBITED</strong>: Client transfer prohibited</li>
+            
+        
+            
+                <li><strong>REGISTRAR_HOLD</strong>: Registrar hold</li>
+            
+        
+            
+                <li><strong>REGISTRAR_DELETE_PROHIBITED</strong>: Registrar delete prohibited</li>
+            
+        
+            
+                <li><strong>REGISTRAR_UPDATE_PROHIBITED</strong>: Registrar update prohibited</li>
+            
+        
+            
+                <li><strong>REGISTRAR_RENEW_PROHIBITED</strong>: Registrar renew prohibited</li>
+            
+        
+            
+                <li><strong>REGISTRAR_TRANSFER_PROHIBITED</strong>: Registrar transfer prohibited</li>
+            
+        
+            
+                <li><strong>SERVER_HOLD</strong>: Server hold</li>
+            
+        
+            
+                <li><strong>SERVER_DELETE_PROHIBITED</strong>: Server delete prohibited</li>
+            
+        
+            
+                <li><strong>SERVER_UPDATE_PROHIBITED</strong>: Server update prohibited</li>
+            
+        
+            
+                <li><strong>SERVER_RENEW_PROHIBITED</strong>: Server renew prohibited</li>
+            
+        
+            
+                <li><strong>SERVER_TRANSFER_PROHIBITED</strong>: Server transfer prohibited</li>
+            
+        
+            
+                <li><strong>PENDING_VALIDATION</strong>: Domain pending registrant validation</li>
+            
+        
+            
+                <li><strong>PRIVACY_PROTECT_PROHIBITED</strong>: Privacy protect prohibited</li>
+            
+        
+            
+                <li><strong>EXPIRED</strong>: Domain has expired</li>
+            
+        
+            
+                <li><strong>IRTPC_TRANSFER_PROHIBITED</strong>: Transfer prohibited due to IRTP-C</li>
+            
+        
+    </ul>
+</div>
+
+        
+        </td>
+    
+</tr>
+
+        
+        
+        
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+
+
+
+
+
+
+                        
+                    </div>
+                </div>
+                
+
+                <h4>Failed requests</h4>
+                
+                
+                
+                    <p>Besides the <a href="/docs/api/errors">generic errors</a> these specific error responses can be expected.</p>
+                    <div class="block well">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <h5>Error responses</h5>
+                        </div>
+                    </div>
+                    <div class="table-overflow">
+                        <table class="table table-bordered table-striped table-block">
+                            <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                                <tr>
+                                    <td><a href="/docs/api/errors/BillableAcknowledgmentNeededException">BillableAcknowledgmentNeededException</a></td>
+                                    <td>400 Bad Request</td>
+                                    <td></td>
+                                </tr>
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+            
+            <div class="tab-pane body" id="try">
+                
+                    <div class="block well">
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <h5>URL fields</h5>
+                            </div>
+                        </div>
+                        <form action="" id="url-fields-form" onsubmit="return false;">
+                            
+
+
+
+
+
+
+
+
+    
+        
+
+<div class="control-group control-group-field-domainName">
+    
+        <label class="control-label" for="id_domainName">
+            Domain Name
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <input type="text" name="domainName" maxlength="255" minlength="3" required id="id_domainName">
+            
+                <span class="help-block">The domain name</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+
+
+
+    
+
+
+
+
+
+
+                        </form>
+                    </div>
+
+                
+
+                
+                    <div class="block well">
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <h5>Request parameters</h5>
+                            </div>
+                        </div>
+                        <form action="" id="request-parameters-form" onsubmit="return false;">
+                            
+
+
+
+
+
+
+
+
+    
+        
+
+<div class="control-group control-group-field-quote">
+    
+        <div class="controls">
+            <label class="checkbox">
+                <input type="checkbox" name="quote" value="true" id="id_quote"> <span>Quote</span>
+                
+            </label>
+
+            
+                <span class="help-block">If true, validate the request and request a quote for the action</span>
+            
+
+            
+        </div>
+    
+</div>
+
+    
+
+
+
+    
+
+
+
+
+
+
+                        </form>
+                    </div>
+                
+
+                
+                    <div class="block well">
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <h5>Request parameters</h5>
+                            </div>
+                        </div>
+                        <form action="" id="request-content-form" onsubmit="return false;">
+                            
+
+
+
+
+
+
+
+
+    
+        
+
+<div class="control-group control-group-field-customer">
+    
+        <label class="control-label" for="id_customer">
+            Customer
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <input type="text" name="customer" maxlength="40" minlength="3" required id="id_customer">
+            
+                <span class="help-block">The customer handle</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+
+    
+        
+
+<div class="control-group control-group-field-registrant">
+    
+        <label class="control-label" for="id_registrant">
+            Registrant
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <input type="text" name="registrant" maxlength="40" minlength="3" required id="id_registrant">
+            
+                <span class="help-block">The handle of the contact to use as registrant</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+
+    
+        
+
+<div class="control-group control-group-field-privacyProtect">
+    
+        <label class="control-label" for="id_privacyProtect">
+            Privacy protect
+            
+        </label>
+        <div class="controls">
+            <select name="privacyProtect" data-type="boolean" id="id_privacyProtect">
+  <option value=""></option>
+
+  <option value="true">true</option>
+
+  <option value="false">false</option>
+
+</select>
+            
+                <span class="help-block">If set to True, privacy protect will be enabled, defaults to the &#x27;Privacy Protect&#x27; setting in your account</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+
+    
+        
+
+<div class="control-group control-group-field-period">
+    
+        <label class="control-label" for="id_period">
+            Period
+            
+        </label>
+        <div class="controls">
+            <input type="text" name="period" data-type="integer" id="id_period">
+            
+                <span class="help-block">The initial registration period for the domain name in months, defaults to the minimum period allowed by the registry</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+
+    
+        
+
+<div class="control-group control-group-field-authcode">
+    
+        <label class="control-label" for="id_authcode">
+            Auth code
+            
+        </label>
+        <div class="controls">
+            <input type="text" name="authcode" maxlength="64" id="id_authcode">
+            
+                <span class="help-block">The auth code for the domain name</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+
+    
+        
+
+<div class="control-group control-group-field-languageCode">
+    
+        <label class="control-label" for="id_languageCode">
+            Language code
+            
+        </label>
+        <div class="controls">
+            <input type="text" name="languageCode" maxlength="10" minlength="1" id="id_languageCode">
+            
+                <span class="help-block">For IDN domains, the TLD specific language code for the domain name</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+
+    
+        
+
+<div class="control-group control-group-field-autoRenew">
+    
+        <label class="control-label" for="id_autoRenew">
+            Auto renew
+            
+        </label>
+        <div class="controls">
+            <select name="autoRenew" data-type="boolean" id="id_autoRenew">
+  <option value=""></option>
+
+  <option value="true">true</option>
+
+  <option value="false">false</option>
+
+</select>
+            
+                <span class="help-block">If set to False, the domain will not be auto renewed upon expiration, defaults to True</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+
+    
+        
+
+<div class="control-group control-group-field-ns">
+    
+        <label class="control-label" for="id_ns">
+            Name servers
+            
+        </label>
+        <div class="controls">
+            <textarea name="ns" cols="40" rows="5" id="id_ns">
+</textarea>
+            
+                <span class="help-block">List of name servers to use for the domain name</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+
+    
+        
+
+<div class="control-group control-group-field-skipValidation">
+    
+        <label class="control-label" for="id_skipValidation">
+            Skip validation
+            
+        </label>
+        <div class="controls">
+            <select name="skipValidation" data-type="boolean" id="id_skipValidation">
+  <option value="" selected></option>
+
+  <option value="true">true</option>
+
+  <option value="false">false</option>
+
+</select>
+            
+                <span class="help-block">If set to True, contact validation will not be started. If validation is required before activation the domain will not be activated and get the PENDING_VALIDATION status. The domain will automatically be activated if validation is completed at a later time. This option cannot be used for TLD&#x27;s that require pre validation.</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+
+    
+        
+
+<div class="control-group control-group-field-launchPhase">
+    
+        <label class="control-label" for="id_launchPhase">
+            Launch phase
+            
+        </label>
+        <div class="controls">
+            <input type="text" name="launchPhase" maxlength="64" id="id_launchPhase">
+            
+                <span class="help-block">The launch phase the domain is to be registered in, this field is only required if the TLD is not in General Availability yet</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+    <div class="navbar">
+        <div class="navbar-inner">
+            <h5>zone</h5>
+        </div>
+    </div>
+    
+        
+
+<div class="control-group control-group-field-zone-service">
+    
+        <label class="control-label" for="id_zone-service">
+            Service
+            
+        </label>
+        <div class="controls">
+            <select name="zone-service" id="id_zone-service">
+  <option value="" selected></option>
+
+  <option value="BASIC">Basic, free DNS</option>
+
+  <option value="PREMIUM">Premium DNS</option>
+
+</select>
+            
+                <span class="help-block">DNS service to provision, defaults to BASIC</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+        
+
+<div class="control-group control-group-field-zone-template">
+    
+        <label class="control-label" for="id_zone-template">
+            Template
+            
+        </label>
+        <div class="controls">
+            <input type="text" name="zone-template" maxlength="40" minlength="3" id="id_zone-template">
+            
+                <span class="help-block">In case of a new zone, the template to use</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+        
+
+<div class="control-group control-group-field-zone-link">
+    
+        <div class="controls">
+            <label class="checkbox">
+                <input type="checkbox" name="zone-link" value="true" id="id_zone-link"> <span>Link</span>
+                
+            </label>
+
+            
+                <span class="help-block">Unless false, the zone is linked to the template</span>
+            
+
+            
+        </div>
+    
+</div>
+
+    
+        
+
+<div class="control-group control-group-field-zone-master">
+    
+        <label class="control-label" for="id_zone-master">
+            Master
+            
+        </label>
+        <div class="controls">
+            <input type="text" name="zone-master" id="id_zone-master">
+            
+                <span class="help-block">In case of a new zone, the IP address of the (hidden) master</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+        
+
+<div class="control-group control-group-field-zone-dnssec">
+    
+        <label class="control-label" for="id_zone-dnssec">
+            DNSSEC
+            
+        </label>
+        <div class="controls">
+            <select name="zone-dnssec" data-type="boolean" id="id_zone-dnssec">
+  <option value="" selected></option>
+
+  <option value="true">true</option>
+
+  <option value="false">false</option>
+
+</select>
+            
+                <span class="help-block">In case of a new zone, provision zone with DNSSEC</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+    
+
+
+
+
+    
+        <input type="hidden" name="contacts-TOTAL_FORMS" value="3" id="id_contacts-TOTAL_FORMS"><input type="hidden" name="contacts-INITIAL_FORMS" value="3" id="id_contacts-INITIAL_FORMS"><input type="hidden" name="contacts-MIN_NUM_FORMS" value="0" id="id_contacts-MIN_NUM_FORMS"><input type="hidden" name="contacts-MAX_NUM_FORMS" value="1000" id="id_contacts-MAX_NUM_FORMS">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <h5>contacts</h5>
+            </div>
+        </div>
+        <div class="formset" id="formset-contacts">
+        
+        
+            <fieldset class="formset-form form-inline">
+                
+
+
+
+
+    
+
+<div class="control-group control-group-field-contacts-0-role">
+    
+        <label class="control-label" for="id_contacts-0-role">
+            Role
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <select name="contacts-0-role" id="id_contacts-0-role">
+  <option value="ADMIN" selected>ADMIN</option>
+
+  <option value="BILLING">BILLING</option>
+
+  <option value="TECH">TECH</option>
+
+</select>
+            
+                <span class="help-block">The role for the contact</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+    
+
+<div class="control-group control-group-field-contacts-0-handle">
+    
+        <label class="control-label" for="id_contacts-0-handle">
+            Contact
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <input type="text" name="contacts-0-handle" maxlength="40" minlength="3" id="id_contacts-0-handle">
+            
+                <span class="help-block">The contact handle</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+
+            </fieldset>
+        
+            <fieldset class="formset-form form-inline">
+                
+
+
+
+
+    
+
+<div class="control-group control-group-field-contacts-1-role">
+    
+        <label class="control-label" for="id_contacts-1-role">
+            Role
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <select name="contacts-1-role" id="id_contacts-1-role">
+  <option value="ADMIN">ADMIN</option>
+
+  <option value="BILLING" selected>BILLING</option>
+
+  <option value="TECH">TECH</option>
+
+</select>
+            
+                <span class="help-block">The role for the contact</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+    
+
+<div class="control-group control-group-field-contacts-1-handle">
+    
+        <label class="control-label" for="id_contacts-1-handle">
+            Contact
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <input type="text" name="contacts-1-handle" maxlength="40" minlength="3" id="id_contacts-1-handle">
+            
+                <span class="help-block">The contact handle</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+
+            </fieldset>
+        
+            <fieldset class="formset-form form-inline">
+                
+
+
+
+
+    
+
+<div class="control-group control-group-field-contacts-2-role">
+    
+        <label class="control-label" for="id_contacts-2-role">
+            Role
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <select name="contacts-2-role" id="id_contacts-2-role">
+  <option value="ADMIN">ADMIN</option>
+
+  <option value="BILLING">BILLING</option>
+
+  <option value="TECH" selected>TECH</option>
+
+</select>
+            
+                <span class="help-block">The role for the contact</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+    
+
+<div class="control-group control-group-field-contacts-2-handle">
+    
+        <label class="control-label" for="id_contacts-2-handle">
+            Contact
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <input type="text" name="contacts-2-handle" maxlength="40" minlength="3" id="id_contacts-2-handle">
+            
+                <span class="help-block">The contact handle</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+
+            </fieldset>
+        
+        </div>
+    
+        <input type="hidden" name="keyData-TOTAL_FORMS" value="1" id="id_keyData-TOTAL_FORMS"><input type="hidden" name="keyData-INITIAL_FORMS" value="0" id="id_keyData-INITIAL_FORMS"><input type="hidden" name="keyData-MIN_NUM_FORMS" value="0" id="id_keyData-MIN_NUM_FORMS"><input type="hidden" name="keyData-MAX_NUM_FORMS" value="1000" id="id_keyData-MAX_NUM_FORMS">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <h5>keyData</h5>
+            </div>
+        </div>
+        <div class="formset" id="formset-keyData">
+        
+        
+            <fieldset class="formset-form form-inline">
+                
+
+
+
+
+    
+
+<div class="control-group control-group-field-keyData-0-protocol">
+    
+        <label class="control-label" for="id_keyData-0-protocol">
+            Protocol
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <select name="keyData-0-protocol" class="dnssec_input" data-type="integer" id="id_keyData-0-protocol">
+  <option value="3">3</option>
+
+</select>
+            
+                <span class="help-block">The DNSSEC protocol</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+    
+
+<div class="control-group control-group-field-keyData-0-flags">
+    
+        <label class="control-label" for="id_keyData-0-flags">
+            Flags
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <select name="keyData-0-flags" class="dnssec_input" data-type="integer" id="id_keyData-0-flags">
+  <option value="256">256 (ZSK)</option>
+
+  <option value="257">257 (KSK)</option>
+
+</select>
+            
+                <span class="help-block">The DNSSEC flags</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+    
+
+<div class="control-group control-group-field-keyData-0-algorithm">
+    
+        <label class="control-label" for="id_keyData-0-algorithm">
+            Algorithm
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <select name="keyData-0-algorithm" class="dnssec_input" data-type="integer" id="id_keyData-0-algorithm">
+  <option value="3">3 (DSA/SHA1)</option>
+
+  <option value="5">5 (RSA/SHA-1)</option>
+
+  <option value="6">6 (DSA-NSEC3-SHA1)</option>
+
+  <option value="7">7 (RSASHA1-NSEC3-SHA1)</option>
+
+  <option value="8">8 (RSA/SHA-256)</option>
+
+  <option value="10">10 (RSA/SHA-512)</option>
+
+  <option value="12">12 (GOST R 34.10-2001)</option>
+
+  <option value="13">13 (ECDSA Curve P-256 with SHA-256)</option>
+
+  <option value="14">14 (ECDSA Curve P-384 with SHA-384)</option>
+
+  <option value="15">15 (Ed25519)</option>
+
+  <option value="16">16 (Ed448)</option>
+
+  <option value="17">17 (SM2 signing algorithm with SM3 hashing algorithm)</option>
+
+  <option value="23">23 (GOST R 34.10.2012)</option>
+
+</select>
+            
+                <span class="help-block">The DNSSEC algorithm</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+    
+
+<div class="control-group control-group-field-keyData-0-publicKey">
+    
+        <label class="control-label" for="id_keyData-0-publicKey">
+            Public key
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <textarea name="keyData-0-publicKey" cols="40" rows="10" class="public_key_input" id="id_keyData-0-publicKey">
+</textarea>
+            
+                <span class="help-block">The base64 encoded public key</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+
+            </fieldset>
+        
+        </div>
+    
+        <input type="hidden" name="billables-TOTAL_FORMS" value="1" id="id_billables-TOTAL_FORMS"><input type="hidden" name="billables-INITIAL_FORMS" value="0" id="id_billables-INITIAL_FORMS"><input type="hidden" name="billables-MIN_NUM_FORMS" value="0" id="id_billables-MIN_NUM_FORMS"><input type="hidden" name="billables-MAX_NUM_FORMS" value="1000" id="id_billables-MAX_NUM_FORMS">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <h5>billables</h5>
+            </div>
+        </div>
+        <div class="formset" id="formset-billables">
+        
+        
+            <fieldset class="formset-form form-inline">
+                
+
+
+
+
+    
+
+<div class="control-group control-group-field-billables-0-product">
+    
+        <label class="control-label" for="id_billables-0-product">
+            Product
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <input type="text" name="billables-0-product" id="id_billables-0-product">
+            
+                <span class="help-block">The product</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+    
+
+<div class="control-group control-group-field-billables-0-action">
+    
+        <label class="control-label" for="id_billables-0-action">
+            Action
+            <span class="req">*</span>
+        </label>
+        <div class="controls">
+            <select name="billables-0-action" id="id_billables-0-action">
+  <option value="CREATE">CREATE</option>
+
+  <option value="REQUEST">REQUEST</option>
+
+  <option value="TRANSFER">TRANSFER</option>
+
+  <option value="RENEW">RENEW</option>
+
+  <option value="RESTORE">RESTORE</option>
+
+  <option value="TRANSFER_RESTORE">TRANSFER_RESTORE</option>
+
+  <option value="UPDATE">UPDATE</option>
+
+  <option value="REGISTRANT_CHANGE">REGISTRANT_CHANGE</option>
+
+  <option value="LOCAL_CONTACT">LOCAL_CONTACT</option>
+
+  <option value="NEGATIVE_MARKUP">NEGATIVE_MARKUP</option>
+
+  <option value="PRIVACY_PROTECT">PRIVACY_PROTECT</option>
+
+  <option value="EXTRA_WILDCARD">EXTRA_WILDCARD</option>
+
+  <option value="EXTRA_DOMAIN">EXTRA_DOMAIN</option>
+
+  <option value="REGISTRY_LOCK">REGISTRY_LOCK</option>
+
+</select>
+            
+                <span class="help-block">The action</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+    
+
+<div class="control-group control-group-field-billables-0-quantity">
+    
+        <label class="control-label" for="id_billables-0-quantity">
+            Quantity
+            
+        </label>
+        <div class="controls">
+            <input type="number" name="billables-0-quantity" id="id_billables-0-quantity">
+            
+                <span class="help-block">The maximum quantity, default 1</span>
+            
+            
+            
+            
+        </div>
+    
+</div>
+
+
+
+            </fieldset>
+        
+        </div>
+    
+
+
+                        </form>
+                    </div>
+                
+
+                
+
+                <div class="block well">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <h5>Request</h5>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <p>
+                            <span id="method">POST</span>
+                            <span id="url">/v2/domains/<span class="label label-default">domainName</span></span><span id="request-parameters"></span>
+
+                            
+                                <br />
+                                Content-Type: application/json
+                            
+                        </p>
+                        
+                        <pre id="request-content">{}</pre>
+                        
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit" id="submit">Submit</button>
+                    </div>
+                </div>
+
+                <div class="block well">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <h5>Response</h5>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <ul class="list-font" id="response-headers">
+                        </ul>
+                    </div>
+
+                    <div class="body" id="response-body">
+                    </div>
+                </div>
+            </div>
+            
+        
+        </div>
+    </div>
+
+</div>
+
+
+    <div class="try-modal modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="navbar" style="margin-bottom: 5px;">
+            <div class="navbar-inner">
+                <h5>API tryout</h5>
+                <a class="modal-hide font-remove popover-action-icon" title="Close"></a>
+            </div>
+        </div>
+
+        <div class="body">
+            <div class="inner">
+                
+                <p>The tryout functionality for our API is only available in the OT&E environment. If you do not yet have an account, our support team can create it for you.</p>
+                
+
+                <p>
+                    <a class="btn" href="mailto:support@realtimeregister.com?subject=OT%26E+Account&amp;body=Please+ceate+an+OT%26E+account"><i class="font-envelope"></i>Email Support</a>
+                    
+                        <a rel="noreferrer noopener" class="btn" target="_blank" href="https://dm.yoursrs-ote.com"><i class="font-share-alt"></i>OT&E Environment</a>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+                    </div>
+                
+            </div>
+        
+    </div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-3.4.1.min.js"></script>
+
+<script src="/static/js/plugins/bootstrap/bootstrap.min.js"></script>
+<script src="/static/js/plugins/tables/jquery.floatThead.min.js"></script>
+<script src="/static/js/plugins/wizard/jquery.formset.js"></script>
+<script src="/static/js/functions/custom.js"></script>
+
+<script>
+    const page = "domains";
+</script>
+
+<script>
+    $(function(){
+      window.location.hash && $('ul.nav.nav-tabs a[href="' + window.location.hash + '"]').tab('show');
+      $('ul.nav.nav-tabs a').click(function (e) {
+        history.replaceState(null, null, this.hash);
+      });
+    });
+</script>
+
+    
+<script>
+    url = '/v2/domains/{domainName}';
+
+    url_fields = ['domainName'];
+    url_fields_optional = [];
+    update_url = function() {
+        let new_url = url;
+        for (var i = 0; i < url_fields.length; i++) {
+            let val = $('#id_' + url_fields[i]).val();
+            if (!val && url_fields_optional.indexOf(url_fields[i]) == -1) {
+                val = '<span class="label label-default">' + url_fields[i] + '</span>';
+            }
+
+            new_url = new_url.replace('{' + url_fields[i] + '}', val);
+            // Remove trailing slash
+            new_url = new_url.replace(/\/$/, '');
+        }
+        $('#url').html(new_url);
+    };
+    $(document).ready(function() {
+        $('#url-fields-form').find('input, select').on('change keyup', update_url);
+        update_url();
+    });
+
+</script>
+
+
+    
+<script>
+    update_parameters = function() {
+        const parameters = $('#request-parameters-form').find(':input').filter((_, el) => $(el).val().trim() !== "").serializeArray();
+        let urlString = ''
+        if (parameters.length) {
+            urlString += '?'
+            parameters.forEach((param, index) => {
+                if (index !== 0) {
+                    urlString += '&'
+                }
+                urlString += param.name + '=' + param.value
+            })
+        }
+        $('#request-parameters').text(urlString);
+    };
+    $(document).ready(function() {
+        $('#request-parameters-form').find('input, select').on('change keyup', update_parameters);
+        update_parameters();
+    });
+</script>
+    
+
+
+<script>
+
+     function serialize_content(object) {
+         var o = {};
+         var a = object.serializeArray();
+
+         $.each($(object).find("input[data-type='integer'], select[data-type='integer']"), function() {
+             var name = $(this).attr('name');
+             $.each(a, function() {
+                 if (this.name == name && this.value && this.value != '') {
+                     this.value = parseInt(this.value);
+                 }
+             });
+         });
+
+         $.each($(object).find("input[data-type='boolean'], select[data-type='boolean']"), function() {
+             var name = $(this).attr('name');
+             $.each(a, function() {
+                 if (this.name == name && this.value != '') {
+                     if (this.value == "true") {
+                         this.value = true;
+                     } else if (this.value == "false") {
+                         this.value = false;
+                     }
+                 }
+             });
+         });
+
+         $.each(a, function() {
+             if (this.value == undefined || this.value === '') {
+                 return;
+             }
+
+         
+             
+         
+             
+         
+             
+         
+             
+         
+             
+         
+             
+         
+             
+         
+             
+         
+             
+         
+             
+         
+
+         
+             if (this.name.indexOf("contacts-") == 0) {
+                 if (!o["contacts"]) {
+                     o["contacts"] = [];
+                 }
+
+                 var n = this.name.split("-", 3);
+                 if (n.length != 3) {
+                     return;
+                 }
+
+                 if (!o["contacts"][n[1]]) {
+                     o["contacts"][n[1]] = {};
+                 }
+                 
+
+                 o["contacts"][n[1]][n[2]] = this.value;
+
+                 return;
+             }
+         
+             if (this.name.indexOf("keyData-") == 0) {
+                 if (!o["keyData"]) {
+                     o["keyData"] = [];
+                 }
+
+                 var n = this.name.split("-", 3);
+                 if (n.length != 3) {
+                     return;
+                 }
+
+                 if (!o["keyData"][n[1]]) {
+                     o["keyData"][n[1]] = {};
+                 }
+                 
+
+                 o["keyData"][n[1]][n[2]] = this.value;
+
+                 return;
+             }
+         
+             if (this.name.indexOf("billables-") == 0) {
+                 if (!o["billables"]) {
+                     o["billables"] = [];
+                 }
+
+                 var n = this.name.split("-", 3);
+                 if (n.length != 3) {
+                     return;
+                 }
+
+                 if (!o["billables"][n[1]]) {
+                     o["billables"][n[1]] = {};
+                 }
+                 
+
+                 o["billables"][n[1]][n[2]] = this.value;
+
+                 return;
+             }
+         
+
+         
+             if (this.name.indexOf("zone-") == 0) {
+                 if (!o["zone"]) {
+                     o["zone"] = {};
+                 }
+
+                 var n = this.name.split("-", 2);
+                 if (n.length != 2) {
+                     return;
+                 }
+
+                 o["zone"][n[1]] = this.value;
+
+                 return;
+             }
+         
+
+         
+             if (this.name == "ns") {
+             
+                 o[this.name] = $.grep(this.value.split(/[\n\r]+/), function(n){return(n)});
+             
+                 return;
+             }
+             
+
+             o[this.name] = this.value;
+         });
+
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+            
+         
+
+         
+             if (o["contacts"]) {
+                 o["contacts"] = $.grep(o["contacts"],function(n){ return(n) });
+
+                 if (!o["contacts"].length) {
+                     delete o["contacts"];
+                 }
+             }
+         
+             if (o["keyData"]) {
+                 o["keyData"] = $.grep(o["keyData"],function(n){ return(n) });
+
+                 if (!o["keyData"].length) {
+                     delete o["keyData"];
+                 }
+             }
+         
+             if (o["billables"]) {
+                 o["billables"] = $.grep(o["billables"],function(n){ return(n) });
+
+                 if (!o["billables"].length) {
+                     delete o["billables"];
+                 }
+             }
+         
+
+         $.each(a, function() {
+             var index = this.name.indexOf("_empty");
+             if (index > 0) {
+                 var name = this.name.substring(0, index);
+                 delete o[this.name];
+
+                 
+                 if (name == "ns") {
+                     o[name] = [];
+                     return;
+                 }
+                 
+                 
+                 o[name] = "";
+
+             }
+         });
+
+         return o;
+    }
+
+    update_content = function() {
+        $('#request-content').text(JSON.stringify(serialize_content($("#request-content-form")), null, 4));
+    };
+
+    $(document).ready(function() {
+        $('#request-content-form').find('input, textarea, select').on('change keyup', update_content);
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    
+        $('#formset-contacts').find('.formset-form').formset({
+            prefix: 'contacts',
+            addText: '<i class="font-plus-sign"></i>Add',
+            deleteText: '<i class="font-minus-sign"></i>Remove',
+            addCssClass: "btn btn-inline-add",
+            deleteCssClass: "btn",
+            added: function() {update_content();},
+            removed: function() {update_content();}
+        });
+    
+        $('#formset-keyData').find('.formset-form').formset({
+            prefix: 'keyData',
+            addText: '<i class="font-plus-sign"></i>Add',
+            deleteText: '<i class="font-minus-sign"></i>Remove',
+            addCssClass: "btn btn-inline-add",
+            deleteCssClass: "btn",
+            added: function() {update_content();},
+            removed: function() {update_content();}
+        });
+    
+        $('#formset-billables').find('.formset-form').formset({
+            prefix: 'billables',
+            addText: '<i class="font-plus-sign"></i>Add',
+            deleteText: '<i class="font-minus-sign"></i>Remove',
+            addCssClass: "btn btn-inline-add",
+            deleteCssClass: "btn",
+            added: function() {update_content();},
+            removed: function() {update_content();}
+        });
+    
+        update_content();
+    });
+
+
+    $(document).ready(function() {
+        $('#submit').on('click', function(event) {
+            
+                $(".try-modal").modal();
+            
+        });
+    });
+
+    
+        $('.try-modal .modal-hide').on('click', function() { $('.try-modal').modal('hide'); });
+    
+</script>
+    
+
+    
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+category: dupe
+label: Dupe
+description: Fixture with two operations sharing the same operationId.
+operations:
+  - operationId: pingDupe
+    method: GET
+    path: /v2/dupe/a
+  - operationId: pingDupe
+    method: GET
+    path: /v2/dupe/b
