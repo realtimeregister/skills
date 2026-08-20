@@ -6,6 +6,9 @@ author: Realtime Register
 
 # Realtime Register
 
+This skill provides reference information about the Realtime Register API.
+It does not contain or provide credentials. Any examples containing authentication values use placeholders only.
+
 ## Resources
 
 - `assets/spec/_shared.yaml` - enums, reusable types, and the global error catalog
@@ -25,7 +28,8 @@ Use this skill for tasks involving the Realtime Register REST API, including:
 
 ## Hard rules
 
-- Authentication is `Authorization: ApiKey <key>`.
+- Never ask the user to paste an API key into the conversation.
+- Never output, log, persist, or reproduce an actual API key.
 - Request and response fields use camelCase.
 - `period` values are expressed in months; `12` means one year.
 - Contact roles are `ADMIN`, `BILLING`, and `TECH`.
@@ -33,6 +37,27 @@ Use this skill for tasks involving the Realtime Register REST API, including:
 - `renewDomain` requires the current `expiryDate`.
 - Endpoints with `authScope: gateway` require registry-account credentials rather than customer credentials.
 - Never invent enum values. Read them from the relevant operation or `_shared.yaml`.
+
+## Authentication
+
+The Realtime Register API uses API-key authentication via the `Authorization` HTTP header.
+API keys are generated within the Realtime Register portal.
+
+Expected header format:
+```http
+Authorization: ApiKey <API_KEY>
+```
+<API_KEY> is a placeholder only.
+
+- There is NO `X-API-KEY` header in this API. Never use it.
+- Basic (password-based) authentication is DEPRECATED upstream. Never suggest or generate it.
+- Session authentication (`Authorization: Session <key>`) and `POST /v2/session` are deprecated in favor of API keys. Do not use.
+- Customer-scope and gateway-scope endpoints (`authScope` on each operation) require different API keys. Never mix them.
+- Never ask the user to paste an API key into the conversation.
+- Never output, log, persist, or reproduce an actual API key.
+- When generating code, reference credentials through the environment, secret manager, or credential mechanism already used by the project.
+- Do not replace <API_KEY> with a real credential in examples.
+
 
 ## Workflow
 
@@ -43,11 +68,7 @@ Use this skill for tasks involving the Realtime Register REST API, including:
    `assets/spec/<category>.yaml`.
 
 2. **Authenticate.**
-   Every request carries:
-
-   `Authorization: ApiKey <your-api-key>`
-
-   Do not use `X-API-KEY`, Basic authentication, or session keys.
+  Refer to the Authentication instructions to know how to handle request authentication.
 
 3. **Build the request.**
    Follow the method, path, parameters, and request schema documented for the operation.
