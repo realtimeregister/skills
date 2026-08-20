@@ -68,11 +68,7 @@ Authorization: ApiKey <API_KEY>
    `assets/spec/<category>.yaml`.
 
 2. **Authenticate.**
-   Every request carries:
-
-   `Authorization: ApiKey <your-api-key>`
-
-   Do not use `X-API-KEY`, Basic authentication, or session keys.
+  Refer to the Authentication instructions to know how to handle request authentication.
 
 3. **Build the request.**
    Follow the method, path, parameters, and request schema documented for the operation.
