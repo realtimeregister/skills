@@ -7,16 +7,6 @@ completed asynchronously; poll /v2/processes/{id} to confirm.
 **Base URL:** `https://api.yoursrs.com`  
 **Docs:** `https://dm.realtimeregister.com/docs/api`
 
-**Auth:** `Authorization: ApiKey <your-api-key>`
-
-## Authentication
-
-- Authenticate every REST request with the header `Authorization: ApiKey <your-api-key>`. API keys are generated in the Realtime Register portal.
-- There is NO `X-API-KEY` header in this API. Never use it.
-- Basic (password-based) authentication is DEPRECATED upstream. Never suggest or generate it.
-- Session authentication (`Authorization: Session <key>`) and `POST /v2/session` are deprecated in favor of API keys. Do not use.
-- Customer-scope and gateway-scope endpoints (`authScope` on each operation) require different API keys. Never mix them.
-
 ## Operations
 
 ### `listDomains`

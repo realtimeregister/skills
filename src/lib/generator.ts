@@ -12,14 +12,6 @@ export function renderCategory(cat: Category, shared: SharedSpec): string {
   lines.push(`**Base URL:** \`${shared.baseUrl}\`  `);
   lines.push(`**Docs:** \`${shared.docsBaseUrl}\``);
   lines.push("");
-  if (shared.auth) {
-    lines.push(`**Auth:** \`${shared.auth.format}\``);
-    lines.push("");
-    lines.push("## Authentication");
-    lines.push("");
-    for (const rule of shared.auth.rules) lines.push(`- ${rule}`);
-    lines.push("");
-  }
   lines.push("## Operations");
   lines.push("");
   for (const op of cat.operations) {
