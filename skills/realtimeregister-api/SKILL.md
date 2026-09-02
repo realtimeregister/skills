@@ -1,7 +1,8 @@
 ---
 name: realtime-register
 description: Realtime Register REST API v2 reference. Use when operating on domains, DNS zones, contacts, SSL certificates, hosts, brands, notifications, billing, or processes against api.yoursrs.com. Includes machine-readable specifications and per-operation reference documentation for every non-SiteLock endpoint.
-author: Realtime Register
+metadata:
+  author: Realtime Register
 ---
 
 # Realtime Register
@@ -13,6 +14,7 @@ It does not contain or provide credentials. Any examples containing authenticati
 
 - `assets/spec/_shared.yaml` - enums, reusable types, and the global error catalog
 - `assets/spec/<category>.yaml` - machine-readable API contracts grouped by category and indexed by `operationId`
+- `references/listings.md` - shared pagination, search, filtering, projection, export, and response rules
 - `references/<category>.md` - human-readable operation reference grouped by category
 
 ## When to use
@@ -72,6 +74,9 @@ Authorization: ApiKey <API_KEY>
 
 3. **Build the request.**
    Follow the method, path, parameters, and request schema documented for the operation.
+
+   For operations marked `listing: true`, read `references/listings.md` before
+   constructing pagination, search, filter, field-selection, or export parameters.
 
    Request fields use camelCase.
 

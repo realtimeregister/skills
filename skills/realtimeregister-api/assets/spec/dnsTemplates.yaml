@@ -34,19 +34,12 @@ operations:
     async: false
     authScope: customer
     summary: List DNS templates for the authenticated customer.
+    listing: true
     pathParams:
       - { name: customer, type: string, required: true, minLength: 3, maxLength: 40 }
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string }
-      - { name: limit,  type: integer, default: 100, maximum: 1000 }
-      - { name: offset, type: integer, default: 0 }
-      - { name: order,  type: string }
     responses:
       "200": { description: "Paginated envelope." }
     errors: [InvalidParameter]
-    gotchas:
-      - "Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering)."
 
   - operationId: createDnsTemplate
     verified: docs

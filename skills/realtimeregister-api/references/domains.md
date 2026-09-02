@@ -22,11 +22,13 @@ List domains owned by the authenticated customer.
 
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| `fields` | `string` | no | Comma-separated top-level fields to include. Properties without a value are omitted from each entity; do not infer a complete fields projection from one sampled record. |
-| `q` | `string` | no | Plain-text substring search across entity fields; values are not parsed as filter expressions. |
-| `limit` | `integer` | no | Page size; maximum 250. Use 0 for count-only requests. |
-| `offset` | `integer` | no |  |
-| `order` | `string` | no |  |
+| `limit` | `integer` | no | Number of entities to return; use 0 for a count-only request. See [common listing rules](listings.md). |
+| `offset` | `integer` | no | Zero-based result offset. See [common listing rules](listings.md). |
+| `order` | `string` | no | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. See [common listing rules](listings.md). |
+| `total` | `boolean` | no | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
+| `q` | `string` | no | Plain-text substring search across entity fields; values are not parsed as filter expressions. See [common listing rules](listings.md). |
+| `fields` | `string` | no | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
+| `export` | `boolean` | no | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
 
 **Responses**
 
@@ -37,8 +39,6 @@ List domains owned by the authenticated customer.
 **Gotchas**
 
 - Use `fields` to trim the response; full Domain objects are large.
-- `q` is plain search. A value such as `status:OK` is searched literally and can return HTTP 200 with an empty `entities` array.
-- Apply filters as separate query parameters: `field=value` for equality or `field:<operator>=value` for comparisons; filters can be combined with `q`.
 
 
 ### `getDomain`

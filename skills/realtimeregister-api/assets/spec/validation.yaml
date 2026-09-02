@@ -33,12 +33,7 @@ operations:
     async: false
     authScope: customer
     summary: List validation categories supported by the platform.
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string }
-      - { name: limit,  type: integer, default: 100, maximum: 1000 }
-      - { name: offset, type: integer, default: 0 }
-      - { name: order,  type: string }
+    listing: true
     responses:
       "200": { description: "Paginated envelope of ValidationCategory objects." }
     errors: [InvalidParameter]

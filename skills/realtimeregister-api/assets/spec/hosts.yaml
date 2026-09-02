@@ -34,17 +34,10 @@ operations:
     async: false
     authScope: customer
     summary: List hosts owned by the authenticated customer.
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string, description: "Filter expression." }
-      - { name: limit,  type: integer, default: 100, maximum: 1000 }
-      - { name: offset, type: integer, default: 0,   minimum: 0 }
-      - { name: order,  type: string }
+    listing: true
     responses:
       "200": { description: "Paginated envelope." }
     errors: [InvalidParameter, AuthenticationFailed]
-    gotchas:
-      - "Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering)."
 
   - operationId: createHost
     verified: docs

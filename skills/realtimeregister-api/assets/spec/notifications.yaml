@@ -33,14 +33,9 @@ operations:
     async: false
     authScope: customer
     summary: List notifications for the customer.
+    listing: true
     pathParams:
       - { name: customer, type: string, required: true }
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string, description: "Filter expression, e.g. acknowledgeDate:null." }
-      - { name: limit,  type: integer, default: 100, maximum: 1000 }
-      - { name: offset, type: integer, default: 0 }
-      - { name: order,  type: string, example: "createdDate:desc" }
     responses:
       "200": { description: "Paginated envelope." }
     errors: [InvalidParameter]

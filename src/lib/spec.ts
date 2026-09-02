@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse as parseYaml } from "yaml";
-import type { Category, SharedSpec, Spec, Operation } from "./types.js";
+import type { Category, SharedSpec, Spec, Operation, Param } from "./types.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const SKILL_DIR = join(here, "..", "..", "skills", "realtimeregister-api");
@@ -51,9 +51,26 @@ export function loadSpec(dir: string = SPEC_DIR): Spec {
   const shared = loadShared(dir);
   const categories = new Map<string, Category>();
   for (const name of listCategoryFiles(dir)) {
-    categories.set(name, loadCategory(name, dir));
+    const category = loadCategory(name, dir);
+    categories.set(name, {
+      ...category,
+      operations: category.operations.map((op) => expandListingParams(op, shared.listing.queryParams)),
+    });
   }
   return { shared, categories };
+}
+
+function expandListingParams(op: Operation, commonParams: Param[]): Operation {
+  if (!op.listing) return op;
+
+  const overrides = new Map((op.queryParams ?? []).map((param) => [param.name, param]));
+  const queryParams = commonParams.map((param) => ({ ...param, ...overrides.get(param.name) }));
+  const commonNames = new Set(commonParams.map((param) => param.name));
+  for (const param of op.queryParams ?? []) {
+    if (!commonNames.has(param.name)) queryParams.push(param);
+  }
+
+  return { ...op, queryParams };
 }
 
 export function findOperation(spec: Spec, operationId: string): { category: Category; op: Operation } | null {

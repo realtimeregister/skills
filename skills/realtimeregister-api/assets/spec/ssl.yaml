@@ -35,12 +35,7 @@ operations:
     async: false
     authScope: customer
     summary: List certificate orders.
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string }
-      - { name: limit,  type: integer, default: 100, maximum: 1000 }
-      - { name: offset, type: integer, default: 0 }
-      - { name: order,  type: string }
+    listing: true
     responses:
       "200": { description: "Paginated envelope of Certificate objects." }
     errors: [InvalidParameter]
@@ -69,11 +64,7 @@ operations:
     async: false
     authScope: customer
     summary: List SSL products available to the authenticated customer.
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string, description: "Filter, e.g. validationType:EV." }
-      - { name: limit,  type: integer, default: 100, maximum: 1000 }
-      - { name: offset, type: integer, default: 0 }
+    listing: true
     responses:
       "200": { description: "Paginated envelope of Product objects." }
     errors: [InvalidParameter]

@@ -35,19 +35,12 @@ operations:
     async: false
     authScope: customer
     summary: List brands for a customer.
+    listing: true
     pathParams:
       - { name: customer, type: string, required: true, minLength: 3, maxLength: 40 }
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string }
-      - { name: limit,  type: integer, default: 100, maximum: 1000 }
-      - { name: offset, type: integer, default: 0 }
-      - { name: order,  type: string }
     responses:
       "200": { description: "Paginated envelope of Brand objects." }
     errors: [InvalidParameter]
-    gotchas:
-      - "Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering)."
 
   - operationId: createBrand
     verified: docs
@@ -166,15 +159,10 @@ operations:
     async: false
     authScope: customer
     summary: List configured template overrides for a brand.
+    listing: true
     pathParams:
       - { name: customer, type: string, required: true }
       - { name: brand,    type: string, required: true }
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string }
-      - { name: limit,  type: integer, default: 100, maximum: 1000 }
-      - { name: offset, type: integer, default: 0 }
-      - { name: order,  type: string }
     responses:
       "200": { description: "Paginated envelope of Template objects." }
     errors: [InvalidParameter]

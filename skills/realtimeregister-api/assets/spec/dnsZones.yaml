@@ -37,17 +37,10 @@ operations:
     async: false
     authScope: customer
     summary: List managed DNS zones.
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string }
-      - { name: limit,  type: integer, default: 100, maximum: 1000 }
-      - { name: offset, type: integer, default: 0 }
-      - { name: order,  type: string }
+    listing: true
     responses:
       "200": { description: "Paginated envelope." }
     errors: [InvalidParameter]
-    gotchas:
-      - "Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering)."
 
   - operationId: createDnsZone
     verified: docs

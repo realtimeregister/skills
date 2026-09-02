@@ -50,11 +50,13 @@ List certificate orders.
 
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| `fields` | `string` | no |  |
-| `q` | `string` | no |  |
-| `limit` | `integer` | no |  |
-| `offset` | `integer` | no |  |
-| `order` | `string` | no |  |
+| `limit` | `integer` | no | Number of entities to return; use 0 for a count-only request. See [common listing rules](listings.md). |
+| `offset` | `integer` | no | Zero-based result offset. See [common listing rules](listings.md). |
+| `order` | `string` | no | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. See [common listing rules](listings.md). |
+| `total` | `boolean` | no | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
+| `q` | `string` | no | Plain-text substring search across entity fields; values are not parsed as filter expressions. See [common listing rules](listings.md). |
+| `fields` | `string` | no | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
+| `export` | `boolean` | no | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
 
 **Responses**
 
@@ -104,10 +106,13 @@ List SSL products available to the authenticated customer.
 
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| `fields` | `string` | no |  |
-| `q` | `string` | no | Filter, e.g. validationType:EV. |
-| `limit` | `integer` | no |  |
-| `offset` | `integer` | no |  |
+| `limit` | `integer` | no | Number of entities to return; use 0 for a count-only request. See [common listing rules](listings.md). |
+| `offset` | `integer` | no | Zero-based result offset. See [common listing rules](listings.md). |
+| `order` | `string` | no | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. See [common listing rules](listings.md). |
+| `total` | `boolean` | no | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
+| `q` | `string` | no | Plain-text substring search across entity fields; values are not parsed as filter expressions. See [common listing rules](listings.md). |
+| `fields` | `string` | no | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
+| `export` | `boolean` | no | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
 
 **Responses**
 
