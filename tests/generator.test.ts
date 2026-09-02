@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { loadSpec, findOperation, REFERENCES_DIR } from "../src/lib/spec.js";
-import { renderCategory, renderOperation } from "../src/lib/generator.js";
+import { renderCategory, renderListingReference, renderOperation } from "../src/lib/generator.js";
 
 describe("renderCategory", () => {
   it("includes the createDomain heading and a registrant request-body table row", () => {
@@ -40,6 +40,12 @@ describe("reference generation sync", () => {
 
   it("has at least one category to check", () => {
     expect(categoryNames.length).toBeGreaterThan(0);
+  });
+
+  it("renders listings.md from the shared listing specification", () => {
+    const rendered = renderListingReference(spec.shared.listing, spec.shared) + "\n";
+    const committed = readFileSync(join(REFERENCES_DIR, "listings.md"), "utf8");
+    expect(rendered).toBe(committed);
   });
 
   for (const name of categoryNames) {

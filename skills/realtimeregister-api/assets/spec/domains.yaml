@@ -20,18 +20,12 @@ operations:
     async: false
     authScope: customer
     summary: List domains owned by the authenticated customer.
-    queryParams:
-      - { name: fields, type: string, description: "Comma-separated top-level fields to include." }
-      - { name: q,      type: string, description: "Filter expression, e.g. status:OK AND name:*.nl" }
-      - { name: limit,  type: integer, default: 100, maximum: 1000 }
-      - { name: offset, type: integer, default: 0,   minimum: 0 }
-      - { name: order,  type: string,  example: "name:asc" }
+    listing: true
     responses:
       "200": { description: "Paginated envelope with an `entities` array of Domain objects." }
     errors: [InvalidParameter, AuthenticationFailed]
     gotchas:
       - "Use `fields` to trim the response; full Domain objects are large."
-      - "Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering)."
 
   - operationId: getDomain
     verified: docs
@@ -333,4 +327,3 @@ operations:
     responses:
       "200": { description: "Extended Domain object including internal flags." }
     errors: [ObjectDoesNotExist, AuthorizationFailed]
-

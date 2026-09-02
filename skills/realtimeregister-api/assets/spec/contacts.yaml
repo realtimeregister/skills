@@ -36,19 +36,12 @@ operations:
     async: false
     authScope: customer
     summary: List contacts for a customer.
+    listing: true
     pathParams:
       - { name: customer, type: string, required: true }
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string }
-      - { name: limit,  type: integer, default: 100, maximum: 1000 }
-      - { name: offset, type: integer, default: 0 }
-      - { name: order,  type: string }
     responses:
       "200": { description: "Paginated envelope of Contact objects." }
     errors: [InvalidParameter]
-    gotchas:
-      - "Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering)."
 
   - operationId: createContact
     verified: docs
@@ -267,6 +260,7 @@ operations:
     async: false
     authScope: customer
     summary: List all known countries.
+    listing: true
     responses:
       "200": { description: "Paginated envelope of Country objects." }
     errors: []

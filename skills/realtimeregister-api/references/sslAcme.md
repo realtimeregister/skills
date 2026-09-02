@@ -21,15 +21,15 @@ Retrieve a single ACME subscription.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `acmeSubscriptionId` | `integer` | yes | Subscription ID. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `acmeSubscriptionId` | `integer` | yes |  | Subscription ID. |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `fields` | `string` | no |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `fields` | `string` | no |  |  |
 
 **Responses**
 
@@ -59,14 +59,15 @@ List ACME subscriptions.
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `fields` | `string` | no |  |
-| `q` | `string` | no | Filter expression (e.g. status:ACTIVE). |
-| `limit` | `integer` | no |  |
-| `offset` | `integer` | no |  |
-| `order` | `string` | no |  |
-| `export` | `boolean` | no |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `limit` | `integer` | no | 10 | Number of entities to return; use 0 for a count-only request. Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 See [common listing rules](listings.md). |
+| `offset` | `integer` | no | 0 | Zero-based result offset. Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 See [common listing rules](listings.md). |
+| `order` | `string` | no |  | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. Default order differs per listing; set order explicitly when paginating with offset. See [common listing rules](listings.md). |
+| `total` | `boolean` | no | true | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
+| `q` | `string` | no |  | Plain-text substring search across entity fields;  Values are NOT filter expressions: `q=status:OK` is matched literally and returns HTTP 200 with an empty `entities` array; filter with `status=OK` instead. See [common listing rules](listings.md). |
+| `fields` | `string` | no |  | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
+| `export` | `boolean` | no |  | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
 
 **Responses**
 
@@ -86,9 +87,9 @@ Create an ACME subscription; returns directoryUrl + account credentials (once).
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `quote` | `boolean` | no | Validate and price without committing. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `quote` | `boolean` | no |  | Validate and price without committing. |
 
 **Request body** (`application/json`)
 
@@ -135,15 +136,15 @@ Update subscription metadata (e.g. autoRenew, approver, domainNames).
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `acmeSubscriptionId` | `integer` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `acmeSubscriptionId` | `integer` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `quote` | `boolean` | no |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `quote` | `boolean` | no |  |  |
 
 **Request body** (`application/json`)
 
@@ -178,15 +179,15 @@ Extend subscription validity by another `period` months.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `acmeSubscriptionId` | `integer` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `acmeSubscriptionId` | `integer` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `quote` | `boolean` | no |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `quote` | `boolean` | no |  |  |
 
 **Request body** (`application/json`)
 
@@ -212,9 +213,9 @@ Delete an ACME subscription.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `acmeSubscriptionId` | `integer` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `acmeSubscriptionId` | `integer` | yes |  |  |
 
 **Responses**
 
@@ -234,9 +235,9 @@ Rotate the External Account Binding (accountKey + hmacKey). Invalidates the old 
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `acmeSubscriptionId` | `integer` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `acmeSubscriptionId` | `integer` | yes |  |  |
 
 **Responses**
 

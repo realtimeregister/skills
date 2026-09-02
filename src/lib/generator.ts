@@ -1,7 +1,7 @@
 // Render a category YAML into a Markdown reference document suitable for
 // loading as agent context.
 
-import type { Category, FieldShape, Operation, Param, SharedSpec } from "./types.js";
+import type { Category, FieldShape, ListingSpec, Operation, Param, SharedSpec } from "./types.js";
 
 export function renderCategory(cat: Category, shared: SharedSpec): string {
   const lines: string[] = [];
@@ -42,7 +42,7 @@ export function renderOperation(op: Operation, shared: SharedSpec): string[] {
   if (op.queryParams?.length) {
     lines.push("**Query params**");
     lines.push("");
-    lines.push(...renderParamTable(op.queryParams));
+    lines.push(...renderParamTable(op.queryParams, op.listing === true));
     lines.push("");
   }
   if (op.requestBody) {
@@ -85,13 +85,50 @@ export function renderOperation(op: Operation, shared: SharedSpec): string[] {
   return lines;
 }
 
-function renderParamTable(params: Param[]): string[] {
-  const rows = ["| Name | Type | Required | Description |", "| --- | --- | --- | --- |"];
+function renderParamTable(params: Param[], linkListingReference = false): string[] {
+  const rows = ["| Name | Type | Required | Default | Description |", "| --- | --- | --- | --- | --- |"];
   for (const p of params) {
     const type = p.enumRef ? `\`${p.enumRef}\`` : `\`${p.type}\``;
-    rows.push(`| \`${p.name}\` | ${type} | ${p.required ? "yes" : "no"} | ${p.description ?? ""} |`);
+    const reference = linkListingReference ? " See [common listing rules](listings.md)." : "";
+    if (p.minimum !== undefined) {
+      p.description += ` Min: ${p.minimum}`;
+    }
+    if (p.maximum !== undefined) {
+      p.description += ` Max: ${p.maximum}`;
+    }
+    rows.push(`| \`${p.name}\` | ${type} | ${p.required ? "yes" : "no"} | ${p.default ?? ""} | ${p.description ?? ""}${reference} |`);
   }
   return rows;
+}
+
+export function renderListingReference(listing: ListingSpec, shared: SharedSpec): string {
+  const lines: string[] = [
+    "# Common listing rules",
+    "",
+    listing.description.trim(),
+    "",
+    `**Upstream docs:** \`${shared.docsBaseUrl}${listing.docUrl}\``,
+    "",
+    "## Query parameters",
+    "",
+    ...renderParamTable(listing.queryParams),
+    "",
+    "## Search and filters",
+    "",
+  ];
+
+  for (const note of listing.filterNotes) lines.push(`- ${note}`);
+
+  lines.push("", "## Filter operators", "");
+  lines.push("| Operator | Description | Supported field types |");
+  lines.push("| --- | --- | --- |");
+  for (const operator of listing.operators) {
+    lines.push(`| \`${operator.name}\` | ${operator.description} | ${operator.supportedTypes.map((type) => `\`${type}\``).join(", ")} |`);
+  }
+
+  lines.push("", "## Response behavior", "");
+  for (const note of listing.responseNotes) lines.push(`- ${note}`);
+  return lines.join("\n");
 }
 
 function renderFieldTable(fields: Record<string, FieldShape>, _shared: SharedSpec): string[] {

@@ -21,9 +21,9 @@ Retrieve the metadata envelope for a single TLD.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `tld` | `string` | yes | TLD without the leading dot (e.g. `com`, `co.uk`). |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `tld` | `string` | yes |  | TLD without the leading dot (e.g. `com`, `co.uk`). |
 
 **Responses**
 

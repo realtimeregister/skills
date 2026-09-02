@@ -18,9 +18,9 @@ Check whether an IP is a known proxy/VPN/Tor exit.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `ip` | `string` | yes | IPv4 or IPv6 address. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `ip` | `string` | yes |  | IPv4 or IPv6 address. |
 
 **Responses**
 
@@ -44,9 +44,9 @@ ADAC WebSocket action. Perform an availability check and optional suggestion run
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `sessionId` | `string` | yes | UUID4 unique per session, included as `session_id` query parameter. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `sessionId` | `string` | yes |  | UUID4 unique per session, included as `session_id` query parameter. |
 
 **Request body** (`application/json`)
 
@@ -80,9 +80,9 @@ ADAC WebSocket action. Fetch the TLD categories configured for a given TLD set.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `sessionId` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `sessionId` | `string` | yes |  |  |
 
 **Request body** (`application/json`)
 
@@ -114,9 +114,9 @@ ADAC WebSocket action. Perform a plain availability check (no suggestions) for o
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `sessionId` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `sessionId` | `string` | yes |  |  |
 
 **Request body** (`application/json`)
 
@@ -149,9 +149,9 @@ ADAC WebSocket action. Run only the configured suggestion engines (no availabili
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `sessionId` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `sessionId` | `string` | yes |  |  |
 
 **Request body** (`application/json`)
 

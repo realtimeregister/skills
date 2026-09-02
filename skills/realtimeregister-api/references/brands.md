@@ -20,16 +20,16 @@ Retrieve a brand.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `handle` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `handle` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `fields` | `string` | no | Comma-separated field selector. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `fields` | `string` | no |  | Comma-separated field selector. |
 
 **Responses**
 
@@ -49,29 +49,27 @@ List brands for a customer.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `fields` | `string` | no |  |
-| `q` | `string` | no |  |
-| `limit` | `integer` | no |  |
-| `offset` | `integer` | no |  |
-| `order` | `string` | no |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `limit` | `integer` | no | 10 | Number of entities to return; use 0 for a count-only request. Min: 0 Max: 250 Min: 0 Max: 250 See [common listing rules](listings.md). |
+| `offset` | `integer` | no | 0 | Zero-based result offset. Min: 0 Min: 0 See [common listing rules](listings.md). |
+| `order` | `string` | no |  | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. Default order differs per listing; set order explicitly when paginating with offset. See [common listing rules](listings.md). |
+| `total` | `boolean` | no | true | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
+| `q` | `string` | no |  | Plain-text substring search across entity fields;  Values are NOT filter expressions: `q=status:OK` is matched literally and returns HTTP 200 with an empty `entities` array; filter with `status=OK` instead. See [common listing rules](listings.md). |
+| `fields` | `string` | no |  | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
+| `export` | `boolean` | no |  | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
 
 **Responses**
 
 - `200` - Paginated envelope of Brand objects.
 
 **Errors:** `InvalidParameter`
-
-**Gotchas**
-
-- Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering).
 
 
 ### `createBrand`
@@ -85,10 +83,10 @@ Create a brand under a customer.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `handle` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `handle` | `string` | yes |  |  |
 
 **Request body** (`application/json`)
 
@@ -134,10 +132,10 @@ Update a brand. Fields accept an empty string to clear where noted.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `handle` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `handle` | `string` | yes |  |  |
 
 **Request body** (`application/json`)
 
@@ -179,10 +177,10 @@ Delete a brand.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `handle` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `handle` | `string` | yes |  |  |
 
 **Responses**
 
@@ -207,17 +205,17 @@ Retrieve a brand-specific notification/mail template override.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `brand` | `string` | yes |  |
-| `name` | `string` | yes | Template identifier (e.g. TRANSFER_FOA, CONTACT_VERIFICATION). |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `brand` | `string` | yes |  |  |
+| `name` | `string` | yes |  | Template identifier (e.g. TRANSFER_FOA, CONTACT_VERIFICATION). |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `fields` | `string` | no | Comma-separated field selector. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `fields` | `string` | no |  | Comma-separated field selector. |
 
 **Responses**
 
@@ -237,20 +235,22 @@ List configured template overrides for a brand.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `brand` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `brand` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `fields` | `string` | no |  |
-| `q` | `string` | no |  |
-| `limit` | `integer` | no |  |
-| `offset` | `integer` | no |  |
-| `order` | `string` | no |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `limit` | `integer` | no | 10 | Number of entities to return; use 0 for a count-only request. Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 See [common listing rules](listings.md). |
+| `offset` | `integer` | no | 0 | Zero-based result offset. Min: 0 Min: 0 Min: 0 See [common listing rules](listings.md). |
+| `order` | `string` | no |  | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. Default order differs per listing; set order explicitly when paginating with offset. See [common listing rules](listings.md). |
+| `total` | `boolean` | no | true | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
+| `q` | `string` | no |  | Plain-text substring search across entity fields;  Values are NOT filter expressions: `q=status:OK` is matched literally and returns HTTP 200 with an empty `entities` array; filter with `status=OK` instead. See [common listing rules](listings.md). |
+| `fields` | `string` | no |  | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
+| `export` | `boolean` | no |  | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
 
 **Responses**
 
@@ -270,11 +270,11 @@ Create or update a brand template override. Omit a field to inherit the platform
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `brand` | `string` | yes |  |
-| `name` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `brand` | `string` | yes |  |  |
+| `name` | `string` | yes |  |  |
 
 **Request body** (`application/json`)
 
@@ -307,17 +307,17 @@ Render a template with sample data to preview the rendered subject/body.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `brand` | `string` | yes |  |
-| `name` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `brand` | `string` | yes |  |  |
+| `name` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `context` | `string` | no | The context to request a preview for. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `context` | `string` | no |  | The context to request a preview for. |
 
 **Responses**
 

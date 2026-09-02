@@ -51,15 +51,7 @@ operations:
     async: false
     authScope: customer
     summary: List financial transactions.
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string,
-          description: "Filter expression, e.g. `date:>=2025-01-01 AND processAction:RENEW`." }
-      - { name: limit,  type: integer, default: 10, maximum: 1000 }
-      - { name: offset, type: integer, default: 0 }
-      - { name: order,  type: string, example: "-date" }
-      - { name: export, type: boolean }
-      - { name: "no-total", type: boolean }
+    listing: true
     responses:
       "200": { description: "Paginated envelope of transaction objects." }
     errors: [InvalidParameter]
@@ -98,13 +90,7 @@ operations:
     docUrl: /exchangerates/list
     async: false
     authScope: customer
-    summary: List historical exchange rates across a date range.
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string, description: "Filter on date range, currency pair." }
-      - { name: limit,  type: integer, default: 10, maximum: 1000 }
-      - { name: offset, type: integer, default: 0 }
-      - { name: order,  type: string, example: "-date" }
+    summary: List all available exchange rates.
     responses:
-      "200": { description: "Paginated envelope of daily exchange-rate records." }
+      "200": { description: "Array of objects containing the base currency (`currency`), and a currency-to-rate map (`exchangerates`)." }
     errors: [InvalidParameter]

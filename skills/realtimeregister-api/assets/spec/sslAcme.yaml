@@ -47,13 +47,7 @@ operations:
     async: false
     authScope: customer
     summary: List ACME subscriptions.
-    queryParams:
-      - { name: fields, type: string }
-      - { name: q,      type: string, description: "Filter expression (e.g. status:ACTIVE)." }
-      - { name: limit,  type: integer, default: 100, maximum: 1000 }
-      - { name: offset, type: integer, default: 0 }
-      - { name: order,  type: string }
-      - { name: export, type: boolean }
+    listing: true
     responses:
       "200": { description: "Paginated envelope of ACME subscription objects." }
     errors: [InvalidParameter]

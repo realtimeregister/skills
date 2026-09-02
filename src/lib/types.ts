@@ -77,11 +77,28 @@ export interface Operation {
   errors?: string[];
   gotchas?: string[];
   examples?: OperationExample[];
+  /** Apply shared pagination, search, filtering, projection, and export params. */
+  listing?: boolean;
   /**
    * false = page cannot be machine-diffed; skip in diff-live. Omitted (or
    * true) means the operation is a normal, diffable REST endpoint.
    */
   liveDiff?: boolean;
+}
+
+export interface ListingOperator {
+  name: string;
+  description: string;
+  supportedTypes: string[];
+}
+
+export interface ListingSpec {
+  docUrl: string;
+  description: string;
+  queryParams: Param[];
+  filterNotes: string[];
+  operators: ListingOperator[];
+  responseNotes: string[];
 }
 
 export interface Category {
@@ -108,6 +125,7 @@ export interface SharedSpec {
   version: number;
   baseUrl: string;
   docsBaseUrl: string;
+  listing: ListingSpec;
   auth?: {
     header: string;
     scheme: string;

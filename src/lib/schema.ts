@@ -122,7 +122,9 @@ export function buildOperationSchemas(op: Operation, shared: SharedSpec): Schema
       type: "object",
       properties: queryProps,
       ...(queryRequired.length > 0 ? { required: queryRequired } : {}),
-      additionalProperties: false,
+      // Listing filters use dynamic keys such as `status=OK` and
+      // `expiryDate:gt=2027-01-01`, so they cannot be enumerated here.
+      additionalProperties: op.listing === true,
     },
     body,
   };
