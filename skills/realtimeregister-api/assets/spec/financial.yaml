@@ -90,7 +90,7 @@ operations:
     docUrl: /exchangerates/list
     async: false
     authScope: customer
-    summary: List historical exchange rates across a date range.
+    summary: List all available exchange rates.
     responses:
-      "200": { description: "Object containing the base currency, date, and a currency-to-rate map." }
+      "200": { description: "Array of objects containing the base currency (`currency`), and a currency-to-rate map (`exchangerates`)." }
     errors: [InvalidParameter]

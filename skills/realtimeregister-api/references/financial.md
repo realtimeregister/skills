@@ -124,14 +124,14 @@ are quoted today.
 
 `GET /v2/exchangerates`
 
-List historical exchange rates across a date range.
+List all available exchange rates.
 
 - **Docs:** `https://dm.realtimeregister.com/docs/api/exchangerates/list`
 - **Auth scope:** `customer`
 
 **Responses**
 
-- `200` - Object containing the base currency, date, and a currency-to-rate map.
+- `200` - Array of objects containing the base currency (`currency`), and a currency-to-rate map (`exchangerates`).
 
 **Errors:** `InvalidParameter`
 
