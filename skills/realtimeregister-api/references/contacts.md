@@ -57,9 +57,9 @@ List contacts for a customer.
 
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| `fields` | `string` | no |  |
-| `q` | `string` | no |  |
-| `limit` | `integer` | no |  |
+| `fields` | `string` | no | Comma-separated fields to include. Properties without a value are omitted from each entity; do not infer a complete fields projection from one sampled record. |
+| `q` | `string` | no | Plain-text substring search across entity fields; values are not parsed as filter expressions. |
+| `limit` | `integer` | no | Page size; maximum 250. Use 0 for count-only requests. |
 | `offset` | `integer` | no |  |
 | `order` | `string` | no |  |
 
@@ -71,7 +71,8 @@ List contacts for a customer.
 
 **Gotchas**
 
-- Filter/order parameters follow the generic listing format (see /docs/api/listings#filtering).
+- `q` is plain search. A value such as `status:OK` is searched literally and can return HTTP 200 with an empty `entities` array.
+- Apply filters as separate query parameters: `field=value` for equality or `field:<operator>=value` for comparisons; filters can be combined with `q`.
 
 
 ### `createContact`
