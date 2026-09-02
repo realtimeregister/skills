@@ -20,15 +20,15 @@ Retrieve a certificate order and its current state.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `certificateId` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `certificateId` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `fields` | `string` | no | Comma-separated field selector. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `fields` | `string` | no |  | Comma-separated field selector. |
 
 **Responses**
 
@@ -48,15 +48,15 @@ List certificate orders.
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `limit` | `integer` | no | Number of entities to return; use 0 for a count-only request. See [common listing rules](listings.md). |
-| `offset` | `integer` | no | Zero-based result offset. See [common listing rules](listings.md). |
-| `order` | `string` | no | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. See [common listing rules](listings.md). |
-| `total` | `boolean` | no | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
-| `q` | `string` | no | Plain-text substring search across entity fields; values are not parsed as filter expressions. See [common listing rules](listings.md). |
-| `fields` | `string` | no | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
-| `export` | `boolean` | no | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `limit` | `integer` | no | 10 | Number of entities to return; use 0 for a count-only request. Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 See [common listing rules](listings.md). |
+| `offset` | `integer` | no | 0 | Zero-based result offset. Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 See [common listing rules](listings.md). |
+| `order` | `string` | no |  | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. Default order differs per listing; set order explicitly when paginating with offset. See [common listing rules](listings.md). |
+| `total` | `boolean` | no | true | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
+| `q` | `string` | no |  | Plain-text substring search across entity fields;  Values are NOT filter expressions: `q=status:OK` is matched literally and returns HTTP 200 with an empty `entities` array; filter with `status=OK` instead. See [common listing rules](listings.md). |
+| `fields` | `string` | no |  | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
+| `export` | `boolean` | no |  | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
 
 **Responses**
 
@@ -76,15 +76,15 @@ Retrieve SSL product metadata (validation type, SAN limits, warranty).
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `product` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `product` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `fields` | `string` | no | Comma-separated field selector. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `fields` | `string` | no |  | Comma-separated field selector. |
 
 **Responses**
 
@@ -104,15 +104,15 @@ List SSL products available to the authenticated customer.
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `limit` | `integer` | no | Number of entities to return; use 0 for a count-only request. See [common listing rules](listings.md). |
-| `offset` | `integer` | no | Zero-based result offset. See [common listing rules](listings.md). |
-| `order` | `string` | no | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. See [common listing rules](listings.md). |
-| `total` | `boolean` | no | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
-| `q` | `string` | no | Plain-text substring search across entity fields; values are not parsed as filter expressions. See [common listing rules](listings.md). |
-| `fields` | `string` | no | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
-| `export` | `boolean` | no | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `limit` | `integer` | no | 10 | Number of entities to return; use 0 for a count-only request. Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 See [common listing rules](listings.md). |
+| `offset` | `integer` | no | 0 | Zero-based result offset. Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 See [common listing rules](listings.md). |
+| `order` | `string` | no |  | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. Default order differs per listing; set order explicitly when paginating with offset. See [common listing rules](listings.md). |
+| `total` | `boolean` | no | true | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
+| `q` | `string` | no |  | Plain-text substring search across entity fields;  Values are NOT filter expressions: `q=status:OK` is matched literally and returns HTTP 200 with an empty `entities` array; filter with `status=OK` instead. See [common listing rules](listings.md). |
+| `fields` | `string` | no |  | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
+| `export` | `boolean` | no |  | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
 
 **Responses**
 
@@ -132,9 +132,9 @@ Place a new certificate order.
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `quote` | `boolean` | no |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `quote` | `boolean` | no |  |  |
 
 **Request body** (`application/json`)
 
@@ -189,15 +189,15 @@ Reissue a certificate with a new CSR or SAN set.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `certificateId` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `certificateId` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `quote` | `boolean` | no |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `quote` | `boolean` | no |  |  |
 
 **Request body** (`application/json`)
 
@@ -241,15 +241,15 @@ Renew an existing certificate.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `certificateId` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `certificateId` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `quote` | `boolean` | no |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `quote` | `boolean` | no |  |  |
 
 **Request body** (`application/json`)
 
@@ -292,9 +292,9 @@ Revoke a certificate.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `certificateId` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `certificateId` | `string` | yes |  |  |
 
 **Request body** (`application/json`)
 
@@ -324,9 +324,9 @@ Re-send the DCV email or re-check a DNS/HTTP DCV token for a pending certificate
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `processId` | `integer` | yes | Process ID of the pending certificate request. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `processId` | `integer` | yes |  | Process ID of the pending certificate request. |
 
 **Request body** (`application/json`)
 
@@ -356,15 +356,15 @@ Download the issued certificate in PEM or PKCS#7 format.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `certificateId` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `certificateId` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `format` | `string` | no |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `format` | `string` | no | PEM |  |
 
 **Responses**
 
@@ -388,9 +388,9 @@ Schedule an EV validation call with the CA for a pending certificate request.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `processId` | `integer` | yes | Process ID of the pending certificate request. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `processId` | `integer` | yes |  | Process ID of the pending certificate request. |
 
 **Request body** (`application/json`)
 
@@ -416,15 +416,15 @@ List the approver email addresses accepted for EMAIL DCV on a given domain.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes | The domain name. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  | The domain name. |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `product` | `string` | no | The product to fetch addresses for. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `product` | `string` | no |  | The product to fetch addresses for. |
 
 **Responses**
 
@@ -444,9 +444,9 @@ Send (or re-send) the CA Subscriber Agreement email to the approver for a pendin
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `processId` | `integer` | yes | Process ID of the pending certificate request. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `processId` | `integer` | yes |  | Process ID of the pending certificate request. |
 
 **Request body** (`application/json`)
 
@@ -477,9 +477,9 @@ Attach a free-form note to a certificate order. DEPRECATED; use a ticketing syst
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `processId` | `integer` | yes | The process ID. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `processId` | `integer` | yes |  | The process ID. |
 
 **Request body** (`application/json`)
 

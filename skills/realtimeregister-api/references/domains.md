@@ -20,15 +20,15 @@ List domains owned by the authenticated customer.
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `limit` | `integer` | no | Number of entities to return; use 0 for a count-only request. See [common listing rules](listings.md). |
-| `offset` | `integer` | no | Zero-based result offset. See [common listing rules](listings.md). |
-| `order` | `string` | no | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. See [common listing rules](listings.md). |
-| `total` | `boolean` | no | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
-| `q` | `string` | no | Plain-text substring search across entity fields; values are not parsed as filter expressions. See [common listing rules](listings.md). |
-| `fields` | `string` | no | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
-| `export` | `boolean` | no | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `limit` | `integer` | no | 10 | Number of entities to return; use 0 for a count-only request. Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 See [common listing rules](listings.md). |
+| `offset` | `integer` | no | 0 | Zero-based result offset. Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 See [common listing rules](listings.md). |
+| `order` | `string` | no |  | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. Default order differs per listing; set order explicitly when paginating with offset. See [common listing rules](listings.md). |
+| `total` | `boolean` | no | true | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
+| `q` | `string` | no |  | Plain-text substring search across entity fields;  Values are NOT filter expressions: `q=status:OK` is matched literally and returns HTTP 200 with an empty `entities` array; filter with `status=OK` instead. See [common listing rules](listings.md). |
+| `fields` | `string` | no |  | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
+| `export` | `boolean` | no |  | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
 
 **Responses**
 
@@ -52,15 +52,15 @@ Fetch a single domain and all sub-objects.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `fields` | `string` | no | Comma-separated field selector; identifying fields are always included. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `fields` | `string` | no |  | Comma-separated field selector; identifying fields are always included. |
 
 **Responses**
 
@@ -84,15 +84,15 @@ Availability and price check for a domain name.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `renewPrice` | `boolean` | no | If true, include a renewal price alongside the acquisition price for available premium domains. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `renewPrice` | `boolean` | no |  | If true, include a renewal price alongside the acquisition price for available premium domains. |
 
 **Responses**
 
@@ -117,15 +117,15 @@ Register a new domain.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes | Domain name (min 3, max 255 chars; lowercase letters/digits/hyphen). |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  | Domain name (min 3, max 255 chars; lowercase letters/digits/hyphen). |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `quote` | `boolean` | no | If true, only validate and quote the action. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `quote` | `boolean` | no |  | If true, only validate and quote the action. |
 
 **Request body** (`application/json`)
 
@@ -203,15 +203,15 @@ Update contacts, nameservers, DNSSEC, status flags, autoRenew, or privacy protec
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `quote` | `boolean` | no | Validate and quote only. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `quote` | `boolean` | no |  | Validate and quote only. |
 
 **Request body** (`application/json`)
 
@@ -255,15 +255,15 @@ Renew a domain for N additional months.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `quote` | `boolean` | no | Validate and quote only. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `quote` | `boolean` | no |  | Validate and quote only. |
 
 **Request body** (`application/json`)
 
@@ -294,15 +294,15 @@ Initiate an inbound transfer from another registrar.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `quote` | `boolean` | no |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `quote` | `boolean` | no |  |  |
 
 **Request body** (`application/json`)
 
@@ -344,9 +344,9 @@ Push a domain to another customer within RTR.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  |  |
 
 **Request body** (`application/json`)
 
@@ -376,10 +376,10 @@ Inspect the status of an in-flight transfer by process id.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes |  |
-| `processId` | `string` | yes | Process id returned by the original transferDomain call. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  |  |
+| `processId` | `string` | yes |  | Process id returned by the original transferDomain call. |
 
 **Responses**
 
@@ -403,15 +403,15 @@ Restore a domain in redemption grace.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `quote` | `boolean` | no |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `quote` | `boolean` | no |  |  |
 
 **Request body** (`application/json`)
 
@@ -442,9 +442,9 @@ Delete a domain; enters the registry redemption grace period.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  |  |
 
 **Responses**
 
@@ -468,11 +468,11 @@ Gateway-only. Approve or reject an outbound transfer request.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes |  |
-| `processId` | `string` | yes | Process id of the pending outbound transfer. |
-| `action` | `TransferAction` | yes | `approve` or `reject` (lowercase). |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  |  |
+| `processId` | `string` | yes |  | Process id of the pending outbound transfer. |
+| `action` | `TransferAction` | yes |  | `approve` or `reject` (lowercase). |
 
 **Responses**
 
@@ -498,16 +498,16 @@ Gateway-only read of a domain across all customers.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `domainName` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `domainName` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `authcode` | `string` | no | If set, the endpoint checks the provided auth code against the domain. |
-| `type` | `string` | no | Transfer type filter for info lookups (IN, OUT). |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `authcode` | `string` | no |  | If set, the endpoint checks the provided auth code against the domain. |
+| `type` | `string` | no |  | Transfer type filter for info lookups (IN, OUT). |
 
 **Responses**
 

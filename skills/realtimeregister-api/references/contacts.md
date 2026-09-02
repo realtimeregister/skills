@@ -20,16 +20,16 @@ Retrieve a single contact.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `handle` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `handle` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `fields` | `string` | no | Comma-separated field selector. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `fields` | `string` | no |  | Comma-separated field selector. |
 
 **Responses**
 
@@ -49,21 +49,21 @@ List contacts for a customer.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `limit` | `integer` | no | Number of entities to return; use 0 for a count-only request. See [common listing rules](listings.md). |
-| `offset` | `integer` | no | Zero-based result offset. See [common listing rules](listings.md). |
-| `order` | `string` | no | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. See [common listing rules](listings.md). |
-| `total` | `boolean` | no | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
-| `q` | `string` | no | Plain-text substring search across entity fields; values are not parsed as filter expressions. See [common listing rules](listings.md). |
-| `fields` | `string` | no | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
-| `export` | `boolean` | no | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `limit` | `integer` | no | 10 | Number of entities to return; use 0 for a count-only request. Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 See [common listing rules](listings.md). |
+| `offset` | `integer` | no | 0 | Zero-based result offset. Min: 0 Min: 0 Min: 0 Min: 0 See [common listing rules](listings.md). |
+| `order` | `string` | no |  | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. Default order differs per listing; set order explicitly when paginating with offset. See [common listing rules](listings.md). |
+| `total` | `boolean` | no | true | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
+| `q` | `string` | no |  | Plain-text substring search across entity fields;  Values are NOT filter expressions: `q=status:OK` is matched literally and returns HTTP 200 with an empty `entities` array; filter with `status=OK` instead. See [common listing rules](listings.md). |
+| `fields` | `string` | no |  | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
+| `export` | `boolean` | no |  | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
 
 **Responses**
 
@@ -83,10 +83,10 @@ Create a new contact under the given customer.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes | Customer handle. |
-| `handle` | `string` | yes | Desired contact handle. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  | Customer handle. |
+| `handle` | `string` | yes |  | Desired contact handle. |
 
 **Request body** (`application/json`)
 
@@ -132,10 +132,10 @@ Update mutable contact fields. Omitted fields are preserved.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `handle` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `handle` | `string` | yes |  |  |
 
 **Request body** (`application/json`)
 
@@ -180,10 +180,10 @@ Submit pre-validation records for a contact.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `handle` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `handle` | `string` | yes |  |  |
 
 **Request body** (`application/json`)
 
@@ -213,10 +213,10 @@ Split a shared contact into a new handle to avoid cross-brand mutation side effe
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `handle` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `handle` | `string` | yes |  |  |
 
 **Request body** (`application/json`)
 
@@ -243,10 +243,10 @@ Delete a contact.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `handle` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `handle` | `string` | yes |  |  |
 
 **Responses**
 
@@ -270,11 +270,11 @@ Add TLD-specific contact properties for a given registry (e.g. `nl-legalForm`).
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `handle` | `string` | yes |  |
-| `registry` | `string` | yes | Registry identifier (e.g. sidn, dns-be). |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `handle` | `string` | yes |  |  |
+| `registry` | `string` | yes |  | Registry identifier (e.g. sidn, dns-be). |
 
 **Request body** (`application/json`)
 
@@ -301,11 +301,11 @@ Replace existing TLD-specific contact properties for a given registry.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes |  |
-| `handle` | `string` | yes |  |
-| `registry` | `string` | yes |  |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  |  |
+| `handle` | `string` | yes |  |  |
+| `registry` | `string` | yes |  |  |
 
 **Request body** (`application/json`)
 
@@ -331,15 +331,15 @@ Lookup a single country by ISO 3166-1 alpha-2 code.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `country` | `string` | yes | ISO 3166-1 alpha-2 code. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `country` | `string` | yes |  | ISO 3166-1 alpha-2 code. |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `fields` | `string` | no | Comma-separated field selector. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `fields` | `string` | no |  | Comma-separated field selector. |
 
 **Responses**
 
@@ -359,15 +359,15 @@ List all known countries.
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `limit` | `integer` | no | Number of entities to return; use 0 for a count-only request. See [common listing rules](listings.md). |
-| `offset` | `integer` | no | Zero-based result offset. See [common listing rules](listings.md). |
-| `order` | `string` | no | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. See [common listing rules](listings.md). |
-| `total` | `boolean` | no | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
-| `q` | `string` | no | Plain-text substring search across entity fields; values are not parsed as filter expressions. See [common listing rules](listings.md). |
-| `fields` | `string` | no | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
-| `export` | `boolean` | no | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `limit` | `integer` | no | 10 | Number of entities to return; use 0 for a count-only request. Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 Min: 0 Max: 250 See [common listing rules](listings.md). |
+| `offset` | `integer` | no | 0 | Zero-based result offset. Min: 0 Min: 0 Min: 0 Min: 0 Min: 0 See [common listing rules](listings.md). |
+| `order` | `string` | no |  | Sort field; prefix with `-` for descending order. Repeat to sort by multiple fields. Default order differs per listing; set order explicitly when paginating with offset. See [common listing rules](listings.md). |
+| `total` | `boolean` | no | true | Set to false to omit the total match count and improve performance. See [common listing rules](listings.md). |
+| `q` | `string` | no |  | Plain-text substring search across entity fields;  Values are NOT filter expressions: `q=status:OK` is matched literally and returns HTTP 200 with an empty `entities` array; filter with `status=OK` instead. See [common listing rules](listings.md). |
+| `fields` | `string` | no |  | Comma-separated fields to include. Identifying fields remain included; properties without a value may be omitted from each entity. See [common listing rules](listings.md). |
+| `export` | `boolean` | no |  | Return all records. Cannot be combined with limit or offset; default projection contains identifying fields only. See [common listing rules](listings.md). |
 
 **Responses**
 

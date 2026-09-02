@@ -70,7 +70,11 @@ function expandListingParams(op: Operation, commonParams: Param[]): Operation {
     if (!commonNames.has(param.name)) queryParams.push(param);
   }
 
-  return { ...op, queryParams };
+  if (op.queryParams?.length) {
+    throw new Error(`${op.operationId}: Listing operations inherit queryParams from _shared.yaml; remove the per-operation queryParams.`)
+  }
+
+  return { ...op, queryParams: commonParams };
 }
 
 export function findOperation(spec: Spec, operationId: string): { category: Category; op: Operation } | null {

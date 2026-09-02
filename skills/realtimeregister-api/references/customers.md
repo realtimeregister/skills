@@ -21,15 +21,15 @@ Retrieve the effective pricelist for a customer, with upcoming price changes and
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes | Customer handle. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  | Customer handle. |
 
 **Query params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `currency` | `string` | no | Convert prices to this currency (USD or EUR). Conversion uses daily exchange rates. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `currency` | `string` | no |  | Convert prices to this currency (USD or EUR). Conversion uses daily exchange rates. |
 
 **Responses**
 
@@ -59,9 +59,9 @@ Retrieve available credits for a customer, split per currency account.
 
 **Path params**
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `customer` | `string` | yes | Customer handle. |
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `customer` | `string` | yes |  | Customer handle. |
 
 **Responses**
 

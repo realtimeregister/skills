@@ -86,11 +86,17 @@ export function renderOperation(op: Operation, shared: SharedSpec): string[] {
 }
 
 function renderParamTable(params: Param[], linkListingReference = false): string[] {
-  const rows = ["| Name | Type | Required | Description |", "| --- | --- | --- | --- |"];
+  const rows = ["| Name | Type | Required | Default | Description |", "| --- | --- | --- | --- | --- |"];
   for (const p of params) {
     const type = p.enumRef ? `\`${p.enumRef}\`` : `\`${p.type}\``;
     const reference = linkListingReference ? " See [common listing rules](listings.md)." : "";
-    rows.push(`| \`${p.name}\` | ${type} | ${p.required ? "yes" : "no"} | ${p.description ?? ""}${reference} |`);
+    if (p.minimum !== undefined) {
+      p.description += ` Min: ${p.minimum}`;
+    }
+    if (p.maximum !== undefined) {
+      p.description += ` Max: ${p.maximum}`;
+    }
+    rows.push(`| \`${p.name}\` | ${type} | ${p.required ? "yes" : "no"} | ${p.default ?? ""} | ${p.description ?? ""}${reference} |`);
   }
   return rows;
 }

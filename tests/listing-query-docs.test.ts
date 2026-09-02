@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { buildOperationSchemas } from "../src/lib/schema.js";
-import { findOperation, loadSpec } from "../src/lib/spec.js";
+import { allOperations, findOperation, loadSpec } from "../src/lib/spec.js";
 
 const LISTING_OPERATION_IDS = [
   "listBrands",
@@ -24,6 +24,8 @@ const LISTING_OPERATION_IDS = [
 ] as const;
 
 const COMMON_PARAM_NAMES = ["limit", "offset", "order", "total", "q", "fields", "export"];
+/** Operations on a `/list` docs page that verifiably do not use the generic listing format. */
+const NON_LISTING_LIST_PAGES = ["listBrandLocales", "listExchangeRates"];
 
 describe("shared listing query semantics", () => {
   const spec = loadSpec();
@@ -54,6 +56,15 @@ describe("shared listing query semantics", () => {
     });
   }
 
+  it("flags every /list docs page that forgot the listing flag", () => {
+    const missing = allOperations(spec)
+      .filter(({ op }) => op.docUrl.endsWith('/list'))
+      .filter(({ op }) => op.listing !== true && !NON_LISTING_LIST_PAGES.includes(op.operationId))
+      .map(({ op }) => op.operationId)
+
+    expect(missing.length).toBe(0)
+  })
+
   it("documents every upstream filter operator", () => {
     expect(spec.shared.listing.operators.map((operator) => operator.name)).toEqual([
       "eq",
@@ -72,7 +83,7 @@ describe("shared listing query semantics", () => {
   });
 
   it("keeps non-generic list operations outside the shared contract", () => {
-    for (const operationId of ["listBrandLocales", "listExchangeRates"]) {
+    for (const operationId of NON_LISTING_LIST_PAGES) {
       const hit = findOperation(spec, operationId);
       expect(hit).not.toBeNull();
       expect(hit!.op.listing).not.toBe(true);
